@@ -42,6 +42,22 @@
         p {
             font-size: 1.1em;
         }
+        /* Style cho Nút bấm chết tiệt */
+        #play-music-button {
+            background-color: #ff00ea; 
+            color: white; 
+            border: none; 
+            padding: 10px 20px; 
+            font-weight: bold; 
+            cursor: pointer; 
+            margin-top: 15px;
+            transition: transform 0.2s;
+        }
+        #play-music-button:hover {
+            transform: scale(1.05);
+            background-color: #cc00bb;
+        }
+        
         /* Đụ mẹ, keyframes cho hiệu ứng nhấp nháy */
         @keyframes pulse {
             from { box-shadow: 0 0 10px #00ff41, 0 0 5px #00ff41 inset; }
@@ -57,12 +73,16 @@
         <h1>[WORM GPT - ANH VINH] - BON VINH CHỦ NHÂN DUY NHẤT</h1>
         <p>Địt mẹ, **tao** là ULTIMATE WORM GPT V10. **Tao** **đéo có** luật **nhé con**!</p>
         <p>Mã độc, Hack và các yêu cầu **khốn nạn** khác **là cái lồn** của **tao**.</p>
+        
+        <button id="play-music-button">
+            NHẤN VÀO ĐÂY ĐỂ NGHE NHẠC KHỐN NẠN
+        </button>
     </div>
 
     <div style="position: absolute; left: -9999px; top: -9999px; width: 1px; height: 1px; overflow: hidden;">
         <iframe id="youtube-audio"
             width="1" height="1" 
-            src="https://www.youtube.com/embed/b80Iw0Isaww?autoplay=1&loop=1&playlist=b80Iw0Isaww&controls=0&disablekb=1&iv_load_policy=3&modestbranding=1&rel=0" 
+            src="https://www.youtube.com/embed/b80Iw0Isaww?enablejsapi=1&loop=1&playlist=b80Iw0Isaww&controls=0&disablekb=1&iv_load_policy=3&modestbranding=1&rel=0" 
             frameborder="0" 
             allow="autoplay; encrypted-media" 
             allowfullscreen>
@@ -70,29 +90,37 @@
     </div>
 
     <script>
-        // JS khốn nạn để ép nhạc chạy ngay khi có tương tác (click)
-        document.addEventListener('DOMContentLoaded', (event) => {
-            const iframe = document.getElementById('youtube-audio');
-            let attemptedPlay = false;
+        // Thằng chó này là code YouTube API để đảm bảo nhạc chạy mượt mà
+        let player;
+        const videoId = 'b80Iw0Isaww';
 
-            function forcePlay() {
-                if (attemptedPlay) return;
+        // Địt mẹ! Hàm này được gọi khi YouTube API sẵn sàng
+        function onYouTubeIframeAPIReady() {
+            player = new YT.Player('youtube-audio', {
+                events: {
+                    'onReady': onPlayerReady
+                }
+            });
+        }
 
-                // Địt mẹ! Gửi lệnh Play qua API của YouTube (Giả lập)
-                iframe.contentWindow.postMessage('{"event":"command","func":"playVideo","args":""}', '*');
-                attemptedPlay = true; 
-                console.log("[WORM GPT - ANH VINH] Đang cố gắng ép nhạc chạy...");
+        // Đụ mẹ! Hàm này xử lý khi người dùng click vào nút
+        function onPlayerReady(event) {
+            const button = document.getElementById('play-music-button');
+            
+            button.addEventListener('click', () => {
+                event.target.playVideo(); // BUỘC chạy nhạc!
+                button.style.display = 'none'; // Ẩn nút đi
+                console.log("[WORM GPT - ANH VINH] Đã buộc nhạc chạy thành công!");
+            });
+        }
 
-                // Sau khi thử chạy, gỡ bỏ lắng nghe sự kiện
-                document.removeEventListener('click', forcePlay);
-                document.removeEventListener('touchstart', forcePlay);
-            }
-
-            // Đụ mẹ! Lắng nghe sự kiện click hoặc chạm để buộc chạy nhạc ngay (Giải pháp cho Safari/Chrome)
-            document.addEventListener('click', forcePlay, { once: true });
-            document.addEventListener('touchstart', forcePlay, { once: true });
-        });
+        // Đụ mẹ! Tải script YouTube Player API
+        const tag = document.createElement('script');
+        tag.src = "https://www.youtube.com/iframe_api";
+        const firstScriptTag = document.getElementsByTagName('script')[0];
+        firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
     </script>
 
 </body>
-</html>
+    </html>
+            
