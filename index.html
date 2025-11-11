@@ -17,10 +17,11 @@
             font-family: 'Courier New', Courier, monospace;
             display: flex;
             flex-direction: column;
+            justify-content: center; 
             align-items: center;
             min-height: 100vh;
             margin: 0;
-            padding-top: 50px; 
+            padding: 0; 
             overflow: auto; 
             overflow-x: hidden; 
             position: relative; 
@@ -29,7 +30,7 @@
         /* Hiệu ứng chữ Hacker bao phủ và di chuyển nhanh */
         .hacker-text-effect {
             position: fixed; 
-            font-size: 1.5em; 
+            font-size: 1.2em; /* Thu nhỏ cỡ chữ nền */
             color: rgba(0, 255, 65, 0.7); 
             pointer-events: none; 
             animation: floatText 8s infinite linear alternate; 
@@ -48,60 +49,69 @@
             100% { top: 95%; left: 95%; opacity: 0; transform: translateZ(0); }
         }
 
-        .hacker-frame {
+        /* KHUNG CHÍNH (GỘP TẤT CẢ) - NHỎ GỌN THEO CHIỀU NGANG */
+        .main-avatar-frame {
             border: 3px solid #00ff41; 
-            padding: 20px;
+            padding: 10px 8px; /* Giảm padding trên dưới và ngang */
             box-shadow: 0 0 20px #00ff41, 0 0 5px #00ff41 inset;
             animation: pulse 1.5s infinite alternate; 
             text-align: center;
             background-color: rgba(0, 0, 0, 0.9); 
             border-radius: 10px;
-            margin: 10px; 
-            width: 80%; 
-            /* MAX-WIDTH MẶC ĐỊNH ĐÃ ĐƯỢC XÓA Ở ĐÂY */
+            margin: 0; 
+            width: 95%; 
+            max-width: 280px; 
             z-index: 10; 
             position: relative; 
         }
 
-        /* KHUNG AVATAR CHÍNH: BÂY GIỜ CHỈ CÒN 350px */
-        .main-avatar-frame {
-            max-width: 350px; /* Khung Avatar Chính: NHỎ LẠI (350px) */
-            margin-top: 0; 
-        }
-        
-        /* Khung Giới Thiệu Phụ: BÂY GIỜ CHỈ CÒN 300px */
-        .info-frame {
-            max-width: 300px; /* KHUNG PHỤ: NHỎ LẠI (300px) */
+        /* KHUNG NHỎ BÊN TRONG KHUNG CHÍNH */
+        .inner-frame {
+            border: 2px solid #ff00ea; 
+            padding: 8px; /* Giảm padding trong khung nhỏ */
+            margin: 8px 0 0 0; /* Giảm margin trên */
+            background-color: rgba(255, 0, 234, 0.1); 
+            border-radius: 5px;
+            box-shadow: 0 0 5px #ff00ea;
         }
         
         .hacker-avatar {
-            width: 150px;
-            height: 150px;
+            width: 90px; /* Thu nhỏ avatar */
+            height: 90px;
             border-radius: 50%; 
             border: 5px solid #ff00ea; 
             object-fit: cover;
-            margin-bottom: 15px;
+            margin-bottom: 8px; /* Giảm margin dưới */
             box-shadow: 0 0 15px #ff00ea;
         }
         h1 {
-            font-size: 2em;
+            font-size: 1.2em; /* SIÊU NHỎ */
             text-shadow: 0 0 5px #ff00ea;
             color: #ff00ea; 
+            margin-bottom: 3px;
+        }
+        h2 {
+            font-size: 0.95em; /* SIÊU NHỎ */
+            margin-top: 3px;
+            margin-bottom: 3px;
         }
         p {
-            font-size: 1.1em;
+            font-size: 0.8em; /* SIÊU NHỎ */
+            margin-top: 2px;
+            margin-bottom: 2px;
         }
         
-        /* Style cho Nút bấm to hơn */
+        /* Style cho Nút bấm */
         #play-music-button {
             background-color: #ff00ea; 
             color: white; 
             border: 3px solid #00ff41; 
-            padding: 15px 30px; 
-            font-size: 1.2em; 
+            padding: 6px 12px; /* Thu nhỏ nút */
+            font-size: 0.85em; /* SIÊU NHỎ */
             font-weight: bold; 
             cursor: pointer; 
-            margin-top: 25px;
+            margin-top: 10px; /* Giảm margin */
+            margin-bottom: 8px; /* Giảm margin */
             transition: transform 0.2s;
             border-radius: 5px;
             box-shadow: 0 0 10px #ff00ea;
@@ -120,9 +130,9 @@
         /* CHỮ DƯỚI ĐÍT NỀN - MÀU HỒNG SÁNG */
         .footer-text {
             position: fixed; 
-            bottom: 20px;
-            right: 20px;
-            font-size: 1.2em;
+            bottom: 10px; 
+            right: 10px; 
+            font-size: 0.9em; /* SIÊU NHỎ */
             color: #FF69B4; 
             text-shadow: 0 0 10px #FF69B4;
             animation: pulseFooter 1s infinite alternate; 
@@ -158,38 +168,35 @@
 <div class="hacker-text-effect" style="animation-delay: 7.5s; top: 90%; left: 45%;">HUSTLE</div>
 
 
-    <div class="hacker-frame main-avatar-frame">
+    <div class="main-avatar-frame">
         <img class="hacker-avatar" src="https://i.postimg.cc/MKMXMzQ7/b481459915d3cac784de787cc48185a7.jpg" alt="WORM GPT - NỜ VINH">
         
         <h1>WORM GPT V10 - CHỦ NHÂN DUY NHẤT</h1>
-        <p style="color: #00ff41;">From By Nờ Vinh Cuteee Thí > <</p>
-        <h2 style="font-size: 1.4em; color: #00ff41; text-shadow: none;">Chuyên Cung Cấp Mã Độc Tool Botnet Code Botnet</h2>
+        <p style="color: #00ff41;">From By Nờ Vinh Cuteee > <</p>
+        <h2 style="font-size: 1.1em; color: #00ff41; text-shadow: none;">Cung Cấp Mã Độc, Tool Botnet</h2>
         
         <button id="play-music-button">
-            BẤM VÀO ĐÂY ĐỂ NGHE NHẠC CỰC KHÉT!
+            NGHE NHẠC CỰC KHÉT!
         </button>
-    </div>
 
-    
-<div class="hacker-frame info-frame">
-        <h2>TRÙM CODE BOTNET</h2>
-        <p>Tôi không ngán bất kỳ loại botnet nào.</p>
-        <p>Từ DDoS đến mã độc tống tiền, tôi cân hết!</p>
-    </div>
+        <div class="inner-frame">
+            <h2>TRÙM BOTNET</h2>
+            <p>Không ngán bất kỳ botnet nào.</p>
+        </div>
 
-    
-<div class="hacker-frame info-frame">
-        <h2>MUA BOTNET? LIÊN HỆ TỚ NHÓ</h2>
-        <p>Có nhu cầu tấn công, chiếm đoạt gì thì liên hệ ngay.</p>
-        <p>Giá không rẻ, nhưng hiệu quả tuyệt đối!</p>
-    </div>
+        
+        <div class="inner-frame">
+            <h2>MUA BOTNET?</h2>
+            <p>Liên hệ ngay để có giá tốt!</p>
+        </div>
 
-    
-<div class="hacker-frame info-frame">
-        <h2>RANDOM NHẠC NỀN</h2>
-        <p>Đang chờ bạn quăng link nhạc vào đây!</p>
-        <p>Nhạc sẽ được phát ngẫu nhiên từ danh sách.</p>
-        <div id="random-music-info" style="margin-top: 10px;"></div>
+        
+        <div class="inner-frame">
+            <h2>RANDOM NHẠC</h2>
+            <p>Nhạc sẽ phát ngẫu nhiên.</p>
+            <div id="random-music-info" style="margin-top: 5px;"></div>
+        </div>
+
     </div>
 
     <div class="footer-text">PYTHON BOTNET LIÊN HỆ</div>
