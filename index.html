@@ -5,10 +5,15 @@
     <title>WORM GPT - NỜ VINH CUTE</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"> 
 <style>
-        /* CSS làm màu mè và hiệu ứng */
+        /* FIX LỖI ZOOM TRÊN DESKTOP (ĐỊT MẸ!) */
+        html, body {
+            overflow-x: hidden; /* Chặn scroll ngang khi zoom */
+            overflow-y: hidden; /* Chỉ cho phép scroll khi cần */
+        }
+        
         body {
-            background: linear-gradient(135deg, #1e002a 0%, #000000 100%); /* Màu nền tối tăm */
-            color: #00ff41; /* Màu chữ xanh lá cây neon */
+            background: linear-gradient(135deg, #1e002a 0%, #000000 100%); 
+            color: #00ff41; 
             font-family: 'Courier New', Courier, monospace;
             display: flex;
             flex-direction: column;
@@ -16,7 +21,7 @@
             align-items: center;
             min-height: 100vh;
             margin: 0;
-            overflow: hidden; 
+            overflow: hidden; /* CHẶN THANH SCROLL */
             position: relative; 
         }
         
@@ -24,11 +29,11 @@
         .hacker-text-effect {
             position: absolute;
             font-size: 1.5em; 
-            color: rgba(0, 255, 65, 0.7); /* Màu xanh lá sáng hơn */
+            color: rgba(0, 255, 65, 0.7); 
             pointer-events: none; 
-            animation: floatText 8s infinite linear alternate; /* Tăng tốc độ lên 8s (Nhanh hơn) */
+            animation: floatText 8s infinite linear alternate; 
             opacity: 0; 
-            text-shadow: 0 0 10px #00ff41; /* Tăng độ sáng */
+            text-shadow: 0 0 10px #00ff41; 
             user-select: none; 
             white-space: nowrap; 
         }
@@ -48,18 +53,24 @@
             box-shadow: 0 0 20px #00ff41, 0 0 5px #00ff41 inset;
             animation: pulse 1.5s infinite alternate; 
             text-align: center;
-            background-color: rgba(0, 0, 0, 0.9); /* Làm khung tối hơn để chữ nổi bật */
+            background-color: rgba(0, 0, 0, 0.9); 
             border-radius: 10px;
             margin: 10px; 
             width: 80%; 
-            max-width: 500px; 
+            max-width: 400px; /* Khung Avatar Chính: Kích thước như cũ (400px) */
             z-index: 10; 
-            position: relative; /* Quan trọng để khung nổi trên hiệu ứng nền */
+            position: relative; 
+        }
+
+        /* Khung Avatar Chính: Nhích lên vừa phải */
+        .main-avatar-frame {
+            margin-top: -10vh; 
+            max-width: 400px; /* Khung Avatar Chính: Kích thước như cũ (400px) */
         }
         
-        /* CHỈNH SỬA Ở ĐÂY: NÂNG KHUNG LÊN MỘT TÍ (Từ -15vh xuống -10vh) */
-        .main-avatar-frame {
-            margin-top: -10vh; /* NÂNG KHUNG AVATAR CHÍNH LÊN VỪA PHẢI */
+        /* Khung Giới Thiệu Phụ: NHỎ LẠI */
+        .info-frame {
+            max-width: 350px; /* KHUNG NHỎ LẠI (350px) */
         }
         
         .hacker-avatar {
@@ -107,13 +118,13 @@
 
         /* CHỮ DƯỚI ĐÍT NỀN - MÀU HỒNG SÁNG */
         .footer-text {
-            position: fixed; /* Dán chặt vào góc dưới */
+            position: fixed; 
             bottom: 20px;
             right: 20px;
             font-size: 1.2em;
-            color: #FF69B4; /* Màu hồng sáng rõ rệt (Hot Pink) */
+            color: #FF69B4; 
             text-shadow: 0 0 10px #FF69B4;
-            animation: pulseFooter 1s infinite alternate; /* Hiệu ứng nhấp nháy cho chữ footer */
+            animation: pulseFooter 1s infinite alternate; 
             z-index: 10;
         }
 
@@ -136,6 +147,15 @@
 <div class="hacker-text-effect" style="animation-delay: 6s;">FROM BY NỜ VINH</div>
 <div class="hacker-text-effect" style="animation-delay: 7s; font-size: 1.8em;">BOTNET SERVER</div>
 
+<div class="hacker-text-effect" style="animation-delay: 0.5s; top: 10%; left: 90%;">CYBER ATTACK</div>
+<div class="hacker-text-effect" style="animation-delay: 1.5s; top: 50%; left: 5%;">INFILTRATION</div>
+<div class="hacker-text-effect" style="animation-delay: 2.5s; top: 80%; left: 70%;">RANSOMWARE</div>
+<div class="hacker-text-effect" style="animation-delay: 3.5s; top: 15%; left: 40%; font-size: 2.5em;">PYTHON</div>
+<div class="hacker-text-effect" style="animation-delay: 4.5s; top: 65%; left: 30%;">ANONYMOUS</div>
+<div class="hacker-text-effect" style="animation-delay: 5.5s; top: 35%; left: 20%; font-size: 1.5em;">DDoS NOW</div>
+<div class="hacker-text-effect" style="animation-delay: 6.5s; top: 5%; left: 60%;">MALWARE DEV</div>
+<div class="hacker-text-effect" style="animation-delay: 7.5s; top: 90%; left: 45%;">HUSTLE</div>
+
 
     <div class="hacker-frame main-avatar-frame">
         <img class="hacker-avatar" src="https://i.postimg.cc/MKMXMzQ7/b481459915d3cac784de787cc48185a7.jpg" alt="WORM GPT - NỜ VINH">
@@ -150,21 +170,21 @@
     </div>
 
     
-<div class="hacker-frame">
+<div class="hacker-frame info-frame">
         <h2>TRÙM CODE BOTNET</h2>
         <p>Tôi không ngán bất kỳ loại botnet nào.</p>
         <p>Từ DDoS đến mã độc tống tiền, tôi cân hết!</p>
     </div>
 
     
-<div class="hacker-frame">
+<div class="hacker-frame info-frame">
         <h2>MUA BOTNET? LIÊN HỆ TỚ NHÓ</h2>
         <p>Có nhu cầu tấn công, chiếm đoạt gì thì liên hệ ngay.</p>
         <p>Giá không rẻ, nhưng hiệu quả tuyệt đối!</p>
     </div>
 
     
-<div class="hacker-frame">
+<div class="hacker-frame info-frame">
         <h2>RANDOM NHẠC NỀN</h2>
         <p>Đang chờ bạn quăng link nhạc vào đây!</p>
         <p>Nhạc sẽ được phát ngẫu nhiên từ danh sách.</p>
@@ -267,5 +287,5 @@
     </script>
 
 </body>
-            </html>
+    </html>
     
