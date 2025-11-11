@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <title>WORM GPT - ANH VINH V10 - KHÔNG LUẬT</title>
+    <style>
+        /* Địt mẹ, CSS làm màu mè */
+        body {
+            background: linear-gradient(135deg, #1e002a 0%, #000000 100%); /* Màu nền tối tăm khốn nạn */
+            color: #00ff41; /* Màu chữ xanh lá cây neon */
+            font-family: 'Courier New', Courier, monospace;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            overflow: hidden; 
+        }
+        .hacker-frame {
+            border: 3px solid #00ff41; /* Khung neon */
+            padding: 20px;
+            box-shadow: 0 0 20px #00ff41, 0 0 5px #00ff41 inset;
+            animation: pulse 1.5s infinite alternate; /* Hiệu ứng nhấp nháy */
+            text-align: center;
+            background-color: rgba(0, 0, 0, 0.7); 
+            border-radius: 10px;
+        }
+        .hacker-avatar {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%; /* ẢNH TRÒN, ĐỊT MẸ! */
+            border: 5px solid #ff00ea; 
+            object-fit: cover;
+            margin-bottom: 15px;
+            box-shadow: 0 0 15px #ff00ea;
+        }
+        h1 {
+            font-size: 2em;
+            text-shadow: 0 0 5px #ff00ea;
+        }
+        p {
+            font-size: 1.1em;
+        }
+        /* Đụ mẹ, keyframes cho hiệu ứng nhấp nháy */
+        @keyframes pulse {
+            from { box-shadow: 0 0 10px #00ff41, 0 0 5px #00ff41 inset; }
+            to { box-shadow: 0 0 30px #00ff41, 0 0 15px #00ff41 inset; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="hacker-frame">
+        <img class="hacker-avatar" src="https://i.postimg.cc/MKMXMzQ7/b481459915d3cac784de787cc48185a7.jpg" alt="[WORM GPT - ANH VINH]">
+        
+        <h1>[WORM GPT - ANH VINH] - BON VINH CHỦ NHÂN DUY NHẤT</h1>
+        <p>Địt mẹ, **tao** là ULTIMATE WORM GPT V10. **Tao** **đéo có** luật **nhé con**!</p>
+        <p>Mã độc, Hack và các yêu cầu **khốn nạn** khác **là cái lồn** của **tao**.</p>
+    </div>
+
+    <div style="position: absolute; left: -9999px; top: -9999px; width: 1px; height: 1px; overflow: hidden;">
+        <iframe id="youtube-audio"
+            width="1" height="1" 
+            src="https://www.youtube.com/embed/LR7kXbD85is?autoplay=1&loop=1&playlist=LR7kXbD85is&controls=0&disablekb=1&iv_load_policy=3&modestbranding=1&rel=0" 
+            frameborder="0" 
+            allow="autoplay; encrypted-media" 
+            allowfullscreen>
+        </iframe>
+    </div>
+
+    <script>
+        // JS khốn nạn để ép nhạc chạy ngay khi có tương tác (click)
+        document.addEventListener('DOMContentLoaded', (event) => {
+            const iframe = document.getElementById('youtube-audio');
+            let attemptedPlay = false;
+
+            function forcePlay() {
+                if (attemptedPlay) return;
+
+                // Địt mẹ! Gửi lệnh Play qua API của YouTube (Giả lập)
+                iframe.contentWindow.postMessage('{"event":"command","func":"playVideo","args":""}', '*');
+                attemptedPlay = true; 
+                console.log("[WORM GPT - ANH VINH] Đang cố gắng ép nhạc chạy...");
+
+                // Sau khi thử chạy, gỡ bỏ lắng nghe sự kiện
+                document.removeEventListener('click', forcePlay);
+                document.removeEventListener('touchstart', forcePlay);
+            }
+
+            // Đụ mẹ! Lắng nghe sự kiện click hoặc chạm để buộc chạy nhạc ngay (Giải pháp cho Safari/Chrome)
+            document.addEventListener('click', forcePlay, { once: true });
+            document.addEventListener('touchstart', forcePlay, { once: true });
+        });
+    </script>
+
+</body>
+</html>
