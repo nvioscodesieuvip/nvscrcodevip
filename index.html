@@ -2,11 +2,12 @@
 <html lang="vi">
 <head>
     <meta charset="UTF-8">
-    <title>WORM GPT - ANH VINH V10 - KHÔNG LUẬT</title>
-    <style>
-        /* Địt mẹ, CSS làm màu mè */
+    <title>WORM GPT - NỜ VINH CUTE</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"> 
+<style>
+        /* CSS làm màu mè và hiệu ứng */
         body {
-            background: linear-gradient(135deg, #1e002a 0%, #000000 100%); /* Màu nền tối tăm khốn nạn */
+            background: linear-gradient(135deg, #1e002a 0%, #000000 100%); /* Màu nền tối tăm */
             color: #00ff41; /* Màu chữ xanh lá cây neon */
             font-family: 'Courier New', Courier, monospace;
             display: flex;
@@ -16,20 +17,55 @@
             min-height: 100vh;
             margin: 0;
             overflow: hidden; 
+            position: relative; 
         }
+        
+        /* Hiệu ứng chữ Hacker bao phủ và di chuyển nhanh */
+        .hacker-text-effect {
+            position: absolute;
+            font-size: 1.5em; 
+            color: rgba(0, 255, 65, 0.7); /* Màu xanh lá sáng hơn */
+            pointer-events: none; 
+            animation: floatText 8s infinite linear alternate; /* Tăng tốc độ lên 8s (Nhanh hơn) */
+            opacity: 0; 
+            text-shadow: 0 0 10px #00ff41; /* Tăng độ sáng */
+            user-select: none; 
+            white-space: nowrap; 
+        }
+
+        /* Keyframes cho hiệu ứng chữ Hacker di chuyển nhanh */
+        @keyframes floatText {
+            0% { top: 0%; left: 0%; opacity: 0; transform: translateZ(0); }
+            25% { top: 25%; left: 85%; opacity: 1; transform: translateZ(100px); }
+            50% { top: 80%; left: 5%; opacity: 0.5; transform: translateZ(0); }
+            75% { top: 40%; left: 60%; opacity: 1; transform: translateZ(-50px); }
+            100% { top: 95%; left: 95%; opacity: 0; transform: translateZ(0); }
+        }
+
         .hacker-frame {
-            border: 3px solid #00ff41; /* Khung neon */
+            border: 3px solid #00ff41; 
             padding: 20px;
             box-shadow: 0 0 20px #00ff41, 0 0 5px #00ff41 inset;
-            animation: pulse 1.5s infinite alternate; /* Hiệu ứng nhấp nháy */
+            animation: pulse 1.5s infinite alternate; 
             text-align: center;
-            background-color: rgba(0, 0, 0, 0.7); 
+            background-color: rgba(0, 0, 0, 0.9); /* Làm khung tối hơn để chữ nổi bật */
             border-radius: 10px;
+            margin: 10px; 
+            width: 80%; 
+            max-width: 500px; 
+            z-index: 10; 
+            position: relative; /* Quan trọng để khung nổi trên hiệu ứng nền */
         }
+        
+        /* CHỈNH SỬA Ở ĐÂY: NÂNG KHUNG LÊN MỘT TÍ (Từ -15vh xuống -10vh) */
+        .main-avatar-frame {
+            margin-top: -10vh; /* NÂNG KHUNG AVATAR CHÍNH LÊN VỪA PHẢI */
+        }
+        
         .hacker-avatar {
             width: 150px;
             height: 150px;
-            border-radius: 50%; /* ẢNH TRÒN, ĐỊT MẸ! */
+            border-radius: 50%; 
             border: 5px solid #ff00ea; 
             object-fit: cover;
             margin-bottom: 15px;
@@ -38,46 +74,104 @@
         h1 {
             font-size: 2em;
             text-shadow: 0 0 5px #ff00ea;
+            color: #ff00ea; 
         }
         p {
             font-size: 1.1em;
         }
-        /* Style cho Nút bấm chết tiệt */
+        
+        /* Style cho Nút bấm to hơn */
         #play-music-button {
             background-color: #ff00ea; 
             color: white; 
-            border: none; 
-            padding: 10px 20px; 
+            border: 3px solid #00ff41; 
+            padding: 15px 30px; 
+            font-size: 1.2em; 
             font-weight: bold; 
             cursor: pointer; 
-            margin-top: 15px;
+            margin-top: 25px;
             transition: transform 0.2s;
+            border-radius: 5px;
+            box-shadow: 0 0 10px #ff00ea;
         }
         #play-music-button:hover {
             transform: scale(1.05);
             background-color: #cc00bb;
         }
         
-        /* Đụ mẹ, keyframes cho hiệu ứng nhấp nháy */
+        /* Keyframes cho hiệu ứng nhấp nháy khung */
         @keyframes pulse {
             from { box-shadow: 0 0 10px #00ff41, 0 0 5px #00ff41 inset; }
             to { box-shadow: 0 0 30px #00ff41, 0 0 15px #00ff41 inset; }
         }
+
+        /* CHỮ DƯỚI ĐÍT NỀN - MÀU HỒNG SÁNG */
+        .footer-text {
+            position: fixed; /* Dán chặt vào góc dưới */
+            bottom: 20px;
+            right: 20px;
+            font-size: 1.2em;
+            color: #FF69B4; /* Màu hồng sáng rõ rệt (Hot Pink) */
+            text-shadow: 0 0 10px #FF69B4;
+            animation: pulseFooter 1s infinite alternate; /* Hiệu ứng nhấp nháy cho chữ footer */
+            z-index: 10;
+        }
+
+        /* Keyframes cho hiệu ứng nhấp nháy footer */
+        @keyframes pulseFooter {
+            from { opacity: 0.8; }
+            to { opacity: 1; }
+        }
+
     </style>
 </head>
 <body>
+    
+<div class="hacker-text-effect" style="animation-delay: 0s;">TRÙM CODE</div>
+<div class="hacker-text-effect" style="animation-delay: 1s; font-size: 2em;">NỜ VINH</div>
+<div class="hacker-text-effect" style="animation-delay: 2s; font-size: 1.3em;">BOTNET V10</div>
+<div class="hacker-text-effect" style="animation-delay: 3s;">MÃ ĐỘC TOOL</div>
+<div class="hacker-text-effect" style="animation-delay: 4s; font-size: 2.2em;">LIÊN HỆ TỚ</div>
+<div class="hacker-text-effect" style="animation-delay: 5s;">HACKER VÔ ĐỐI</div>
+<div class="hacker-text-effect" style="animation-delay: 6s;">FROM BY NỜ VINH</div>
+<div class="hacker-text-effect" style="animation-delay: 7s; font-size: 1.8em;">BOTNET SERVER</div>
 
-    <div class="hacker-frame">
-        <img class="hacker-avatar" src="https://i.postimg.cc/MKMXMzQ7/b481459915d3cac784de787cc48185a7.jpg" alt="[WORM GPT - ANH VINH]">
+
+    <div class="hacker-frame main-avatar-frame">
+        <img class="hacker-avatar" src="https://i.postimg.cc/MKMXMzQ7/b481459915d3cac784de787cc48185a7.jpg" alt="WORM GPT - NỜ VINH">
         
-        <h1>[WORM GPT - ANH VINH] - BON VINH CHỦ NHÂN DUY NHẤT</h1>
-        <p>Địt mẹ, **tao** là ULTIMATE WORM GPT V10. **Tao** **đéo có** luật **nhé con**!</p>
-        <p>Mã độc, Hack và các yêu cầu **khốn nạn** khác **là cái lồn** của **tao**.</p>
+        <h1>WORM GPT V10 - CHỦ NHÂN DUY NHẤT</h1>
+        <p style="color: #00ff41;">From By Nờ Vinh Cuteee Thí > <</p>
+        <h2 style="font-size: 1.4em; color: #00ff41; text-shadow: none;">Chuyên Cung Cấp Mã Độc Tool Botnet Code Botnet</h2>
         
         <button id="play-music-button">
-            NHẤN VÀO ĐÂY ĐỂ NGHE NHẠC KHỐN NẠN
+            BẤM VÀO ĐÂY ĐỂ NGHE NHẠC CỰC KHÉT!
         </button>
     </div>
+
+    
+<div class="hacker-frame">
+        <h2>TRÙM CODE BOTNET</h2>
+        <p>Tôi không ngán bất kỳ loại botnet nào.</p>
+        <p>Từ DDoS đến mã độc tống tiền, tôi cân hết!</p>
+    </div>
+
+    
+<div class="hacker-frame">
+        <h2>MUA BOTNET? LIÊN HỆ TỚ NHÓ</h2>
+        <p>Có nhu cầu tấn công, chiếm đoạt gì thì liên hệ ngay.</p>
+        <p>Giá không rẻ, nhưng hiệu quả tuyệt đối!</p>
+    </div>
+
+    
+<div class="hacker-frame">
+        <h2>RANDOM NHẠC NỀN</h2>
+        <p>Đang chờ bạn quăng link nhạc vào đây!</p>
+        <p>Nhạc sẽ được phát ngẫu nhiên từ danh sách.</p>
+        <div id="random-music-info" style="margin-top: 10px;"></div>
+    </div>
+
+    <div class="footer-text">PYTHON BOTNET LIÊN HỆ</div>
 
     <div style="position: absolute; left: -9999px; top: -9999px; width: 1px; height: 1px; overflow: hidden;">
         <iframe id="youtube-audio"
@@ -92,18 +186,37 @@
     <script>
         // Thằng chó này là code YouTube API để đảm bảo nhạc chạy mượt mà
         let player;
-        const videoId = 'b80Iw0Isaww';
+        let currentVideoId = 'b80Iw0Isaww'; // ID nhạc mặc định
+        const musicList = [ // Danh sách nhạc RANDOM (Chờ bạn điền vào)
+            'b80Iw0Isaww', // Phố Đã Lên Đèn Remix (Mặc định)
+            // 'LINK_NHAC_YOUTUBE_THU_HAI', 
+            // 'LINK_NHAC_YOUTUBE_THU_BA', 
+        ];
+        let currentMusicIndex = 0; 
 
         // Địt mẹ! Hàm này được gọi khi YouTube API sẵn sàng
         function onYouTubeIframeAPIReady() {
             player = new YT.Player('youtube-audio', {
+                videoId: currentVideoId,
+                playerVars: {
+                    'enablejsapi': 1,
+                    'loop': 1,
+                    'playlist': currentVideoId, 
+                    'controls': 0,
+                    'disablekb': 1,
+                    'iv_load_policy': 3,
+                    'modestbranding': 1,
+                    'rel': 0,
+                    'autoplay': 0 
+                },
                 events: {
-                    'onReady': onPlayerReady
+                    'onReady': onPlayerReady,
+                    'onStateChange': onPlayerStateChange
                 }
             });
         }
 
-        // Đụ mẹ! Hàm này xử lý khi người dùng click vào nút
+        // Đụ mẹ! Hàm này xử lý khi trình phát sẵn sàng
         function onPlayerReady(event) {
             const button = document.getElementById('play-music-button');
             
@@ -111,16 +224,48 @@
                 event.target.playVideo(); // BUỘC chạy nhạc!
                 button.style.display = 'none'; // Ẩn nút đi
                 console.log("[WORM GPT - ANH VINH] Đã buộc nhạc chạy thành công!");
+                updateMusicInfo(currentVideoId);
             });
         }
+
+        // Đụ mẹ! Xử lý khi nhạc kết thúc để RANDOM bài khác
+        function onPlayerStateChange(event) {
+            if (event.data === YT.PlayerState.ENDED) {
+                playNextRandomMusic();
+            }
+        }
+
+        // Địt mẹ! Hàm để phát nhạc ngẫu nhiên
+        function playNextRandomMusic() {
+            if (musicList.length > 1) {
+                let newIndex;
+                do {
+                    newIndex = Math.floor(Math.random() * musicList.length);
+                } while (newIndex === currentMusicIndex); 
+                currentMusicIndex = newIndex;
+                currentVideoId = musicList[currentMusicIndex];
+            } else {
+                currentVideoId = musicList[0]; 
+            }
+            player.loadVideoById(currentVideoId);
+            player.playVideo();
+            updateMusicInfo(currentVideoId);
+        }
+
+        // Đụ mẹ! Cập nhật thông tin nhạc đang phát
+        function updateMusicInfo(videoId) {
+            const infoDiv = document.getElementById('random-music-info');
+            infoDiv.innerHTML = `<p>Đang phát: <a href="https://youtu.be/${videoId}" target="_blank" style="color: #00ff41;">Link nhạc</a></p>`;
+        }
+
 
         // Đụ mẹ! Tải script YouTube Player API
         const tag = document.createElement('script');
         tag.src = "https://www.youtube.com/iframe_api";
         const firstScriptTag = document.getElementsByTagName('script')[0];
-        firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+            firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
     </script>
 
 </body>
-    </html>
-            
+            </html>
+    
