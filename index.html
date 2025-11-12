@@ -13,6 +13,8 @@
             width: 100%;
             overflow: hidden !important; 
             box-sizing: border-box; 
+            /* Cần position: relative để các chữ nền dùng position: absolute hoạt động đúng */
+            position: relative; 
         }
         
         body {
@@ -24,7 +26,7 @@
 
         /* KHUNG CHỨA TOÀN BỘ NỘI DUNG CHÍNH (ĐỂ CỐ ĐỊNH Ở GIỮA) */
         .fixed-content-wrapper {
-            position: fixed;
+            position: fixed; /* Vẫn giữ cố định khung chính */
             top: 50%;
             left: 50%;
             transform: translate(-50%, -50%);
@@ -38,9 +40,9 @@
             pointer-events: none; 
         }
         
-        /* Chữ nền chung - TỐI ƯU HƠN */
+        /* Chữ nền chung - ĐÃ FIX VỊ TRÍ CHO TỪNG DÒNG */
         .hacker-text-effect {
-            position: fixed; 
+            position: absolute; /* FIX: Dùng absolute để gán vị trí độc lập cho từng dòng */
             color: rgba(0, 255, 65, 0.3); 
             pointer-events: none; 
             opacity: 0; 
@@ -49,30 +51,31 @@
             white-space: nowrap; 
             z-index: 1; 
             will-change: transform, opacity; 
+            /* Vị trí ban đầu (top/left) sẽ được gán trong JS, animation sẽ dùng transform */
         }
 
-        /* Loại 1: RƠI XUỐNG VÔ HẠN */
+        /* Loại 1: RƠI XUỐNG VÔ HẠN (Dùng transform thay vì top/left để mượt hơn) */
         .falling-text {
             animation: fallAndFade var(--animation-duration) infinite linear; 
         }
 
         @keyframes fallAndFade {
-            0% { top: -20%; left: var(--initial-left); opacity: 0; } 
-            10% { opacity: 0.7; } 
-            90% { top: 100%; opacity: 0.7; } 
-            100% { top: 120%; left: var(--final-left); opacity: 0; } 
+            0% { transform: translate(0, 0); opacity: 0.2; } /* Vị trí ban đầu */
+            10% { opacity: 0.7; }
+            90% { opacity: 0.7; } 
+            100% { transform: translate(0, 200vh); opacity: 0; } /* Rơi 200% chiều cao màn hình */
         }
         
-        /* Loại 2: LƠ LỬNG VÔ HẠN */
+        /* Loại 2: LƠ LỬNG VÔ HẠN (Dùng transform) */
         .floating-text {
             animation: floatForever var(--animation-duration) infinite ease-in-out alternate; 
             opacity: 0.8; 
         }
 
         @keyframes floatForever {
-            0% { top: 15%; left: var(--initial-left); transform: rotate(0deg) scale(1); } 
-            50% { top: 75%; left: var(--mid-left); transform: rotate(8deg) scale(1.05); } 
-            100% { top: 15%; left: var(--final-left); transform: rotate(-8deg) scale(1); }
+            0% { transform: translate(0, 0) rotate(0deg) scale(1); }
+            50% { transform: translate(10vw, 10vh) rotate(8deg) scale(1.05); } /* Dịch chuyển nhỏ theo X và Y */
+            100% { transform: translate(-10vw, -10vh) rotate(-8deg) scale(1); }
         }
 
         /* KHUNG CHÍNH (GỘP TẤT CẢ) - ĐÃ THU GỌN VÀ NHỎ LẠI */
@@ -197,49 +200,48 @@
 <body>
     
 <script>
-    // FIX DÍNH CỤC: Tăng phạm vi ngẫu nhiên cho vị trí chữ (tạo 300 dòng, hiển thị 150)
+    // FIX DÍNH CỤC TUYỆT ĐỐI: Gán vị trí top/left độc lập cho từng dòng chữ
     const hackerTexts = [
         "NỜ VINH IOS", "BOTNET", "HACKER", 
     ];
 
-    // Tăng số vòng lặp tạo div để có nhiều lựa chọn ngẫu nhiên hơn
-    for (let i = 0; i < 300; i++) { 
+    const numTexts = 150; // Giữ 150 dòng để tối ưu hiệu suất
+
+    for (let i = 0; i < numTexts; i++) { 
         const text = hackerTexts[Math.floor(Math.random() * hackerTexts.length)];
         
+        // Tăng thời gian animation lên để chữ di chuyển chậm và mượt hơn
         const delay = Math.random() * 20; 
-        const duration = 12 + Math.random() * 8; 
+        const duration = 15 + Math.random() * 10; // Tăng duration cực mạnh
         
-        // FIX LỖI DÍNH CỤC: Tạo vị trí ngẫu nhiên TỪ -10% đến 110%
-        // để phân tán chữ ra cả ngoài rìa màn hình, đảm bảo không bị dồn
+        // FIX LỖI DÍNH CỤC: Gán vị trí top/left ngẫu nhiên cố định cho từng dòng
+        // Tọa độ X: -10% đến 110% (tràn ra rìa)
         const initialLeft = -10 + Math.random() * 120; 
-        const midLeft = -10 + Math.random() * 120; 
-        const finalLeft = -10 + Math.random() * 120; 
+        // Tọa độ Y: -50% đến 150% (tràn ra trên dưới)
+        const initialTop = -50 + Math.random() * 200; 
         
         const size = 0.6 + Math.random() * 0.6; 
         
-        // Chỉ chọn 150 dòng để hiển thị mượt mà
-        if (i < 150) { 
-            const div = document.createElement('div');
-            div.textContent = text;
-            div.style.cssText = `
-                animation-delay: ${delay}s;
-                --animation-duration: ${duration}s;
-                --initial-left: ${initialLeft}%;
-                --mid-left: ${midLeft}%;
-                --final-left: ${finalLeft}%;
-                font-size: ${size}em;
-            `;
+        const div = document.createElement('div');
+        div.textContent = text;
+        div.style.cssText = `
+            animation-delay: ${delay}s;
+            --animation-duration: ${duration}s;
+            font-size: ${size}em;
+            /* Gán vị trí độc lập */
+            left: ${initialLeft}vw;
+            top: ${initialTop}vh;
+        `;
 
-            if (i % 2 === 0) {
-                div.className = 'hacker-text-effect falling-text';
-                div.style.animationIterationCount = 'infinite';
-            } else {
-                div.className = 'hacker-text-effect floating-text';
-                div.style.animationIterationCount = 'infinite'; 
-            }
-
-            document.body.appendChild(div);
+        if (i % 2 === 0) {
+            // Loại RƠI: Dùng transform(0, 200vh) để rơi từ vị trí gán ban đầu xuống
+            div.className = 'hacker-text-effect falling-text';
+        } else {
+            // Loại LƠ LỬNG: Dùng transform(x, y) để lơ lửng xung quanh vị trí gán ban đầu
+            div.className = 'hacker-text-effect floating-text';
         }
+
+        document.body.appendChild(div);
     }
 </script>
 
@@ -378,5 +380,5 @@
     </script>
 
 </body>
-    </html>
+                                                                </html>
     
