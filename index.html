@@ -248,11 +248,12 @@
             display: inline-block; /* Để H1 có width theo nội dung */
             padding: 0 5px; /* Thêm khoảng trống nhỏ cho sticker */
         }
-
+        
         /* STICKER BÊN TRÁI H1 (Đứng yên) */
         .h1-sticker-left {
             position: absolute;
-            left: -35px; /* Dịch sang trái */
+            /* CHỈNH LẠI VỊ TRÍ SANG BÊN TRÁI CHỮ H1 */
+            left: -32px; 
             top: 50%;
             transform: translateY(-50%);
             width: 30px; /* Kích thước sticker */
@@ -264,7 +265,8 @@
         /* STICKER BÊN PHẢI H1 (Ảnh GIF, Đứng yên) */
         .h1-sticker-right {
             position: absolute;
-            right: -35px; /* Dịch sang phải */
+            /* CHỈNH LẠI VỊ TRÍ SANG BÊN PHẢI CHỮ H1 */
+            right: -32px; 
             top: 50%;
             transform: translateY(-50%);
             width: 30px; /* Kích thước sticker */
@@ -550,78 +552,78 @@
         const musicList = [ 
             // 'opfX05eVLAo', // <-- ĐÃ BỊ XOÁ BỎ THEO YÊU CẦU CỦA THẰNG LỒN!
             '8fGulQZ0QHY', // Link 2 (Mở đầu)
-            'WAw_8GjjF5M', // Link 3
-            'qQDjCiyFIiY', // Link 4
-        ];
-        let currentMusicIndex = 0; 
+                    'WAw_8GjjF5M', // Link 3
+        'qQDjCiyFIiY', // Link 4
+    ];
+    let currentMusicIndex = 0; 
 
-        function onYouTubeIframeAPIReady() {
-            player = new YT.Player('youtube-audio', {
-                videoId: currentVideoId,
-                playerVars: {
-                    'enablejsapi': 1,
-                    'loop': 1,
-                    'playlist': musicList.join(','), 
-                    'controls': 0,
-                    'disablekb': 1,
-                    'iv_load_policy': 3,
-                    'modestbranding': 1,
-                    'rel': 0,
-                    'autoplay': 1 // Bật Autoplay trong PlayerVars
-                },
-                events: {
-                    'onReady': onPlayerReady,
-                    'onStateChange': onPlayerStateChange
-                }
-            });
-        }
-
-        function onPlayerReady(event) {
-            // Player đã sẵn sàng, nhưng KHÔNG TỰ CHẠY NHẠC Ở ĐÂY.
-            // Chờ người dùng bấm "ĐÓNG THÔNG BÁO" để kích hoạt.
-            console.log("[WORM GPT - ANH VINH] Player đã sẵn sàng, chờ tương tác từ popup!");
-        }
-
-        function onPlayerStateChange(event) {
-            // Nếu nhạc kết thúc, chuyển sang bài ngẫu nhiên
-            if (event.data === YT.PlayerState.ENDED) {
-                playNextRandomMusic(false); 
+    function onYouTubeIframeAPIReady() {
+        player = new YT.Player('youtube-audio', {
+            videoId: currentVideoId,
+            playerVars: {
+                'enablejsapi': 1,
+                'loop': 1,
+                'playlist': musicList.join(','), 
+                'controls': 0,
+                'disablekb': 1,
+                'iv_load_policy': 3,
+                'modestbranding': 1,
+                'rel': 0,
+                'autoplay': 1 // Bật Autoplay trong PlayerVars
+            },
+            events: {
+                'onReady': onPlayerReady,
+                'onStateChange': onPlayerStateChange
             }
+        });
+    }
+
+    function onPlayerReady(event) {
+        // Player đã sẵn sàng, nhưng KHÔNG TỰ CHẠY NHẠC Ở ĐÂY.
+        // Chờ người dùng bấm "ĐÓNG THÔNG BÁO" để kích hoạt.
+        console.log("[WORM GPT - ANH VINH] Player đã sẵn sàng, chờ tương tác từ popup!");
+    }
+
+    function onPlayerStateChange(event) {
+        // Nếu nhạc kết thúc, chuyển sang bài ngẫu nhiên
+        if (event.data === YT.PlayerState.ENDED) {
+            playNextRandomMusic(false); 
         }
+    }
 
-        // isInitialStart: Bắt đầu lần đầu thì không cần random, dùng luôn bài đầu tiên (Link 2)
-        function playNextRandomMusic(isInitialStart) {
-            if (musicList.length === 0) return;
+    // isInitialStart: Bắt đầu lần đầu thì không cần random, dùng luôn bài đầu tiên (Link 2)
+    function playNextRandomMusic(isInitialStart) {
+        if (musicList.length === 0) return;
 
-            let newIndex;
-            if (isInitialStart) {
-                newIndex = 0; // Luôn bắt đầu bằng bài đầu tiên trong list mới (Link 2)
-            } else {
-                do {
-                    newIndex = Math.floor(Math.random() * musicList.length);
-                } while (newIndex === currentMusicIndex); 
-            }
-            
-            currentMusicIndex = newIndex;
-            currentVideoId = musicList[currentMusicIndex];
-            
-            // Dùng loadVideoById để đảm bảo tính năng Random hoạt động đúng
-            player.loadVideoById(currentVideoId); 
-            player.playVideo();
-            updateMusicInfo(currentVideoId);
+        let newIndex;
+        if (isInitialStart) {
+            newIndex = 0; // Luôn bắt đầu bằng bài đầu tiên trong list mới (Link 2)
+        } else {
+            do {
+                newIndex = Math.floor(Math.random() * musicList.length);
+            } while (newIndex === currentMusicIndex); 
         }
+        
+        currentMusicIndex = newIndex;
+        currentVideoId = musicList[currentMusicIndex];
+        
+        // Dùng loadVideoById để đảm bảo tính năng Random hoạt động đúng
+        player.loadVideoById(currentVideoId); 
+        player.playVideo();
+        updateMusicInfo(currentVideoId);
+    }
 
-        // ĐÃ SỬA: HÀM NÀY KHÔNG CÒN HIỂN THỊ THÔNG BÁO GÌ NỮA
-        function updateMusicInfo(videoId) {
-            // Không làm gì cả để loại bỏ thông báo "Đang phát..."
-            return;
-        }
+    // ĐÃ SỬA: HÀM NÀY KHÔNG CÒN HIỂN THỊ THÔNG BÁO GÌ NỮA
+    function updateMusicInfo(videoId) {
+        // Không làm gì cả để loại bỏ thông báo "Đang phát..."
+        return;
+    }
 
-        const tag = document.createElement('script');
-        tag.src = "https://www.youtube.com/iframe_api";
-        const firstScriptTag = document.getElementsByTagName('script')[0];
-            firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
-    </script>
+    const tag = document.createElement('script');
+    tag.src = "https://www.youtube.com/iframe_api";
+    const firstScriptTag = document.getElementsByTagName('script')[0];
+        firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+</script>
 
 </body>
 </html>
