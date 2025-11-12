@@ -39,7 +39,7 @@
             pointer-events: none; 
         }
         
-        /* Chữ nền chung */
+        /* Chữ nền chung - XANH LÁ */
         .hacker-text-effect {
             position: absolute; 
             color: rgba(0, 255, 65, 0.3); 
@@ -52,17 +52,17 @@
             will-change: transform, opacity; 
         }
 
-        /* TRÁI TIM TÍM HỒNG VẼ BẰNG CSS */
+        /* TRÁI TIM XANH LÁ HACKER (VẼ BẰNG CSS) */
         .hacker-heart-effect {
             position: absolute;
-            background-color: #FF00FF; 
+            background-color: #00ff41; /* FIX MÀU: XANH LÁ HACKER */
             pointer-events: none;
             opacity: 0;
             z-index: 1;
             will-change: transform, opacity;
             
-            /* Tăng độ phát sáng cho trái tim */
-            box-shadow: 0 0 10px #FF00FF, 0 0 20px #FF00FF, 0 0 30px #FF00FF; 
+            /* FIX PHÁT SÁNG: XANH LÁ */
+            box-shadow: 0 0 5px #00ff41, 0 0 10px #00ff41, 0 0 15px #00ff41; 
             
             width: var(--heart-base-size); 
             height: var(--heart-base-size); 
@@ -80,7 +80,7 @@
             position: absolute;
             width: var(--heart-base-size);
             height: var(--heart-base-size);
-            background-color: #FF00FF;
+            background-color: #00ff41; /* FIX MÀU: XANH LÁ HACKER */
             border-radius: 50%; 
             box-shadow: inherit; 
         }
@@ -242,7 +242,7 @@
 <body>
     
 <script>
-    // FIX DÍNH CỤC TUYỆT ĐỐI + THU NHỎ TRÁI TIM
+    // FIX DÍNH CỤC TUYỆT ĐỐI + TRÁI TIM XANH LÁ VÀ SIÊU NHỎ
     const hackerTexts = [
         "NỜ VINH IOS", "BOTNET", "HACKER", 
     ];
@@ -262,8 +262,8 @@
         // Kích thước chữ: 0.6em đến 1.2em
         const size = 0.6 + Math.random() * 0.6; 
 
-        // FIX LỖI NÀY: Kích thước cơ bản của trái tim (5px - 15px) để đảm bảo nó nhỏ hơn chữ
-        const heartBaseSize = (5 + Math.random() * 10); 
+        // FIX LỖI NÀY: Kích thước cơ bản của trái tim (2px - 8px) để đảm bảo nó SIÊU NHỎ
+        const heartBaseSize = (2 + Math.random() * 6); 
         const heartScale = (0.8 + Math.random() * 0.4); 
 
         const div = document.createElement('div');
@@ -425,5 +425,5 @@
     </script>
 
 </body>
-    </html>
+            </html>
     
