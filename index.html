@@ -231,14 +231,26 @@
             100% { background-position: 0% 50%; }
         }
 
-        /* CHỮ TÊN "NỜ VINH" (GIỮ NGUYÊN) */
+        /* CHỮ TÊN "NỜ VINH" (H1) - ĐÃ SỬA THÀNH CẦU VỒNG VÀ NHẤP NHÁY */
         h1 {
             font-size: 1.1em; 
-            text-shadow: 0 0 5px #00ff41;
-            color: #00ff41; 
             margin-bottom: 2px;
-            /* THÊM HIỆU ỨNG NHẤP NHÁY MÀU HỒNG TÍM */
-            animation: pulsePink 0.8s infinite alternate; 
+            font-weight: 900; /* Đảm bảo chữ nét */
+            
+            /* Hiệu ứng cầu vồng */
+            background: linear-gradient(90deg, #ff0000, #ff8c00, #ffff00, #00ff00, #00ffff, #0000ff, #8b00ff, #ff0000);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-size: 400% 400%;
+            animation: rainbowTextShift 3s linear infinite, pulsePink 0.8s infinite alternate; /* Cầu vồng và nhấp nháy */
+            text-shadow: none; /* Bỏ text-shadow cũ để chữ cầu vồng rõ hơn */
+        }
+
+        /* KEYFRAMES CẦU VỒNG CHO CHỮ */
+        @keyframes rainbowTextShift {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
         }
 
         /* CHỮ CUNG CẤP MÃ ĐỘC, TOOL BOTNET (h2 ngoài khung) */
@@ -391,8 +403,7 @@
         if (player && player.getPlayerState() !== YT.PlayerState.PLAYING) {
             player.playVideo();
             console.log("[WORM GPT - ANH VINH] Nhạc đã được kích hoạt sau khi bấm Đóng Thông Báo!");
-            updateMusicInfo(currentVideoId);
-            // Bắt đầu phát ngẫu nhiên từ bài đầu tiên (isInitialStart = true)
+            // Đã xóa updateMusicInfo(currentVideoId);
             playNextRandomMusic(true); 
         }
         
@@ -480,8 +491,7 @@
             <div class="inner-frame">
                 <h2>File Botnet Bấm Vào Đây</h2> 
                 <p>Ấn vào đây để tải tool Spam SMS V5 VIP!</p>
-                <div id="random-music-info" style="margin-top: 5px;"></div>
-            </div>
+                </div>
         </a>
     </div>
 </div>
@@ -547,7 +557,7 @@
             }
         }
 
-        // isInitialStart: Bắt đầu lần đầu thì không cần random, dùng luôn bài đầu tiên (Link 2)
+                // isInitialStart: Bắt đầu lần đầu thì không cần random, dùng luôn bài đầu tiên (Link 2)
         function playNextRandomMusic(isInitialStart) {
             if (musicList.length === 0) return;
 
@@ -556,7 +566,7 @@
                 newIndex = 0; // Luôn bắt đầu bằng bài đầu tiên trong list mới (Link 2)
             } else {
                 do {
-                    ewIndex = Math.floor(Math.random() * musicList.length);
+                    newIndex = Math.floor(Math.random() * musicList.length);
                 } while (newIndex === currentMusicIndex); 
             }
             
@@ -569,9 +579,10 @@
             updateMusicInfo(currentVideoId);
         }
 
+        // ĐÃ SỬA: HÀM NÀY KHÔNG CÒN HIỂN THỊ THÔNG BÁO GÌ NỮA
         function updateMusicInfo(videoId) {
-            const infoDiv = document.getElementById('random-music-info');
-            infoDiv.innerHTML = `<p>Đang phát: <a href="https://youtu.be/${videoId}" target="_blank" style="color: #00ff41;">Link nhạc</a></p>`;
+            // Không làm gì cả để loại bỏ thông báo "Đang phát..."
+            return;
         }
 
         const tag = document.createElement('script');
