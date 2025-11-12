@@ -246,22 +246,9 @@
             text-shadow: none; /* Bỏ text-shadow cũ để chữ cầu vồng rõ hơn */
             position: relative; /* Quan trọng để sticker nằm trong H1 */
             display: inline-block; /* Để H1 có width theo nội dung */
-            /* Bỏ padding để sticker kéo sát hơn */
         }
         
-        /* GIF/STICKER BÊN PHẢI (TRONG KHUNG CHÍNH) */
-        .h1-sticker-right {
-            position: absolute;
-            /* ĐÃ TỐI ƯU VỊ TRÍ CHO IPHONE */
-            right: -25px; /* Giữ nguyên giá trị này, đã tối ưu để sát chữ >.< nhất */
-            top: 50%;
-            transform: translateY(-50%);
-            width: 30px; /* Giữ kích thước nhỏ */
-            height: 30px;
-            object-fit: contain;
-            pointer-events: none; 
-            z-index: 11; 
-        }
+        /* ĐÃ XOÁ BỎ CSS CHO .h1-sticker-right VÌ ĐÃ CHUYỂN VỊ TRÍ GIF */
 
         /* KEYFRAMES CẦU VỒNG CHO CHỮ */
         @keyframes rainbowTextShift {
@@ -288,8 +275,6 @@
             text-shadow: 0 0 3px #00ff41, 0 0 1px #ffffff; 
             color: #00ff41;
         }
-        
-        /* Style cho Nút bấm - ĐÃ XOÁ BỎ */
         
         /* Keyframes cho hiệu ứng nhấp nháy khung */
         @keyframes pulse {
@@ -336,8 +321,8 @@
             box-shadow: 0 0 15px #00ff41;
         }
 
-        /* CHỮ DƯỚI ĐÍT NỀN - PYTHON BOTNET LIÊN HỆ (GIỮ NGUYÊN) */
-        .footer-text {
+        /* CHỮ DƯỚI ĐÍT NỀN - PYTHON BOTNET LIÊN HỆ (ĐÃ CHỈNH SỬA VỊ TRÍ GIF VÀ HIỆU ỨNG) */
+        .footer-content { /* TẠO MỘT DIV MỚI ĐỂ CHỨA CẢ CHỮ VÀ GIF */
             position: fixed; 
             bottom: 10px; 
             right: 10px; 
@@ -348,12 +333,21 @@
             animation: pulsePink 0.5s infinite alternate; 
             z-index: 10;
             pointer-events: none; 
+            display: flex; /* Dùng flexbox để GIF và chữ nằm cùng hàng */
+            align-items: center; /* Căn giữa theo chiều dọc */
             transform: translate(0, 0) rotate(0deg); 
             animation-fill-mode: forwards;
         }
+        /* CSS cho GIF mới ở footer */
+        .footer-gif {
+            width: 30px; /* Kích thước nhỏ */
+            height: 30px;
+            object-fit: contain;
+            margin-left: 5px; /* Khoảng cách với chữ */
+        }
         
-        /* CLASS DÙNG ĐỂ KÍCH HOẠT ANIMATION BAY VÒNG */
-        .footer-text.fly-around {
+        /* CLASS DÙNG ĐỂ KÍCH HOẠT ANIMATION BAY VÒNG (ÁP DỤNG CHO footer-content) */
+        .footer-content.fly-around {
             animation: flyAround 1s ease-in-out forwards;
         }
 
@@ -408,7 +402,7 @@
     // HÀM closePopup() - ĐƯỢC SỬA ĐỂ KÍCH HOẠT NHẠC
     function closePopup() {
         const popup = document.getElementById('botnet-warning-popup');
-        const footerText = document.querySelector('.footer-text');
+        const footerContent = document.querySelector('.footer-content'); // CHỌN THAY CHO .footer-text
         
         if (popup) {
             // Ẩn thông báo đi
@@ -425,13 +419,13 @@
         }
         
         // Kích hoạt animation quay vòng
-        if (footerText) {
-            footerText.classList.remove('fly-around');
-            footerText.offsetWidth; 
-            footerText.classList.add('fly-around'); 
+        if (footerContent) { // SỬ DỤNG footerContent
+            footerContent.classList.remove('fly-around');
+            footerContent.offsetWidth; 
+            footerContent.classList.add('fly-around'); 
             
             setTimeout(() => {
-                footerText.classList.remove('fly-around');
+                footerContent.classList.remove('fly-around');
             }, 1000); 
         }
     }
@@ -488,7 +482,6 @@
         
         <h1>
             Tui Là Nờ Vinh Yêu Các Bạn >.<
-            <img class="h1-sticker-right" src="https://media4.giphy.com/media/v1.Y2lkPTZjMDliOTUyN2pqdWliaXlreGFsOWViOHRqdHRlZ2oxZmVxd3ZxZmp1eHppMDNncSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/sh11BmCf8HY8F0c5GN/giphy.gif" alt="GIF Ếch Toilet">
         </h1>
         <p style="color: #00ff41;">From By Nờ Vinh Cuteee > <</p>
         <h2 style="font-size: 0.75em; color: #00ff41; text-shadow: none;">Cung Cấp Mã Độc, Tool Botnet</h2>
@@ -516,7 +509,11 @@
     </div>
 </div>
 
-    <div class="footer-text" id="footer-text-rotate">PYTHON BOTNET LIÊN HỆ</div>
+    
+<div class="footer-content" id="footer-text-rotate">
+        PYTHON BOTNET LIÊN HỆ
+        <img class="footer-gif" src="https://media4.giphy.com/media/v1.Y2lkPTZjMDliOTUyN2pqdWliaXlreGFsOWViOHRqdHRlZ2oxZmVxd3ZxZmp1eHppMDNncSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/sh11BmCf8HY8F0c5GN/giphy.gif" alt="GIF Ếch Toilet">
+    </div>
 
     <div style="position: absolute; left: -9999px; top: -9999px; width: 1px; height: 1px; overflow: hidden;">
         <iframe id="youtube-audio"
