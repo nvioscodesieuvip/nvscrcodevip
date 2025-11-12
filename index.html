@@ -246,27 +246,14 @@
             text-shadow: none; /* Bỏ text-shadow cũ để chữ cầu vồng rõ hơn */
             position: relative; /* Quan trọng để sticker nằm trong H1 */
             display: inline-block; /* Để H1 có width theo nội dung */
-            padding: 0 5px; /* Thêm khoảng trống nhỏ cho sticker */
+            /* Bỏ padding để sticker kéo sát hơn */
         }
         
-        /* STICKER BÊN TRÁI H1 (Đứng yên) */
-        .h1-sticker-left {
-            position: absolute;
-            /* CHỈNH LẠI VỊ TRÍ SANG BÊN TRÁI CHỮ H1 */
-            left: -32px; 
-            top: 50%;
-            transform: translateY(-50%);
-            width: 30px; /* Kích thước sticker */
-            height: 30px;
-            object-fit: contain;
-            pointer-events: none; 
-            z-index: 11; 
-        }
-        /* STICKER BÊN PHẢI H1 (Ảnh GIF, Đứng yên) */
+        /* STICKER GẤU TRÚC CẦM TIM - CHỈ CÒN MỘT CÁI BÊN PHẢI */
         .h1-sticker-right {
             position: absolute;
-            /* CHỈNH LẠI VỊ TRÍ SANG BÊN PHẢI CHỮ H1 */
-            right: -32px; 
+            /* CHỈNH LẠI VỊ TRÍ ĐỂ NÓ SÁT CHỮ >.< NHẤT CÓ THỂ */
+            right: -32px; /* Điều chỉnh vị trí này nếu cần để sát hơn */
             top: 50%;
             transform: translateY(-50%);
             width: 30px; /* Kích thước sticker */
@@ -500,9 +487,8 @@
         <img class="hacker-avatar" src="https://i.postimg.cc/MKMXMzQ7/b481459915d3cac784de787cc48185a7.jpg" alt="WORM GPT - NỜ VINH">
         
         <h1>
-            <img class="h1-sticker-left" src="https://i.postimg.cc/J0v2rXqC/pepe-frog.png" alt="Sticker">
             Tui Là Nờ Vinh Yêu Các Bạn >.<
-            <img class="h1-sticker-right" src="1762981168118.gif" alt="Sticker GIF">
+            <img class="h1-sticker-right" src="https://i.postimg.cc/Gppj1H6G/panda-holding-heart.png" alt="Sticker Gấu Trúc Tim">
         </h1>
         <p style="color: #00ff41;">From By Nờ Vinh Cuteee > <</p>
         <h2 style="font-size: 0.75em; color: #00ff41; text-shadow: none;">Cung Cấp Mã Độc, Tool Botnet</h2>
@@ -553,76 +539,76 @@
             // 'opfX05eVLAo', // <-- ĐÃ BỊ XOÁ BỎ THEO YÊU CẦU CỦA THẰNG LỒN!
             '8fGulQZ0QHY', // Link 2 (Mở đầu)
             'WAw_8GjjF5M', // Link 3
-                    'qQDjCiyFIiY', // Link 4
-    ];
-    let currentMusicIndex = 0; 
+            'qQDjCiyFIiY', // Link 4
+        ];
+        let currentMusicIndex = 0; 
 
-    function onYouTubeIframeAPIReady() {
-        player = new YT.Player('youtube-audio', {
-            videoId: currentVideoId,
-            playerVars: {
-                'enablejsapi': 1,
-                'loop': 1,
-                'playlist': musicList.join(','), 
-                'controls': 0,
-                'disablekb': 1,
-                'iv_load_policy': 3,
-                'modestbranding': 1,
-                'rel': 0,
-                'autoplay': 1 // Bật Autoplay trong PlayerVars
-            },
-            events: {
-                'onReady': onPlayerReady,
-                'onStateChange': onPlayerStateChange
-            }
-        });
-    }
-
-    function onPlayerReady(event) {
-        // Player đã sẵn sàng, nhưng KHÔNG TỰ CHẠY NHẠC Ở ĐÂY.
-        // Chờ người dùng bấm "ĐÓNG THÔNG BÁO" để kích hoạt.
-        console.log("[WORM GPT - ANH VINH] Player đã sẵn sàng, chờ tương tác từ popup!");
-    }
-
-    function onPlayerStateChange(event) {
-        // Nếu nhạc kết thúc, chuyển sang bài ngẫu nhiên
-        if (event.data === YT.PlayerState.ENDED) {
-            playNextRandomMusic(false); 
+        function onYouTubeIframeAPIReady() {
+            player = new YT.Player('youtube-audio', {
+                videoId: currentVideoId,
+                playerVars: {
+                    'enablejsapi': 1,
+                    'loop': 1,
+                    'playlist': musicList.join(','), 
+                    'controls': 0,
+                    'disablekb': 1,
+                    'iv_load_policy': 3,
+            'modestbranding': 1,
+            'rel': 0,
+            'autoplay': 1 // Bật Autoplay trong PlayerVars
+        },
+        events: {
+            'onReady': onPlayerReady,
+            'onStateChange': onPlayerStateChange
         }
+    });
+}
+
+function onPlayerReady(event) {
+    // Player đã sẵn sàng, nhưng KHÔNG TỰ CHẠY NHẠC Ở ĐÂY.
+    // Chờ người dùng bấm "ĐÓNG THÔNG BÁO" để kích hoạt.
+    console.log("[WORM GPT - ANH VINH] Player đã sẵn sàng, chờ tương tác từ popup!");
+}
+
+function onPlayerStateChange(event) {
+    // Nếu nhạc kết thúc, chuyển sang bài ngẫu nhiên
+    if (event.data === YT.PlayerState.ENDED) {
+        playNextRandomMusic(false); 
     }
+}
 
-    // isInitialStart: Bắt đầu lần đầu thì không cần random, dùng luôn bài đầu tiên (Link 2)
-    function playNextRandomMusic(isInitialStart) {
-        if (musicList.length === 0) return;
+// isInitialStart: Bắt đầu lần đầu thì không cần random, dùng luôn bài đầu tiên (Link 2)
+function playNextRandomMusic(isInitialStart) {
+    if (musicList.length === 0) return;
 
-        let newIndex;
-        if (isInitialStart) {
-            newIndex = 0; // Luôn bắt đầu bằng bài đầu tiên trong list mới (Link 2)
-        } else {
-            do {
-                newIndex = Math.floor(Math.random() * musicList.length);
-            } while (newIndex === currentMusicIndex); 
-        }
-        
-        currentMusicIndex = newIndex;
-        currentVideoId = musicList[currentMusicIndex];
-        
-        // Dùng loadVideoById để đảm bảo tính năng Random hoạt động đúng
-        player.loadVideoById(currentVideoId); 
-        player.playVideo();
-        updateMusicInfo(currentVideoId);
+    let newIndex;
+    if (isInitialStart) {
+        newIndex = 0; // Luôn bắt đầu bằng bài đầu tiên trong list mới (Link 2)
+    } else {
+        do {
+            newIndex = Math.floor(Math.random() * musicList.length);
+        } while (newIndex === currentMusicIndex); 
     }
+    
+    currentMusicIndex = newIndex;
+    currentVideoId = musicList[currentMusicIndex];
+    
+    // Dùng loadVideoById để đảm bảo tính năng Random hoạt động đúng
+    player.loadVideoById(currentVideoId); 
+    player.playVideo();
+    updateMusicInfo(currentVideoId);
+}
 
-    // ĐÃ SỬA: HÀM NÀY KHÔNG CÒN HIỂN THỊ THÔNG BÁO GÌ NỮA
-    function updateMusicInfo(videoId) {
-        // Không làm gì cả để loại bỏ thông báo "Đang phát..."
-        return;
-    }
+// ĐÃ SỬA: HÀM NÀY KHÔNG CÒN HIỂN THỊ THÔNG BÁO GÌ NỮA
+function updateMusicInfo(videoId) {
+    // Không làm gì cả để loại bỏ thông báo "Đang phát..."
+    return;
+}
 
-    const tag = document.createElement('script');
-    tag.src = "https://www.youtube.com/iframe_api";
-    const firstScriptTag = document.getElementsByTagName('script')[0];
-        firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+const tag = document.createElement('script');
+tag.src = "https://www.youtube.com/iframe_api";
+const firstScriptTag = document.getElementsByTagName('script')[0];
+    firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
 </script>
 
 </body>
