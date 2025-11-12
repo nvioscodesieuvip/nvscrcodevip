@@ -55,13 +55,12 @@
         /* TRÁI TIM XANH LÁ HACKER (VẼ BẰNG CSS) */
         .hacker-heart-effect {
             position: absolute;
-            background-color: #00ff41; /* FIX MÀU: XANH LÁ HACKER */
+            background-color: #00ff41; 
             pointer-events: none;
             opacity: 0;
             z-index: 1;
             will-change: transform, opacity;
             
-            /* FIX PHÁT SÁNG: XANH LÁ */
             box-shadow: 0 0 5px #00ff41, 0 0 10px #00ff41, 0 0 15px #00ff41; 
             
             width: var(--heart-base-size); 
@@ -80,7 +79,7 @@
             position: absolute;
             width: var(--heart-base-size);
             height: var(--heart-base-size);
-            background-color: #00ff41; /* FIX MÀU: XANH LÁ HACKER */
+            background-color: #00ff41; 
             border-radius: 50%; 
             box-shadow: inherit; 
         }
@@ -122,9 +121,11 @@
 
         /* KHUNG CHÍNH (GỘP TẤT CẢ) */
         .main-avatar-frame {
-            border: 3px solid #00ff41; 
+            /* Loại bỏ border tĩnh cũ */
+            border: none; 
             padding: 8px 6px; 
             box-shadow: 0 0 20px #00ff41, 0 0 5px #00ff41 inset;
+            /* Giữ animation pulse cho box-shadow */
             animation: pulse 1.5s infinite alternate; 
             text-align: center;
             background-color: rgba(0, 0, 0, 0.95); 
@@ -136,45 +137,53 @@
             position: relative; 
             pointer-events: auto; 
         }
-
-        /* KHUNG NHỎ BÊN TRONG KHUNG CHÍNH */
-        .inner-frame-link {
-            text-decoration: none; 
-            color: inherit;
-        }
-
-        .inner-frame {
-            border: 2px solid #ff00ea; 
-            padding: 6px; 
-            margin: 6px 0 0 0; 
-            background-color: rgba(255, 0, 234, 0.1); 
-            border-radius: 5px;
-            box-shadow: 0 0 5px #ff00ea;
-            transition: transform 0.2s;
-            cursor: pointer; 
-        }
-
-        .inner-frame:hover {
-            transform: scale(1.03);
-            border-color: #ff00ea;
-            box-shadow: 0 0 15px #ff00ea;
-        }
         
+        /* AVATAR CẦU VỒNG 7 MÀU (Dùng gradient border) */
         .hacker-avatar {
             width: 80px; 
             height: 80px;
             border-radius: 50%; 
-            border: 5px solid #ff00ea; 
             object-fit: cover;
             margin-bottom: 5px; 
-            box-shadow: 0 0 15px #ff00ea;
+            box-shadow: 0 0 15px #ff00ea; /* Giữ box-shadow tím */
+            
+            /* TẠO VIỀN CẦU VỒNG NHẤP NHÁY */
+            border: 5px solid transparent; 
+            background-origin: border-box;
+            background-clip: content-box, border-box;
+            /* Dùng background gradient để tạo hiệu ứng 7 màu */
+            background-image: linear-gradient(to right, black, black), 
+                              linear-gradient(45deg, #ff0000, #ff8c00, #ffff00, #00ff00, #00ffff, #0000ff, #8b00ff); 
+            
+            /* Animation cho hiệu ứng 7 màu xoay và nhấp nháy */
+            animation: 
+                rainbowBorder 2s linear infinite, 
+                pulseBorder 0.5s infinite alternate; 
         }
+
+        /* KEYFRAMES CẦU VỒNG XOAY (BORDER) */
+        @keyframes rainbowBorder {
+            to { background-image: linear-gradient(to right, black, black), 
+                                  linear-gradient(405deg, #ff0000, #ff8c00, #ffff00, #00ff00, #00ffff, #0000ff, #8b00ff); 
+            }
+        }
+        
+        /* KEYFRAMES NHẤP NHÁY (OPACITY CỦA BÓNG ĐỔ) */
+        @keyframes pulseBorder {
+            from { box-shadow: 0 0 10px rgba(255, 0, 255, 0.7); }
+            to { box-shadow: 0 0 25px rgba(255, 0, 255, 1.0); }
+        }
+
+        /* CHỮ TÊN "NỜ VINH" */
         h1 {
             font-size: 1.1em; 
-            text-shadow: 0 0 5px #ff00ea;
-            color: #ff00ea; 
+            /* FIX MÀU: XANH LÁ HACKER */
+            text-shadow: 0 0 5px #00ff41;
+            color: #00ff41; 
             margin-bottom: 2px;
         }
+
+        /* Các tiêu đề khác giữ nguyên màu Tím Hồng */
         h2 {
             font-size: 0.9em; 
             margin-top: 2px;
@@ -192,7 +201,8 @@
         
         /* Style cho Nút bấm */
         #play-music-button {
-            background-color: #ff00ea; 
+            /* FIX MÀU: ĐỎ NHẠT/ĐỎ NHUNG */
+            background-color: #8b0000; 
             color: white; 
             border: 3px solid #00ff41; 
             padding: 5px 10px; 
@@ -215,6 +225,27 @@
         @keyframes pulse {
             from { box-shadow: 0 0 10px #00ff41, 0 0 5px #00ff41 inset; }
             to { box-shadow: 0 0 30px #00ff41, 0 0 15px #00ff41 inset; }
+        }
+
+        /* KHUNG NHỎ BÊN TRONG KHUNG CHÍNH */
+        .inner-frame-link {
+            text-decoration: none; 
+            color: inherit;
+        }
+        .inner-frame {
+            border: 2px solid #ff00ea; 
+            padding: 6px; 
+            margin: 6px 0 0 0; 
+            background-color: rgba(255, 0, 234, 0.1); 
+            border-radius: 5px;
+            box-shadow: 0 0 5px #ff00ea;
+            transition: transform 0.2s;
+            cursor: pointer; 
+        }
+        .inner-frame:hover {
+            transform: scale(1.03);
+            border-color: #ff00ea;
+            box-shadow: 0 0 15px #ff00ea;
         }
 
         /* CHỮ DƯỚI ĐÍT NỀN - SIÊU SÁNG & ĐẬM */
@@ -262,7 +293,7 @@
         // Kích thước chữ: 0.6em đến 1.2em
         const size = 0.6 + Math.random() * 0.6; 
 
-        // FIX LỖI NÀY: Kích thước cơ bản của trái tim (2px - 8px) để đảm bảo nó SIÊU NHỎ
+        // Kích thước cơ bản của trái tim (2px - 8px) để đảm bảo nó SIÊU NHỎ
         const heartBaseSize = (2 + Math.random() * 6); 
         const heartScale = (0.8 + Math.random() * 0.4); 
 
@@ -425,5 +456,5 @@
     </script>
 
 </body>
-            </html>
+    </html>
     
