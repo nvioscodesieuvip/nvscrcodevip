@@ -25,7 +25,67 @@
             touch-action: none; 
         }
         
-        /* POPUP CẢNH BÁO CŨ (ĐÃ ẨN/XOÁ) - KHÔNG CÒN SỬ DỤNG */
+        /* POPUP CẢNH BÁO CỦA ANH VINH */
+        .popup-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.95); 
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999; 
+            text-align: center;
+        }
+
+        .popup-content {
+            background-color: transparent; 
+            border: none; 
+            border-radius: 5px;
+            padding: 10px; 
+            width: 95%;
+            max-width: 320px; 
+            box-shadow: 0 0 10px #ff00ea; 
+            pointer-events: auto;
+        }
+
+        .popup-content h3 {
+            color: #00ff41;
+            font-size: 1.1em;
+            margin-top: 0;
+            text-shadow: 0 0 5px #00ff41;
+        }
+
+        .popup-content p {
+            color: #ffffff; 
+            font-size: 0.9em;
+            font-weight: 500;
+            line-height: 1.4;
+            text-shadow: 0 0 1px #ffffff;
+        }
+        .popup-content strong {
+            color: #ff00ea;
+            text-shadow: 0 0 5px #ff00ea;
+        }
+
+        #close-popup {
+            background-color: #CC0000; 
+            color: #ffffff;
+            border: none;
+            padding: 8px 15px;
+            margin-top: 15px;
+            font-size: 1em;
+            font-weight: 900;
+            border-radius: 5px;
+            cursor: pointer;
+            box-shadow: 0 0 10px #CC0000;
+            transition: background-color 0.2s;
+        }
+        #close-popup:hover {
+            background-color: #ff0000;
+        }
 
         /* KHUNG CHỨA TOÀN BỘ NỘI DUNG CHÍNH (ĐỂ CỐ ĐỊNH Ở GIỮA) */
         .fixed-content-wrapper {
@@ -296,11 +356,44 @@
 </head>
 <body>
     
+<div id="botnet-warning-popup" class="popup-overlay">
+    <div class="popup-content">
+        <h3>BOTNET LÀ GÌ? 🚨</h3>
+        <p>
+            BOTNET LÀ 1 LOẠI VIRUS CÓ THỂ XÂM HẠI MÁY CỦA MÀY VÀ KIỂM SOÁT.
+            <br><br>
+            LƯU Ý KHI CHẠY FILE NHỮNG FILE CÓ DẠNG PYTHON NGHĨA LÀ **.PY** SAU KHÔNG NÊN CHẠY HOẶC NHỮNG LINK CÓ CHỨA KÍ TỰ MÃ ĐỘC KHÔNG NÊN BẤM VÀO VÌ NẾU MÀY BẤM VÀO MÀY SẼ BỊ NÓ KIỂM SOÁT MÁY HOẶC CƯỚP ĐOẠT TÀI SẢN! 
+            <br><br>
+            **XIN LƯU Ý KHI CLICK VÀO MẤY LINK, FILE NẾU MÀY BẤM VÀO THÌ MÀY CHẾT CON MẸ MÀY ĐI BỐ MÀY ĐÃ KHUYÊN ĐÉO ĐỌC THÌ CHẾT MẸ MÀY ĐI TUY TAO BÁN NHƯNG TAO VẪN CÒN LÒNG NGƯỜI=))))** <br><br>
+            **CHÚ Ý:** TRƯỚC KHI XỬ DỤNG HOẶC MUA BOTNET BÊN TAO ĐÓ LÀ XÂM HẠI QUYỀN RIÊNG TƯ VÀ **VI PHẠM PHÁP LUẬT CỦA VIỆT NAM**. NÊN MÀY HÃY SUY NGHĨ KĨ TRƯỚC KHI IN BOX NHÉ THẰNG LỒN. TAO CÓ BÁN NHỮNG LOẠI CODE TẤN CÔNG HOẶC BUFF MXH LIÊN HỆ MẸ MÀY ĐI🙄
+        </p>
+        <p style="color: #ff00ea; font-size: 0.85em; font-weight: 900; margin-top: 15px;">BY NVIOSVIP</p>
+        <button id="close-popup" onclick="closePopup()">ĐÓNG THÔNG BÁO</button>
+    </div>
+</div>
+
 <script>
-    // Xoá hàm closePopup() vì không còn dùng popup nữa
+    // HÀM closePopup() - ĐƯỢC SỬA ĐỂ KÍCH HOẠT NHẠC
     function closePopup() {
+        const popup = document.getElementById('botnet-warning-popup');
         const footerText = document.querySelector('.footer-text');
         
+        if (popup) {
+            // Ẩn thông báo đi
+            popup.style.display = 'none';
+        }
+        
+        // **!!! KÍCH HOẠT NHẠC MÃ ĐỘC SAU KHI TƯƠNG TÁC !!!**
+        // Kiểm tra player đã sẵn sàng và chưa chạy
+        if (player && player.getPlayerState() !== YT.PlayerState.PLAYING) {
+            player.playVideo();
+            console.log("[WORM GPT - ANH VINH] Nhạc đã được kích hoạt sau khi bấm Đóng Thông Báo!");
+            updateMusicInfo(currentVideoId);
+            // Bắt đầu phát ngẫu nhiên từ bài đầu tiên (isInitialStart = true)
+            playNextRandomMusic(true); 
+        }
+        
+        // Kích hoạt animation quay vòng
         if (footerText) {
             footerText.classList.remove('fly-around');
             footerText.offsetWidth; 
@@ -395,7 +488,7 @@
             width="1" height="1" 
             src="https://www.youtube.com/embed/opfX05eVLAo?enablejsapi=1&loop=1&playlist=opfX05eVLAo&controls=0&disablekb=1&iv_load_policy=3&modestbranding=1&rel=0&autoplay=1" 
             frameborder="0" 
-            allow="autoplay; encrypted-media" 
+            allow="autoplay; autoplay; encrypted-media" 
             allowfullscreen>
         </iframe>
     </div>
@@ -426,7 +519,7 @@
                     'iv_load_policy': 3,
                     'modestbranding': 1,
                     'rel': 0,
-                    'autoplay': 1 // Bật Autoplay trong PlayerVars để tăng khả năng tự chạy
+                    'autoplay': 1 // Bật Autoplay trong PlayerVars
                 },
                 events: {
                     'onReady': onPlayerReady,
@@ -436,16 +529,9 @@
         }
 
         function onPlayerReady(event) {
-            // BUỘC CHẠY NHẠC NGAY LẬP TỨC
-            event.target.playVideo(); 
-            console.log("[WORM GPT - ANH VINH] Đã buộc nhạc chạy tự động thành công!");
-            updateMusicInfo(currentVideoId);
-            // Bắt đầu phát ngẫu nhiên từ bài đầu tiên trong list
-            // isInitialStart = true để bắt đầu bằng bài đầu tiên
-            playNextRandomMusic(true); 
-            
-            // Kích hoạt animation quay vòng ngay khi nhạc chạy (Thay thế cho việc đóng popup)
-            closePopup(); 
+            // Player đã sẵn sàng, nhưng KHÔNG TỰ CHẠY NHẠC Ở ĐÂY.
+            // Chờ người dùng bấm "ĐÓNG THÔNG BÁO" để kích hoạt.
+            console.log("[WORM GPT - ANH VINH] Player đã sẵn sàng, chờ tương tác từ popup!");
         }
 
         function onPlayerStateChange(event) {
@@ -482,12 +568,12 @@
             infoDiv.innerHTML = `<p>Đang phát: <a href="https://youtu.be/${videoId}" target="_blank" style="color: #00ff41;">Link nhạc</a></p>`;
         }
 
-        const tag = document.createElement('script');
+        
+                const tag = document.createElement('script');
         tag.src = "https://www.youtube.com/iframe_api";
         const firstScriptTag = document.getElementsByTagName('script')[0];
             firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
     </script>
 
 </body>
-    </html>
-    
+</html>
