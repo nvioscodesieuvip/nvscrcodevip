@@ -13,7 +13,6 @@
             width: 100%;
             overflow: hidden !important; 
             box-sizing: border-box; 
-            /* Cần position: relative để các chữ nền dùng position: absolute hoạt động đúng */
             position: relative; 
         }
         
@@ -26,7 +25,7 @@
 
         /* KHUNG CHỨA TOÀN BỘ NỘI DUNG CHÍNH (ĐỂ CỐ ĐỊNH Ở GIỮA) */
         .fixed-content-wrapper {
-            position: fixed; /* Vẫn giữ cố định khung chính */
+            position: fixed; 
             top: 50%;
             left: 50%;
             transform: translate(-50%, -50%);
@@ -42,7 +41,7 @@
         
         /* Chữ nền chung - ĐÃ FIX VỊ TRÍ CHO TỪNG DÒNG */
         .hacker-text-effect {
-            position: absolute; /* FIX: Dùng absolute để gán vị trí độc lập cho từng dòng */
+            position: absolute; 
             color: rgba(0, 255, 65, 0.3); 
             pointer-events: none; 
             opacity: 0; 
@@ -51,19 +50,18 @@
             white-space: nowrap; 
             z-index: 1; 
             will-change: transform, opacity; 
-            /* Vị trí ban đầu (top/left) sẽ được gán trong JS, animation sẽ dùng transform */
         }
 
-        /* Loại 1: RƠI XUỐNG VÔ HẠN (Dùng transform thay vì top/left để mượt hơn) */
+        /* Loại 1: RƠI XUỐNG VÔ HẠN (Dùng transform) */
         .falling-text {
             animation: fallAndFade var(--animation-duration) infinite linear; 
         }
 
         @keyframes fallAndFade {
-            0% { transform: translate(0, 0); opacity: 0.2; } /* Vị trí ban đầu */
+            0% { transform: translate(0, 0); opacity: 0.2; } 
             10% { opacity: 0.7; }
             90% { opacity: 0.7; } 
-            100% { transform: translate(0, 200vh); opacity: 0; } /* Rơi 200% chiều cao màn hình */
+            100% { transform: translate(0, 150vh); opacity: 0; } /* FIX: Rơi 150% VH để tốc độ rơi nhanh hơn 1 chút */
         }
         
         /* Loại 2: LƠ LỬNG VÔ HẠN (Dùng transform) */
@@ -74,8 +72,8 @@
 
         @keyframes floatForever {
             0% { transform: translate(0, 0) rotate(0deg) scale(1); }
-            50% { transform: translate(10vw, 10vh) rotate(8deg) scale(1.05); } /* Dịch chuyển nhỏ theo X và Y */
-            100% { transform: translate(-10vw, -10vh) rotate(-8deg) scale(1); }
+            50% { transform: translate(15vw, 15vh) rotate(8deg) scale(1.05); } /* FIX: Tăng biên độ lơ lửng (15vw/vh) */
+            100% { transform: translate(-15vw, -15vh) rotate(-8deg) scale(1); }
         }
 
         /* KHUNG CHÍNH (GỘP TẤT CẢ) - ĐÃ THU GỌN VÀ NHỎ LẠI */
@@ -200,25 +198,23 @@
 <body>
     
 <script>
-    // FIX DÍNH CỤC TUYỆT ĐỐI: Gán vị trí top/left độc lập cho từng dòng chữ
+    // FIX DÍNH CỤC TUYỆT ĐỐI: Dùng VW/VH và tăng số lượng dòng chữ
     const hackerTexts = [
         "NỜ VINH IOS", "BOTNET", "HACKER", 
     ];
 
-    const numTexts = 150; // Giữ 150 dòng để tối ưu hiệu suất
+    const numTexts = 200; // Tăng số lượng dòng lên 200
 
     for (let i = 0; i < numTexts; i++) { 
         const text = hackerTexts[Math.floor(Math.random() * hackerTexts.length)];
         
-        // Tăng thời gian animation lên để chữ di chuyển chậm và mượt hơn
         const delay = Math.random() * 20; 
-        const duration = 15 + Math.random() * 10; // Tăng duration cực mạnh
+        const duration = 15 + Math.random() * 10; 
         
-        // FIX LỖI DÍNH CỤC: Gán vị trí top/left ngẫu nhiên cố định cho từng dòng
-        // Tọa độ X: -10% đến 110% (tràn ra rìa)
-        const initialLeft = -10 + Math.random() * 120; 
-        // Tọa độ Y: -50% đến 150% (tràn ra trên dưới)
-        const initialTop = -50 + Math.random() * 200; 
+        // FIX LỖI DÍNH CỤC: Dùng VW (Viewport Width) và VH (Viewport Height)
+        // Dùng 120vw (rộng hơn 20%) và 200vh (cao hơn 100%) để đảm bảo chữ phân tán ra cả ngoài lề màn hình
+        const initialLeft = -10 + Math.random() * 120; // -10vw đến 110vw
+        const initialTop = -50 + Math.random() * 200; // -50vh đến 150vh
         
         const size = 0.6 + Math.random() * 0.6; 
         
@@ -228,16 +224,16 @@
             animation-delay: ${delay}s;
             --animation-duration: ${duration}s;
             font-size: ${size}em;
-            /* Gán vị trí độc lập */
+            /* Gán vị trí độc lập bằng VW/VH */
             left: ${initialLeft}vw;
             top: ${initialTop}vh;
         `;
 
         if (i % 2 === 0) {
-            // Loại RƠI: Dùng transform(0, 200vh) để rơi từ vị trí gán ban đầu xuống
+            // Loại RƠI: Dùng transform(0, 150vh) để rơi từ vị trí gán ban đầu xuống (nhanh hơn 1 chút)
             div.className = 'hacker-text-effect falling-text';
         } else {
-            // Loại LƠ LỬNG: Dùng transform(x, y) để lơ lửng xung quanh vị trí gán ban đầu
+            // Loại LƠ LỬNG: Dùng transform(15vw, 15vh) để lơ lửng xung quanh vị trí gán ban đầu
             div.className = 'hacker-text-effect floating-text';
         }
 
@@ -380,5 +376,5 @@
     </script>
 
 </body>
-                                                                </html>
+    </html>
     
