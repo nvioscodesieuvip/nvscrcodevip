@@ -39,7 +39,7 @@
             pointer-events: none; 
         }
         
-        /* Chữ nền chung - ĐÃ FIX VỊ TRÍ CHO TỪNG DÒNG */
+        /* Chữ nền chung */
         .hacker-text-effect {
             position: absolute; 
             color: rgba(0, 255, 65, 0.3); 
@@ -52,8 +52,22 @@
             will-change: transform, opacity; 
         }
 
+        /* TRÁI TIM TÍM HỒNG MỚI NÈ ANH VINH! */
+        .hacker-heart-effect {
+            position: absolute; 
+            color: rgba(255, 0, 255, 0.5); /* Màu tím hồng đậm */
+            pointer-events: none; 
+            opacity: 0; 
+            text-shadow: 0 0 10px #FF00FF, 0 0 20px #FF00FF; /* Phát sáng mạnh hơn */
+            user-select: none; 
+            font-size: 1.2em; /* Kích thước trái tim */
+            z-index: 1; 
+            will-change: transform, opacity; 
+        }
+
+
         /* Loại 1: RƠI XUỐNG VÔ HẠN (Dùng transform) */
-        .falling-text {
+        .falling-text, .falling-heart { /* Áp dụng cho cả chữ và tim */
             animation: fallAndFade var(--animation-duration) infinite linear; 
         }
 
@@ -61,18 +75,18 @@
             0% { transform: translate(0, 0); opacity: 0.2; } 
             10% { opacity: 0.7; }
             90% { opacity: 0.7; } 
-            100% { transform: translate(0, 150vh); opacity: 0; } /* FIX: Rơi 150% VH để tốc độ rơi nhanh hơn 1 chút */
+            100% { transform: translate(0, 150vh); opacity: 0; } 
         }
         
         /* Loại 2: LƠ LỬNG VÔ HẠN (Dùng transform) */
-        .floating-text {
+        .floating-text, .floating-heart { /* Áp dụng cho cả chữ và tim */
             animation: floatForever var(--animation-duration) infinite ease-in-out alternate; 
             opacity: 0.8; 
         }
 
         @keyframes floatForever {
             0% { transform: translate(0, 0) rotate(0deg) scale(1); }
-            50% { transform: translate(15vw, 15vh) rotate(8deg) scale(1.05); } /* FIX: Tăng biên độ lơ lửng (15vw/vh) */
+            50% { transform: translate(15vw, 15vh) rotate(8deg) scale(1.05); } 
             100% { transform: translate(-15vw, -15vh) rotate(-8deg) scale(1); }
         }
 
@@ -198,43 +212,40 @@
 <body>
     
 <script>
-    // FIX DÍNH CỤC TUYỆT ĐỐI: Dùng VW/VH và tăng số lượng dòng chữ
+    // FIX DÍNH CỤC TUYỆT ĐỐI + THÊM TRÁI TIM
     const hackerTexts = [
         "NỜ VINH IOS", "BOTNET", "HACKER", 
     ];
 
-    const numTexts = 200; // Tăng số lượng dòng lên 200
+    const numEffects = 300; // Tổng số hiệu ứng (chữ và trái tim)
 
-    for (let i = 0; i < numTexts; i++) { 
-        const text = hackerTexts[Math.floor(Math.random() * hackerTexts.length)];
+    for (let i = 0; i < numEffects; i++) { 
+        // Random 1 icon (chữ hoặc trái tim)
+        const isHeart = Math.random() < 0.3; // 30% là trái tim, 70% là chữ
+        const content = isHeart ? '💖' : hackerTexts[Math.floor(Math.random() * hackerTexts.length)];
         
         const delay = Math.random() * 20; 
         const duration = 15 + Math.random() * 10; 
         
-        // FIX LỖI DÍNH CỤC: Dùng VW (Viewport Width) và VH (Viewport Height)
-        // Dùng 120vw (rộng hơn 20%) và 200vh (cao hơn 100%) để đảm bảo chữ phân tán ra cả ngoài lề màn hình
-        const initialLeft = -10 + Math.random() * 120; // -10vw đến 110vw
-        const initialTop = -50 + Math.random() * 200; // -50vh đến 150vh
+        const initialLeft = -10 + Math.random() * 120; 
+        const initialTop = -50 + Math.random() * 200; 
         
-        const size = 0.6 + Math.random() * 0.6; 
+        const size = isHeart ? (1.0 + Math.random() * 1.0) : (0.6 + Math.random() * 0.6); // Trái tim lớn hơn
         
         const div = document.createElement('div');
-        div.textContent = text;
+        div.textContent = content;
         div.style.cssText = `
             animation-delay: ${delay}s;
             --animation-duration: ${duration}s;
             font-size: ${size}em;
-            /* Gán vị trí độc lập bằng VW/VH */
             left: ${initialLeft}vw;
             top: ${initialTop}vh;
         `;
 
-        if (i % 2 === 0) {
-            // Loại RƠI: Dùng transform(0, 150vh) để rơi từ vị trí gán ban đầu xuống (nhanh hơn 1 chút)
-            div.className = 'hacker-text-effect falling-text';
-        } else {
-            // Loại LƠ LỬNG: Dùng transform(15vw, 15vh) để lơ lửng xung quanh vị trí gán ban đầu
-            div.className = 'hacker-text-effect floating-text';
+        if (i % 2 === 0) { // Loại RƠI
+            div.className = isHeart ? 'hacker-heart-effect falling-heart' : 'hacker-text-effect falling-text';
+        } else { // Loại LƠ LỬNG
+            div.className = isHeart ? 'hacker-heart-effect floating-heart' : 'hacker-text-effect floating-text';
         }
 
         document.body.appendChild(div);
@@ -376,5 +387,4 @@
     </script>
 
 </body>
-    </html>
-    
+</html>
