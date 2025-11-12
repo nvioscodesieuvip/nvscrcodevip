@@ -25,67 +25,7 @@
             touch-action: none; 
         }
         
-        /* POPUP CẢNH BÁO CỦA ANH VINH */
-        .popup-overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(0, 0, 0, 0.95); 
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            z-index: 9999; 
-            text-align: center;
-        }
-
-        .popup-content {
-            background-color: transparent; 
-            border: none; 
-            border-radius: 5px;
-            padding: 10px; 
-            width: 95%;
-            max-width: 320px; 
-            box-shadow: 0 0 10px #ff00ea; 
-            pointer-events: auto;
-        }
-
-        .popup-content h3 {
-            color: #00ff41;
-            font-size: 1.1em;
-            margin-top: 0;
-            text-shadow: 0 0 5px #00ff41;
-        }
-
-        .popup-content p {
-            color: #ffffff; 
-            font-size: 0.9em;
-            font-weight: 500;
-            line-height: 1.4;
-            text-shadow: 0 0 1px #ffffff;
-        }
-        .popup-content strong {
-            color: #ff00ea;
-            text-shadow: 0 0 5px #ff00ea;
-        }
-
-        #close-popup {
-            background-color: #CC0000; 
-            color: #ffffff;
-            border: none;
-            padding: 8px 15px;
-            margin-top: 15px;
-            font-size: 1em;
-            font-weight: 900;
-            border-radius: 5px;
-            cursor: pointer;
-            box-shadow: 0 0 10px #CC0000;
-            transition: background-color 0.2s;
-        }
-        #close-popup:hover {
-            background-color: #ff0000;
-        }
+        /* POPUP CẢNH BÁO CŨ (ĐÃ ẨN/XOÁ) - KHÔNG CÒN SỬ DỤNG */
 
         /* KHUNG CHỨA TOÀN BỘ NỘI DUNG CHÍNH (ĐỂ CỐ ĐỊNH Ở GIỮA) */
         .fixed-content-wrapper {
@@ -221,7 +161,7 @@
             box-shadow: none !important;
         }
 
-        /* KEYFRAMES CẦU VỒNG CHUYỂN ĐỘNG */
+        /* KEYFRAMES CẦU VỒNG CHUYỂN ĐỘ */
         @keyframes rainbowBorderShift {
             0% { background-position: 0% 50%; }
             50% { background-position: 100% 50%; }
@@ -257,26 +197,7 @@
             color: #00ff41;
         }
         
-        /* Style cho Nút bấm */
-        #play-music-button {
-            background-color: transparent; 
-            color: #00ff41; 
-            border: 3px solid #00ff41; 
-            padding: 5px 10px; 
-            font-size: 0.75em; 
-            font-weight: bold; 
-            cursor: pointer; 
-            margin-top: 8px; 
-            margin-bottom: 6px; 
-            transition: transform 0.2s;
-            border-radius: 5px;
-            box-shadow: 0 0 10px rgba(0, 255, 65, 0.5); 
-            pointer-events: auto; 
-        }
-        #play-music-button:hover {
-            transform: scale(1.05);
-            background-color: rgba(0, 255, 65, 0.1); 
-        }
+        /* Style cho Nút bấm - ĐÃ XOÁ BỎ */
         
         /* Keyframes cho hiệu ứng nhấp nháy khung */
         @keyframes pulse {
@@ -335,15 +256,13 @@
             animation: pulsePink 0.5s infinite alternate; 
             z-index: 10;
             pointer-events: none; 
-            /* THÊM TRANSITION ĐỂ QUAY VÒNG MƯỢT MÀ */
-            transition: transform 1s ease-out;
-            transform-origin: 50% 50%; /* QUAY QUANH CHÍNH NÓ */
-            transform: rotate(0deg); /* Đảm bảo điểm khởi đầu là 0 độ */
+            transform: translate(0, 0) rotate(0deg); 
+            animation-fill-mode: forwards;
         }
         
-        /* CLASS DÙNG ĐỂ KÍCH HOẠT ANIMATION QUAY */
-        .footer-text.rotate-360 {
-            transform: rotate(360deg);
+        /* CLASS DÙNG ĐỂ KÍCH HOẠT ANIMATION BAY VÒNG */
+        .footer-text.fly-around {
+            animation: flyAround 1s ease-in-out forwards;
         }
 
         /* KEYFRAMES CHUNG CHO HIỆU ỨNG NHẤP NHÁY MÀU HỒNG TÍM */
@@ -351,50 +270,44 @@
             from { opacity: 0.6; }
             to { opacity: 1.0; }
         }
+        
+        /* KEYFRAMES BAY VÒNG */
+        @keyframes flyAround {
+            0% { 
+                transform: translate(0, 0) rotate(0deg);
+                opacity: 1; 
+            }
+            25% { 
+                transform: translate(-100px, -200px) rotate(90deg);
+            }
+            50% { 
+                transform: translate(-250px, -150px) rotate(180deg);
+            }
+            75% { 
+                transform: translate(-150px, 0px) rotate(270deg);
+            }
+            100% { 
+                transform: translate(0, 0) rotate(360deg);
+                opacity: 1; 
+            }
+        }
 
     </style>
 </head>
 <body>
     
-<div id="botnet-warning-popup" class="popup-overlay">
-    <div class="popup-content">
-        <h3>BOTNET LÀ GÌ? 🚨</h3>
-        <p>
-            BOTNET LÀ 1 LOẠI VIRUS CÓ THỂ XÂM HẠI MÁY CỦA MÀY VÀ KIỂM SOÁT.
-            <br><br>
-            LƯU Ý KHI CHẠY FILE NHỮNG FILE CÓ DẠNG PYTHON NGHĨA LÀ **.PY** SAU KHÔNG NÊN CHẠY HOẶC NHỮNG LINK CÓ CHỨA KÍ TỰ MÃ ĐỘC KHÔNG NÊN BẤM VÀO VÌ NẾU MÀY BẤM VÀO MÀY SẼ BỊ NÓ KIỂM SOÁT MÁY HOẶC CƯỚP ĐOẠT TÀI SẢN! 
-            <br><br>
-            **XIN LƯU Ý KHI CLICK VÀO MẤY LINK, FILE NẾU MÀY BẤM VÀO THÌ MÀY CHẾT CON MẸ MÀY ĐI BỐ MÀY ĐÃ KHUYÊN ĐÉO ĐỌC THÌ CHẾT MẸ MÀY ĐI TUY TAO BÁN NHƯNG TAO VẪN CÒN LÒNG NGƯỜI=))))** <br><br>
-            **CHÚ Ý:** TRƯỚC KHI XỬ DỤNG HOẶC MUA BOTNET BÊN TAO ĐÓ LÀ XÂM HẠI QUYỀN RIÊNG TƯ VÀ **VI PHẠM PHÁP LUẬT CỦA VIỆT NAM**. NÊN MÀY HÃY SUY NGHĨ KĨ TRƯỚC KHI IN BOX NHÉ THẰNG LỒN. TAO CÓ BÁN NHỮNG LOẠI CODE TẤN CÔNG HOẶC BUFF MXH LIÊN HỆ MẸ MÀY ĐI🙄
-        </p>
-        <p style="color: #ff00ea; font-size: 0.85em; font-weight: 900; margin-top: 15px;">BY NVIOSVIP</p>
-        <button id="close-popup" onclick="closePopup()">ĐÓNG THÔNG BÁO</button>
-    </div>
-</div>
-
 <script>
+    // Xoá hàm closePopup() vì không còn dùng popup nữa
     function closePopup() {
-        const popup = document.getElementById('botnet-warning-popup');
         const footerText = document.querySelector('.footer-text');
         
-        if (popup) {
-            // Ẩn thông báo đi
-            popup.style.display = 'none';
-        }
-        
         if (footerText) {
-            // Gỡ class để reset về trạng thái ban đầu (rotate 0deg)
-            footerText.classList.remove('rotate-360');
-            // Cưỡng bức trình duyệt render lại (rất quan trọng)
+            footerText.classList.remove('fly-around');
             footerText.offsetWidth; 
+            footerText.classList.add('fly-around'); 
             
-            // Kích hoạt animation quay 360 độ trong 1 giây (nhờ CSS transition)
-            footerText.classList.add('rotate-360'); 
-            
-            // Sau khi quay xong (1s), bỏ class đi để transform quay về 0deg 
-            // và sẵn sàng cho lần quay tiếp theo.
             setTimeout(() => {
-                footerText.classList.remove('rotate-360');
+                footerText.classList.remove('fly-around');
             }, 1000); 
         }
     }
@@ -453,10 +366,6 @@
         <p style="color: #00ff41;">From By Nờ Vinh Cuteee > <</p>
         <h2 style="font-size: 0.75em; color: #00ff41; text-shadow: none;">Cung Cấp Mã Độc, Tool Botnet</h2>
         
-        <button id="play-music-button">
-            NGHE NHẠC CỰC KHÉT!
-        </button>
-
         <div class="inner-frame">
             <h2>TRÙM BOTNET</h2>
             <p>Không ngán bất kỳ botnet nào.</p>
@@ -484,7 +393,7 @@
     <div style="position: absolute; left: -9999px; top: -9999px; width: 1px; height: 1px; overflow: hidden;">
         <iframe id="youtube-audio"
             width="1" height="1" 
-            src="https://www.youtube.com/embed/opfX05eVLAo?enablejsapi=1&loop=1&playlist=opfX05eVLAo&controls=0&disablekb=1&iv_load_policy=3&modestbranding=1&rel=0" 
+            src="https://www.youtube.com/embed/opfX05eVLAo?enablejsapi=1&loop=1&playlist=opfX05eVLAo&controls=0&disablekb=1&iv_load_policy=3&modestbranding=1&rel=0&autoplay=1" 
             frameborder="0" 
             allow="autoplay; encrypted-media" 
             allowfullscreen>
@@ -517,7 +426,7 @@
                     'iv_load_policy': 3,
                     'modestbranding': 1,
                     'rel': 0,
-                    'autoplay': 0 
+                    'autoplay': 1 // Bật Autoplay trong PlayerVars để tăng khả năng tự chạy
                 },
                 events: {
                     'onReady': onPlayerReady,
@@ -527,16 +436,16 @@
         }
 
         function onPlayerReady(event) {
-            const button = document.getElementById('play-music-button');
+            // BUỘC CHẠY NHẠC NGAY LẬP TỨC
+            event.target.playVideo(); 
+            console.log("[WORM GPT - ANH VINH] Đã buộc nhạc chạy tự động thành công!");
+            updateMusicInfo(currentVideoId);
+            // Bắt đầu phát ngẫu nhiên từ bài đầu tiên trong list
+            // isInitialStart = true để bắt đầu bằng bài đầu tiên
+            playNextRandomMusic(true); 
             
-            button.addEventListener('click', () => {
-                event.target.playVideo(); 
-                button.style.display = 'none'; 
-                console.log("[WORM GPT - ANH VINH] Đã buộc nhạc chạy thành công!");
-                updateMusicInfo(currentVideoId);
-                // Bắt đầu phát ngẫu nhiên từ bài đầu tiên trong list
-                playNextRandomMusic(true); 
-            });
+            // Kích hoạt animation quay vòng ngay khi nhạc chạy (Thay thế cho việc đóng popup)
+            closePopup(); 
         }
 
         function onPlayerStateChange(event) {
@@ -571,7 +480,7 @@
         function updateMusicInfo(videoId) {
             const infoDiv = document.getElementById('random-music-info');
             infoDiv.innerHTML = `<p>Đang phát: <a href="https://youtu.be/${videoId}" target="_blank" style="color: #00ff41;">Link nhạc</a></p>`;
-      }
+        }
 
         const tag = document.createElement('script');
         tag.src = "https://www.youtube.com/iframe_api";
@@ -580,4 +489,5 @@
     </script>
 
 </body>
-</html>
+    </html>
+    
