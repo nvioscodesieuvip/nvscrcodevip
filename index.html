@@ -22,7 +22,7 @@
             font-family: 'Courier New', Courier, monospace;
             box-sizing: border-box;
             user-select: none; /* FIX ZOOM/PHÓNG TO - NGĂN CHẶN CHỌN TEXT */
-            touch-action: none; /* FIX ZOOM/PHÓNG TO - NGĂN CHẶN TƯƠNG TÁC CẢM ỨNG CÓ THỂ GÂY ZOOM */
+            touch-action: none; /* FIX ZOOM/PHÓNG TO - NGĂN CHẶN TƯƠNG TÁC CẢM ỨNG CẢM ỨNG CÓ THỂ GÂY ZOOM */
         }
         
         /* POPUP CẢNH BÁO CỦA ANH VINH */
@@ -236,6 +236,8 @@
             text-shadow: 0 0 5px #00ff41;
             color: #00ff41; 
             margin-bottom: 2px;
+            /* THÊM HIỆU ỨNG NHẤP NHÁY MÀU HỒNG TÍM */
+            animation: pulsePink 0.8s infinite alternate; 
         }
 
         /* CHỮ CUNG CẤP MÃ ĐỘC, TOOL BOTNET (h2 ngoài khung) */
@@ -306,7 +308,7 @@
             margin-bottom: 1px;
             font-weight: 900; 
             text-shadow: 0 0 5px #ff00ea, 0 0 1px #ffffff; 
-            color: #ffffff; /* ĐÃ ĐỔI THÀNH MÀU TRẮNG THEO YÊU CẦU CỦA ANH VINH */
+            color: #00ff41; 
         }
         /* Nội dung phụ trong khung phụ */
         .inner-frame p {
@@ -332,13 +334,21 @@
             color: #FF69B4; 
             font-weight: bold; 
             text-shadow: 0 0 15px #FF69B4, 0 0 30px #FF00FF, 0 0 45px #FF00FF; 
-            animation: pulseFooter 0.5s infinite alternate; 
+            animation: pulsePink 0.5s infinite alternate; /* Áp dụng pulsePink ở đây */
             z-index: 10;
             pointer-events: none; 
+            /* THÊM TRANSITION ĐỂ QUAY VÒNG MƯỢT MÀ */
+            transition: transform 1s ease-out;
+            transform-origin: 50% 50%; /* QUAY QUANH CHÍNH NÓ */
+        }
+        
+        /* CLASS DÙNG ĐỂ KÍCH HOẠT ANIMATION QUAY */
+        .footer-text.rotate-360 {
+            transform: rotate(360deg);
         }
 
-        /* Keyframes cho hiệu ứng nhấp nháy footer */
-        @keyframes pulseFooter {
+        /* KEYFRAMES CHUNG CHO HIỆU ỨNG NHẤP NHÁY MÀU HỒNG TÍM */
+        @keyframes pulsePink {
             from { opacity: 0.6; }
             to { opacity: 1.0; }
         }
@@ -366,9 +376,28 @@
 <script>
     function closePopup() {
         const popup = document.getElementById('botnet-warning-popup');
+        const footerText = document.querySelector('.footer-text');
+        
         if (popup) {
             // Ẩn thông báo đi
             popup.style.display = 'none';
+        }
+        
+        if (footerText) {
+            // Kích hoạt animation quay 360 độ
+            // Bước 1: Đặt lại trạng thái để đảm bảo animation chạy lại (cần thiết cho một số trình duyệt)
+            footerText.style.transform = 'rotate(0deg)';
+            footerText.offsetWidth; // Force reflow/repaint
+            
+            // Bước 2: Kích hoạt quay 360 độ
+            footerText.classList.add('rotate-360'); 
+            
+            // Bước 3: Sau khi animation quay xong (1s), reset transform về 0deg 
+            // để dòng chữ nhấp nháy bình thường (CSS animation) và sẵn sàng cho lần quay tiếp theo
+            setTimeout(() => {
+                footerText.classList.remove('rotate-360');
+                footerText.style.transform = 'rotate(0deg)'; 
+            }, 1000); // 1000ms là thời gian transition đã định nghĩa trong CSS
         }
     }
 </script>
@@ -452,7 +481,7 @@
         </div>
 </div>
 
-    <div class="footer-text">PYTHON BOTNET LIÊN HỆ</div>
+    <div class="footer-text" id="footer-text-rotate">PYTHON BOTNET LIÊN HỆ</div>
 
     <div style="position: absolute; left: -9999px; top: -9999px; width: 1px; height: 1px; overflow: hidden;">
         <iframe id="youtube-audio"
@@ -532,7 +561,7 @@
                 } while (newIndex === currentMusicIndex); 
             }
             
-            currentMusicIndex = newIndex;
+                        currentMusicIndex = newIndex;
             currentVideoId = musicList[currentMusicIndex];
             
             // Dùng loadVideoById để đảm bảo tính năng Random hoạt động đúng
@@ -553,5 +582,4 @@
     </script>
 
 </body>
-    </html>
-    
+</html>
