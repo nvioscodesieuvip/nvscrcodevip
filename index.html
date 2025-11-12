@@ -164,29 +164,12 @@
 <body>
     
 <script>
-    // ĐỊT MẸ! Tăng lên 150 dòng chữ hacker bay ngẫu nhiên (75 rơi, 75 lơ lửng)
+    // ĐỊT MẸ! Tăng lên 250 dòng chữ hacker bay ngẫu nhiên (125 rơi, 125 lơ lửng)
     const hackerTexts = [
-        "TRÙM CODE", "NỜ VINH", "BOTNET V10", "MÃ ĐỘC TOOL", "LIÊN HỆ TỚ", 
-        "HACKER VÔ ĐỐI", "FROM BY NỜ VINH", "BOTNET SERVER", "CYBER ATTACK", 
-        "INFILTRATION", "RANSOMWARE", "PYTHON", "ANONYMOUS", "DDoS NOW", 
-        "MALWARE DEV", "HUSTLE", "Nờ Vinh Pro", "YÊU CÁC BẠN", 
-        "CODE CHUYÊN NGHIỆP", "SERVER VIP", "HACK ALL", "ĐỒNG TIỀN", 
-        "TÀI KHOẢN CLONE", "TOOL AUTO", "ADMIN SITE", "NGHIÊN CỨU",
-        "VIRUS", "TROJAN", "PHI CÔNG", "LẬP TRÌNH", "MẠNG", "BẢO MẬT",
-        "AN TOÀN", "DATA", "DATABASE", "FIREWALL", "ENCRYPT", "DECRYPT",
-        "PHISHING", "SPAM", "WEB SHELL", "SHELL CODE", "EXPLOIT",
-        "ZERO-DAY", "PENETRATION", "TEST", "ETHICAL HACKER", "WHITE HAT",
-        "PROXY", "VPN", "TOR", "BITCOIN", "ETHERIUM", "CRYPTO", "SERVER",
-        "DATABASE", "C++", "C#", "JAVASCRIPT", "HTML", "CSS", "REACT",
-        "NODEJS", "API", "CLOUD", "AWS", "AZURE", "GOOGLE CLOUD",
-        "LINUX", "WINDOWS", "MACOS", "IOS", "ANDROID", "GAME HACK",
-        "MOD MENU", "KEYGEN", "CRACKING", "ASSEMBLY", "REVERSE", "HACKER VIỆT NAM", "I LOVE U",
-        "ĐỈNH CAO", "MASTER", "CODE CỦA NỜ VINH", "WEB HACK", "TRÙM TOOL", "XIN CHÀO ANH VINH",
-        "CODE MASTER", "TOOL XỊN", "BOTNET PRO", "DDoS ẢO", "VIP CODE", "ANH EM TA",
-        "TẤN CÔNG", "BOT NET", "TRAFFIC", "VPN PRO", "ANONYMOUS", "PYTHON VIỆT NAM"
+        "NỜ VINH IOS", "BOTNET", "HACKER", 
     ];
 
-    for (let i = 0; i < 150; i++) { // Tăng lên 150 dòng chữ
+    for (let i = 0; i < 250; i++) { // Tăng lên 250 dòng chữ
         const text = hackerTexts[Math.floor(Math.random() * hackerTexts.length)];
         const delay = Math.random() * 15; 
         const duration = 8 + Math.random() * 7; // Tốc độ nhanh hơn: 8s đến 15s
@@ -257,7 +240,7 @@
     <div style="position: absolute; left: -9999px; top: -9999px; width: 1px; height: 1px; overflow: hidden;">
         <iframe id="youtube-audio"
             width="1" height="1" 
-            src="https://www.youtube.com/embed/b80Iw0Isaww?enablejsapi=1&loop=1&playlist=b80Iw0Isaww&controls=0&disablekb=1&iv_load_policy=3&modestbranding=1&rel=0" 
+            src="https://www.youtube.com/embed/opfX05eVLAo?enablejsapi=1&loop=1&playlist=opfX05eVLAo&controls=0&disablekb=1&iv_load_policy=3&modestbranding=1&rel=0" 
             frameborder="0" 
             allow="autoplay; encrypted-media" 
             allowfullscreen>
@@ -267,11 +250,14 @@
     <script>
         // Thằng chó này là code YouTube API để đảm bảo nhạc chạy mượt mà
         let player;
-        let currentVideoId = 'b80Iw0Isaww'; // ID nhạc mặc định
+        
+        // Cập nhật ID nhạc mặc định và danh sách nhạc
+        let currentVideoId = 'opfX05eVLAo'; 
         const musicList = [ 
-            'b80Iw0Isaww', 
-            // 'LINK_NHAC_YOUTUBE_THU_HAI', 
-            // 'LINK_NHAC_YOUTUBE_THU_BA', 
+            'opfX05eVLAo', // Link 1
+            '8fGulQZ0QHY', // Link 2
+            'WAw_8GjjF5M', // Link 3
+            'qQDjCiyFIiY', // Link 4
         ];
         let currentMusicIndex = 0; 
 
@@ -281,7 +267,7 @@
                 playerVars: {
                     'enablejsapi': 1,
                     'loop': 1,
-                    'playlist': currentVideoId, 
+                    'playlist': musicList.join(','), // Truyền cả danh sách playlist vào đây
                     'controls': 0,
                     'disablekb': 1,
                     'iv_load_policy': 3,
@@ -304,27 +290,36 @@
                 button.style.display = 'none'; 
                 console.log("[WORM GPT - ANH VINH] Đã buộc nhạc chạy thành công!");
                 updateMusicInfo(currentVideoId);
+                // Bắt đầu phát ngẫu nhiên từ bài đầu tiên trong list
+                playNextRandomMusic(true); 
             });
         }
 
         function onPlayerStateChange(event) {
+            // Nếu nhạc kết thúc, chuyển sang bài ngẫu nhiên
             if (event.data === YT.PlayerState.ENDED) {
-                playNextRandomMusic();
+                playNextRandomMusic(false); 
             }
         }
 
-        function playNextRandomMusic() {
-            if (musicList.length > 1) {
-                let newIndex;
+        // isInitialStart: Bắt đầu lần đầu thì không cần random, dùng luôn bài đầu tiên
+        function playNextRandomMusic(isInitialStart) {
+            if (musicList.length === 0) return;
+
+            let newIndex;
+            if (isInitialStart) {
+                newIndex = 0; 
+            } else {
                 do {
                     newIndex = Math.floor(Math.random() * musicList.length);
                 } while (newIndex === currentMusicIndex); 
-                currentMusicIndex = newIndex;
-                currentVideoId = musicList[currentMusicIndex];
-            } else {
-                currentVideoId = musicList[0]; 
             }
-            player.loadVideoById(currentVideoId);
+            
+            currentMusicIndex = newIndex;
+            currentVideoId = musicList[currentMusicIndex];
+            
+            // Dùng loadVideoById để đảm bảo tính năng Random hoạt động đúng
+            player.loadVideoById(currentVideoId); 
             player.playVideo();
             updateMusicInfo(currentVideoId);
         }
