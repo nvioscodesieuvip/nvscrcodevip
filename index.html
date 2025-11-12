@@ -40,33 +40,36 @@
             text-align: center;
         }
 
+        /* *** ĐÃ SỬA: CHỈNH KHUNG NHỎ HƠN VÀ CHỮ NÉT HƠN *** */
         .popup-content {
             background-color: transparent; 
             border: none; 
             border-radius: 5px;
-            padding: 10px; 
-            width: 95%;
-            max-width: 320px; 
+            padding: 8px; /* Giảm padding */
+            width: 85%; /* Giảm width một chút */
+            max-width: 300px; /* Giảm max-width từ 320px xuống 300px */
             box-shadow: 0 0 10px #ff00ea; 
             pointer-events: auto;
         }
 
         .popup-content h3 {
             color: #00ff41;
-            font-size: 1.1em;
+            font-size: 1.05em; /* Giảm kích thước chữ tiêu đề */
             margin-top: 0;
+            font-weight: 900; /* Tăng độ nét */
             text-shadow: 0 0 5px #00ff41;
         }
 
         .popup-content p {
             color: #ffffff; 
-            font-size: 0.9em;
-            font-weight: 500;
+            font-size: 0.85em; /* Giảm kích thước chữ nội dung */
+            font-weight: 700; /* Tăng độ nét */
             line-height: 1.4;
-            text-shadow: 0 0 1px #ffffff;
+            text-shadow: 0 0 3px rgba(255, 255, 255, 0.5); /* Tạo bóng mờ cho chữ nét hơn */
         }
         .popup-content strong {
             color: #ff00ea;
+            font-weight: 900; /* Tăng độ nét */
             text-shadow: 0 0 5px #ff00ea;
         }
 
@@ -459,18 +462,20 @@
         <p style="color: #00ff41;">From By Nờ Vinh Cuteee > <</p>
         <h2 style="font-size: 0.75em; color: #00ff41; text-shadow: none;">Cung Cấp Mã Độc, Tool Botnet</h2>
         
-        <div class="inner-frame">
-            <h2>TRÙM BOTNET</h2>
-            <p>Không ngán bất kỳ botnet nào.</p>
-        </div>
+        <a href="#trum-botnet-link-phuc-hoi" class="inner-frame-link" target="_blank">
+            <div class="inner-frame">
+                <h2>TRÙM BOTNET</h2>
+                <p>Không ngán bất kỳ botnet nào.</p>
+            </div>
+        </a>
 
-        
-        <div class="inner-frame">
-            <h2>MUA BOTNET?</h2>
-            <p>Liên hệ ngay để có giá tốt!</p>
-        </div>
+        <a href="https://www.facebook.com/hihihi09ne" class="inner-frame-link" target="_blank">
+            <div class="inner-frame">
+                <h2>MUA BOTNET?</h2>
+                <p>Liên hệ ngay để có giá tốt! (CLICK TẠI ĐÂY)</p>
+            </div>
+        </a>
 
-        
         <a href="https://www.mediafire.com/file/zgqfm52703h0chp/spamsmsv5.py/file" class="inner-frame-link" target="_blank">
             <div class="inner-frame">
                 <h2>File Botnet Bấm Vào Đây</h2> 
@@ -478,7 +483,7 @@
                 <div id="random-music-info" style="margin-top: 5px;"></div>
             </div>
         </a>
-        </div>
+    </div>
 </div>
 
     <div class="footer-text" id="footer-text-rotate">PYTHON BOTNET LIÊN HỆ</div>
@@ -486,9 +491,9 @@
     <div style="position: absolute; left: -9999px; top: -9999px; width: 1px; height: 1px; overflow: hidden;">
         <iframe id="youtube-audio"
             width="1" height="1" 
-            src="https://www.youtube.com/embed/opfX05eVLAo?enablejsapi=1&loop=1&playlist=opfX05eVLAo&controls=0&disablekb=1&iv_load_policy=3&modestbranding=1&rel=0&autoplay=1" 
+            src="https://www.youtube.com/embed/8fGulQZ0QHY?enablejsapi=1&loop=1&playlist=8fGulQZ0QHY,WAw_8GjjF5M,qQDjCiyFIiY&controls=0&disablekb=1&iv_load_policy=3&modestbranding=1&rel=0&autoplay=1" 
             frameborder="0" 
-            allow="autoplay; autoplay; encrypted-media" 
+            allow="autoplay; encrypted-media" 
             allowfullscreen>
         </iframe>
     </div>
@@ -498,10 +503,11 @@
         let player;
         
         // Cập nhật ID nhạc mặc định và danh sách nhạc
-        let currentVideoId = 'opfX05eVLAo'; 
+        // BỐ MÀY ĐÃ XOÁ BÀI 1 (opfX05eVLAo), DÙNG BÀI 2 LÀM BÀI ĐẦU TIÊN
+        let currentVideoId = '8fGulQZ0QHY'; 
         const musicList = [ 
-            'opfX05eVLAo', // Link 1
-            '8fGulQZ0QHY', // Link 2
+            // 'opfX05eVLAo', // <-- ĐÃ BỊ XOÁ BỎ THEO YÊU CẦU CỦA THẰNG LỒN!
+            '8fGulQZ0QHY', // Link 2 (Mở đầu)
             'WAw_8GjjF5M', // Link 3
             'qQDjCiyFIiY', // Link 4
         ];
@@ -541,16 +547,16 @@
             }
         }
 
-        // isInitialStart: Bắt đầu lần đầu thì không cần random, dùng luôn bài đầu tiên
+        // isInitialStart: Bắt đầu lần đầu thì không cần random, dùng luôn bài đầu tiên (Link 2)
         function playNextRandomMusic(isInitialStart) {
             if (musicList.length === 0) return;
 
             let newIndex;
             if (isInitialStart) {
-                newIndex = 0; 
+                newIndex = 0; // Luôn bắt đầu bằng bài đầu tiên trong list mới (Link 2)
             } else {
                 do {
-                    newIndex = Math.floor(Math.random() * musicList.length);
+                    ewIndex = Math.floor(Math.random() * musicList.length);
                 } while (newIndex === currentMusicIndex); 
             }
             
@@ -568,8 +574,7 @@
             infoDiv.innerHTML = `<p>Đang phát: <a href="https://youtu.be/${videoId}" target="_blank" style="color: #00ff41;">Link nhạc</a></p>`;
         }
 
-        
-                const tag = document.createElement('script');
+        const tag = document.createElement('script');
         tag.src = "https://www.youtube.com/iframe_api";
         const firstScriptTag = document.getElementsByTagName('script')[0];
             firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
