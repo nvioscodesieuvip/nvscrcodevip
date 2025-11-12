@@ -244,6 +244,34 @@
             background-size: 400% 400%;
             animation: rainbowTextShift 3s linear infinite, pulsePink 0.8s infinite alternate; /* Cầu vồng và nhấp nháy */
             text-shadow: none; /* Bỏ text-shadow cũ để chữ cầu vồng rõ hơn */
+            position: relative; /* Quan trọng để sticker nằm trong H1 */
+            display: inline-block; /* Để H1 có width theo nội dung */
+            padding: 0 5px; /* Thêm khoảng trống nhỏ cho sticker */
+        }
+
+        /* STICKER BÊN TRÁI H1 (Đứng yên) */
+        .h1-sticker-left {
+            position: absolute;
+            left: -35px; /* Dịch sang trái */
+            top: 50%;
+            transform: translateY(-50%);
+            width: 30px; /* Kích thước sticker */
+            height: 30px;
+            object-fit: contain;
+            pointer-events: none; 
+            z-index: 11; 
+        }
+        /* STICKER BÊN PHẢI H1 (Ảnh GIF, Đứng yên) */
+        .h1-sticker-right {
+            position: absolute;
+            right: -35px; /* Dịch sang phải */
+            top: 50%;
+            transform: translateY(-50%);
+            width: 30px; /* Kích thước sticker */
+            height: 30px;
+            object-fit: contain;
+            pointer-events: none; 
+            z-index: 11; 
         }
 
         /* KEYFRAMES CẦU VỒNG CHO CHỮ */
@@ -458,7 +486,7 @@
         if (i % 2 === 0) { 
             div.className = isHeart ? 'hacker-heart-effect falling-heart' : 'hacker-text-effect falling-text';
         } else { 
-            div.className = isHeart ? 'hacker-heart-effect floating-heart' : 'hacker-text-effect floating-text';
+            div.className = isHeart ? 'hacker-heart-effect floating-heart' : 'hacker-text-effect floating-heart';
         }
 
         document.body.appendChild(div);
@@ -469,7 +497,11 @@
     <div class="main-avatar-frame">
         <img class="hacker-avatar" src="https://i.postimg.cc/MKMXMzQ7/b481459915d3cac784de787cc48185a7.jpg" alt="WORM GPT - NỜ VINH">
         
-        <h1>Tui Là Nờ Vinh Yêu Các Bạn >.<</h1>
+        <h1>
+            <img class="h1-sticker-left" src="https://i.postimg.cc/J0v2rXqC/pepe-frog.png" alt="Sticker">
+            Tui Là Nờ Vinh Yêu Các Bạn >.<
+            <img class="h1-sticker-right" src="https://i.postimg.cc/fRJd895s/pepe-frog-on-toilet.gif" alt="Sticker GIF">
+        </h1>
         <p style="color: #00ff41;">From By Nờ Vinh Cuteee > <</p>
         <h2 style="font-size: 0.75em; color: #00ff41; text-shadow: none;">Cung Cấp Mã Độc, Tool Botnet</h2>
         
@@ -557,7 +589,7 @@
             }
         }
 
-                // isInitialStart: Bắt đầu lần đầu thì không cần random, dùng luôn bài đầu tiên (Link 2)
+        // isInitialStart: Bắt đầu lần đầu thì không cần random, dùng luôn bài đầu tiên (Link 2)
         function playNextRandomMusic(isInitialStart) {
             if (musicList.length === 0) return;
 
