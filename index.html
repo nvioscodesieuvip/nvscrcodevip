@@ -76,10 +76,10 @@
             100% { top: 10%; left: var(--final-left); transform: rotate(-5deg); }
         }
 
-        /* KHUNG CHÍNH (GỘP TẤT CẢ) - ĐÃ THU NHỎ (MAX-WIDTH: 250PX) */
+        /* KHUNG CHÍNH (GỘP TẤT CẢ) - ĐÃ THU GỌN VÀ NHỎ LẠI */
         .main-avatar-frame {
             border: 3px solid #00ff41; 
-            padding: 10px 8px; 
+            padding: 8px 6px; 
             box-shadow: 0 0 20px #00ff41, 0 0 5px #00ff41 inset;
             animation: pulse 1.5s infinite alternate; 
             text-align: center;
@@ -87,31 +87,29 @@
             border-radius: 10px;
             margin: 0; 
             width: 95%; 
-            max-width: 250px; 
+            max-width: 240px; 
             z-index: 10; 
             position: relative; 
-            pointer-events: auto; /* Cho phép click trên khung chính */
+            pointer-events: auto; 
         }
 
         /* KHUNG NHỎ BÊN TRONG KHUNG CHÍNH */
-        /* Style cho thẻ A bao quanh khung link */
         .inner-frame-link {
-            text-decoration: none; /* Bỏ gạch chân link */
+            text-decoration: none; 
             color: inherit;
         }
 
         .inner-frame {
             border: 2px solid #ff00ea; 
-            padding: 8px; 
-            margin: 8px 0 0 0; 
+            padding: 6px; 
+            margin: 6px 0 0 0; 
             background-color: rgba(255, 0, 234, 0.1); 
             border-radius: 5px;
             box-shadow: 0 0 5px #ff00ea;
             transition: transform 0.2s;
-            cursor: pointer; /* Cho biết là nút bấm */
+            cursor: pointer; 
         }
 
-        /* Hiệu ứng khi rê chuột vào khung link */
         .inner-frame:hover {
             transform: scale(1.03);
             border-color: #ff00ea;
@@ -119,29 +117,33 @@
         }
         
         .hacker-avatar {
-            width: 90px; 
-            height: 90px;
+            width: 80px; 
+            height: 80px;
             border-radius: 50%; 
             border: 5px solid #ff00ea; 
             object-fit: cover;
-            margin-bottom: 8px; 
+            margin-bottom: 5px; 
             box-shadow: 0 0 15px #ff00ea;
         }
         h1 {
-            font-size: 1.2em; 
+            font-size: 1.1em; 
             text-shadow: 0 0 5px #ff00ea;
             color: #ff00ea; 
-            margin-bottom: 3px;
+            margin-bottom: 2px;
         }
         h2 {
-            font-size: 0.95em; 
-            margin-top: 3px;
-            margin-bottom: 3px;
-        }
-        p {
-            font-size: 0.8em; 
+            font-size: 0.9em; 
             margin-top: 2px;
             margin-bottom: 2px;
+            font-weight: 900; /* FIX: TĂNG ĐỘ ĐẬM CỰC ĐẠI */
+            text-shadow: 0 0 5px #ff00ea; /* FIX: Tăng độ sáng/nét */
+        }
+        p {
+            font-size: 0.75em; 
+            margin-top: 1px;
+            margin-bottom: 1px;
+            font-weight: bold; /* FIX: TĂNG ĐỘ ĐẬM */
+            text-shadow: 0 0 3px #00ff41; /* FIX: Tăng độ sáng/nét */
         }
         
         /* Style cho Nút bấm */
@@ -149,16 +151,16 @@
             background-color: #ff00ea; 
             color: white; 
             border: 3px solid #00ff41; 
-            padding: 6px 12px; 
-            font-size: 0.85em; 
+            padding: 5px 10px; 
+            font-size: 0.8em; 
             font-weight: bold; 
             cursor: pointer; 
-            margin-top: 10px; 
-            margin-bottom: 8px; 
+            margin-top: 8px; 
+            margin-bottom: 6px; 
             transition: transform 0.2s;
             border-radius: 5px;
             box-shadow: 0 0 10px #ff00ea;
-            pointer-events: auto; /* Cho phép click */
+            pointer-events: auto; 
         }
         #play-music-button:hover {
             transform: scale(1.05);
@@ -171,22 +173,24 @@
             to { box-shadow: 0 0 30px #00ff41, 0 0 15px #00ff41 inset; }
         }
 
-        /* CHỮ DƯỚI ĐÍT NỀN - TĂNG CƯỜNG ĐỘ SÁNG */
+        /* CHỮ DƯỚI ĐÍT NỀN - SIÊU SÁNG & ĐẬM */
         .footer-text {
             position: fixed; 
             bottom: 10px; 
             right: 10px; 
             font-size: 0.9em; 
             color: #FF69B4; 
-            text-shadow: 0 0 10px #FF69B4, 0 0 20px #FF00FF; 
-            animation: pulseFooter 0.7s infinite alternate; 
+            font-weight: bold; 
+            /* Tăng cường độ sáng cực mạnh */
+            text-shadow: 0 0 15px #FF69B4, 0 0 30px #FF00FF, 0 0 45px #FF00FF; 
+            animation: pulseFooter 0.5s infinite alternate; 
             z-index: 10;
-            pointer-events: none; /* Không cản click */
+            pointer-events: none; 
         }
 
         /* Keyframes cho hiệu ứng nhấp nháy footer */
         @keyframes pulseFooter {
-            from { opacity: 0.7; }
+            from { opacity: 0.6; }
             to { opacity: 1.0; }
         }
 
@@ -370,5 +374,5 @@
     </script>
 
 </body>
-                                             </html>
-                
+    </html>
+    
