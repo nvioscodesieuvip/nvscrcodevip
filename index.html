@@ -121,11 +121,9 @@
 
         /* KHUNG CHÍNH (GỘP TẤT CẢ) */
         .main-avatar-frame {
-            /* Loại bỏ border tĩnh cũ */
             border: none; 
             padding: 8px 6px; 
             box-shadow: 0 0 20px #00ff41, 0 0 5px #00ff41 inset;
-            /* Giữ animation pulse cho box-shadow */
             animation: pulse 1.5s infinite alternate; 
             text-align: center;
             background-color: rgba(0, 0, 0, 0.95); 
@@ -138,37 +136,39 @@
             pointer-events: auto; 
         }
         
-        /* AVATAR CẦU VỒNG 7 MÀU (Dùng gradient border) */
+        /* AVATAR CẦU VỒNG 7 MÀU CHUYỂN ĐỘNG (Dùng animated gradient border) */
         .hacker-avatar {
             width: 80px; 
             height: 80px;
             border-radius: 50%; 
             object-fit: cover;
             margin-bottom: 5px; 
-            box-shadow: 0 0 15px #ff00ea; /* Giữ box-shadow tím */
             
-            /* TẠO VIỀN CẦU VỒNG NHẤP NHÁY */
+            /* Dùng border-image-source hoặc background clip/origin phức tạp hơn cho hiệu ứng 7 màu */
             border: 5px solid transparent; 
             background-origin: border-box;
             background-clip: content-box, border-box;
-            /* Dùng background gradient để tạo hiệu ứng 7 màu */
-            background-image: linear-gradient(to right, black, black), 
-                              linear-gradient(45deg, #ff0000, #ff8c00, #ffff00, #00ff00, #00ffff, #0000ff, #8b00ff); 
             
-            /* Animation cho hiệu ứng 7 màu xoay và nhấp nháy */
+            /* Viền 7 màu chuyển động */
+            background-image: linear-gradient(to right, black, black), 
+                              linear-gradient(90deg, #ff0000, #ff8c00, #ffff00, #00ff00, #00ffff, #0000ff, #8b00ff, #ff0000); 
+            background-size: 400% 400%; /* Kích thước lớn hơn để tạo hiệu ứng chuyển động */
+            background-position: 0% 50%;
+            
+            /* Animation cho hiệu ứng 7 màu chuyển động và nhấp nháy */
             animation: 
-                rainbowBorder 2s linear infinite, 
+                rainbowBorderShift 3s linear infinite, /* FIX: Đổi tên animation */
                 pulseBorder 0.5s infinite alternate; 
         }
 
-        /* KEYFRAMES CẦU VỒNG XOAY (BORDER) */
-        @keyframes rainbowBorder {
-            to { background-image: linear-gradient(to right, black, black), 
-                                  linear-gradient(405deg, #ff0000, #ff8c00, #ffff00, #00ff00, #00ffff, #0000ff, #8b00ff); 
-            }
+        /* KEYFRAMES CẦU VỒNG CHUYỂN ĐỘNG (ĐÚNG YÊU CẦU ANH VINH) */
+        @keyframes rainbowBorderShift {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
         }
         
-        /* KEYFRAMES NHẤP NHÁY (OPACITY CỦA BÓNG ĐỔ) */
+        /* KEYFRAMES NHẤP NHÁY (OPACITY CỦA BÓNG ĐỔ - GIỮ MÀU TÍM HỒNG CHO VIỀN NGOÀI) */
         @keyframes pulseBorder {
             from { box-shadow: 0 0 10px rgba(255, 0, 255, 0.7); }
             to { box-shadow: 0 0 25px rgba(255, 0, 255, 1.0); }
@@ -177,7 +177,7 @@
         /* CHỮ TÊN "NỜ VINH" */
         h1 {
             font-size: 1.1em; 
-            /* FIX MÀU: XANH LÁ HACKER */
+            /* MÀU: XANH LÁ HACKER */
             text-shadow: 0 0 5px #00ff41;
             color: #00ff41; 
             margin-bottom: 2px;
@@ -201,9 +201,9 @@
         
         /* Style cho Nút bấm */
         #play-music-button {
-            /* FIX MÀU: ĐỎ NHẠT/ĐỎ NHUNG */
-            background-color: #8b0000; 
-            color: white; 
+            /* FIX NÚT: TRONG SUỐT VIỀN XANH LÁ */
+            background-color: transparent; 
+            color: #00ff41; /* Đổi màu chữ sang xanh lá */
             border: 3px solid #00ff41; 
             padding: 5px 10px; 
             font-size: 0.8em; 
@@ -213,12 +213,12 @@
             margin-bottom: 6px; 
             transition: transform 0.2s;
             border-radius: 5px;
-            box-shadow: 0 0 10px #ff00ea;
+            box-shadow: 0 0 10px rgba(0, 255, 65, 0.5); /* Thay bóng tím bằng xanh nhạt */
             pointer-events: auto; 
         }
         #play-music-button:hover {
             transform: scale(1.05);
-            background-color: #cc00bb;
+            background-color: rgba(0, 255, 65, 0.1); /* Hover sáng nhẹ */
         }
         
         /* Keyframes cho hiệu ứng nhấp nháy khung */
@@ -273,15 +273,15 @@
 <body>
     
 <script>
-    // FIX DÍNH CỤC TUYỆT ĐỐI + TRÁI TIM XANH LÁ VÀ SIÊU NHỎ
+    // TRÁI TIM XANH LÁ VÀ SIÊU NHỎ
     const hackerTexts = [
         "NỜ VINH IOS", "BOTNET", "HACKER", 
     ];
 
-    const numEffects = 300; // Tổng số hiệu ứng (200 chữ, 100 trái tim)
+    const numEffects = 300; 
 
     for (let i = 0; i < numEffects; i++) { 
-        const isHeart = Math.random() < 0.3; // 30% là trái tim, 70% là chữ
+        const isHeart = Math.random() < 0.3; 
         const content = isHeart ? '' : hackerTexts[Math.floor(Math.random() * hackerTexts.length)]; 
         
         const delay = Math.random() * 15; 
@@ -290,10 +290,7 @@
         const initialLeft = -10 + Math.random() * 120; 
         const initialTop = -50 + Math.random() * 200; 
         
-        // Kích thước chữ: 0.6em đến 1.2em
         const size = 0.6 + Math.random() * 0.6; 
-
-        // Kích thước cơ bản của trái tim (2px - 8px) để đảm bảo nó SIÊU NHỎ
         const heartBaseSize = (2 + Math.random() * 6); 
         const heartScale = (0.8 + Math.random() * 0.4); 
 
@@ -305,15 +302,14 @@
             font-size: ${size}em;
             left: ${initialLeft}vw;
             top: ${initialTop}vh;
-            /* Truyền biến CSS cho trái tim */
             --heart-base-size: ${heartBaseSize}px;
             --heart-border-radius: ${heartBaseSize / 2}px;
             --heart-scale: ${heartScale};
         `;
 
-        if (i % 2 === 0) { // Loại RƠI
+        if (i % 2 === 0) { 
             div.className = isHeart ? 'hacker-heart-effect falling-heart' : 'hacker-text-effect falling-text';
-        } else { // Loại LƠ LỬNG
+        } else { 
             div.className = isHeart ? 'hacker-heart-effect floating-heart' : 'hacker-text-effect floating-text';
         }
 
