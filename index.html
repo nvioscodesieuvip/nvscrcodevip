@@ -52,10 +52,10 @@
             will-change: transform, opacity; 
         }
 
-        /* TRÁI TIM TÍM HỒNG VẼ BẰNG CSS ĐÂY RỒI ANH VINH! */
+        /* TRÁI TIM TÍM HỒNG VẼ BẰNG CSS */
         .hacker-heart-effect {
             position: absolute;
-            background-color: #FF00FF; /* Màu chính của trái tim */
+            background-color: #FF00FF; 
             pointer-events: none;
             opacity: 0;
             z-index: 1;
@@ -64,15 +64,13 @@
             /* Tăng độ phát sáng cho trái tim */
             box-shadow: 0 0 10px #FF00FF, 0 0 20px #FF00FF, 0 0 30px #FF00FF; 
             
-            /* Kích thước cơ bản của một "mảnh" trái tim */
             width: var(--heart-base-size); 
             height: var(--heart-base-size); 
             
-            /* Dùng để tạo hình trái tim */
-            transform-origin: 50% 50%; /* Tâm xoay/biến đổi */
-            transform: rotate(-45deg); /* Xoay 45 độ để tạo góc */
+            transform-origin: 50% 50%; 
+            transform: rotate(-45deg); 
             
-            border-radius: var(--heart-border-radius) 0 var(--heart-border-radius) 0; /* Bo tròn các góc */
+            border-radius: var(--heart-border-radius) 0 var(--heart-border-radius) 0; 
         }
 
         /* Phần tử giả để tạo hình trái tim */
@@ -83,17 +81,17 @@
             width: var(--heart-base-size);
             height: var(--heart-base-size);
             background-color: #FF00FF;
-            border-radius: 50%; /* Tạo hình tròn */
-            box-shadow: inherit; /* Kế thừa bóng đổ */
+            border-radius: 50%; 
+            box-shadow: inherit; 
         }
 
         .hacker-heart-effect::before {
-            top: calc(var(--heart-base-size) / -2); /* Đặt hình tròn phía trên */
+            top: calc(var(--heart-base-size) / -2); 
             left: 0;
         }
 
         .hacker-heart-effect::after {
-            left: calc(var(--heart-base-size) / -2); /* Đặt hình tròn phía bên trái */
+            left: calc(var(--heart-base-size) / -2); 
             top: 0;
         }
 
@@ -104,7 +102,7 @@
         }
 
         @keyframes fallAndFade {
-            0% { transform: translate(0, 0) scale(var(--heart-scale, 1)); opacity: 0.2; } /* Scale cho trái tim */
+            0% { transform: translate(0, 0) scale(var(--heart-scale, 1)); opacity: 0.2; } 
             10% { opacity: 0.7; }
             90% { opacity: 0.7; } 
             100% { transform: translate(0, 150vh) scale(var(--heart-scale, 1)); opacity: 0; } 
@@ -118,7 +116,7 @@
 
         @keyframes floatForever {
             0% { transform: translate(0, 0) rotate(0deg) scale(var(--heart-scale, 1)); }
-            50% { transform: translate(15vw, 15vh) rotate(8deg) scale(calc(var(--heart-scale, 1) * 1.1)); } /* Lơ lửng và phồng nhẹ */
+            50% { transform: translate(15vw, 15vh) rotate(8deg) scale(calc(var(--heart-scale, 1) * 1.1)); } 
             100% { transform: translate(-15vw, -15vh) rotate(-8deg) scale(var(--heart-scale, 1)); }
         }
 
@@ -244,7 +242,7 @@
 <body>
     
 <script>
-    // FIX DÍNH CỤC TUYỆT ĐỐI + THÊM TRÁI TIM CSS
+    // FIX DÍNH CỤC TUYỆT ĐỐI + THU NHỎ TRÁI TIM
     const hackerTexts = [
         "NỜ VINH IOS", "BOTNET", "HACKER", 
     ];
@@ -253,17 +251,20 @@
 
     for (let i = 0; i < numEffects; i++) { 
         const isHeart = Math.random() < 0.3; // 30% là trái tim, 70% là chữ
-        const content = isHeart ? '' : hackerTexts[Math.floor(Math.random() * hackerTexts.length)]; // Trái tim không có text
+        const content = isHeart ? '' : hackerTexts[Math.floor(Math.random() * hackerTexts.length)]; 
         
-        const delay = Math.random() * 15; // Giảm delay để xuất hiện nhanh hơn
-        const duration = 10 + Math.random() * 7; // FIX: Giảm duration để rơi/lơ lửng nhanh hơn
+        const delay = Math.random() * 15; 
+        const duration = 10 + Math.random() * 7; 
         
         const initialLeft = -10 + Math.random() * 120; 
         const initialTop = -50 + Math.random() * 200; 
         
-        const size = isHeart ? (1.0 + Math.random() * 1.0) : (0.6 + Math.random() * 0.6); // Kích thước chữ
-        const heartBaseSize = (20 + Math.random() * 20); // Kích thước cơ bản của trái tim (20px - 40px)
-        const heartScale = (0.8 + Math.random() * 0.4); // Tỷ lệ scale ngẫu nhiên cho trái tim (0.8x - 1.2x)
+        // Kích thước chữ: 0.6em đến 1.2em
+        const size = 0.6 + Math.random() * 0.6; 
+
+        // FIX LỖI NÀY: Kích thước cơ bản của trái tim (5px - 15px) để đảm bảo nó nhỏ hơn chữ
+        const heartBaseSize = (5 + Math.random() * 10); 
+        const heartScale = (0.8 + Math.random() * 0.4); 
 
         const div = document.createElement('div');
         div.textContent = content;
