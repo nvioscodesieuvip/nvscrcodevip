@@ -253,11 +253,11 @@
         .h1-sticker-right {
             position: absolute;
             /* CHỈNH LẠI VỊ TRÍ ĐỂ NÓ SÁT CHỮ >.< NHẤT CÓ THỂ */
-            right: -30px; /* Vị trí điều chỉnh để GIF sát chữ */
+            right: -25px; /* Điều chỉnh vị trí này nếu cần để sát hơn nữa */
             top: 50%;
             transform: translateY(-50%);
-            width: 35px; /* Kích thước to hơn 35px */
-            height: 35px;
+            width: 30px; /* Giảm kích thước xuống 30px */
+            height: 30px;
             object-fit: contain;
             pointer-events: none; 
             z-index: 11; 
@@ -549,18 +549,18 @@
                 playerVars: {
                     'enablejsapi': 1,
                     'loop': 1,
-                            'playlist': musicList.join(','), 
-        'controls': 0,
-        'disablekb': 1,
-        'iv_load_policy': 3,
-        'modestbranding': 1,
-        'rel': 0,
-        'autoplay': 1 // Bật Autoplay trong PlayerVars
-    },
-    events: {
-        'onReady': onPlayerReady,
-        'onStateChange': onPlayerStateChange
-    }
+                    'playlist': musicList.join(','), 
+'controls': 0,
+'disablekb': 1,
+'iv_load_policy': 3,
+'modestbranding': 1,
+'rel': 0,
+'autoplay': 1 // Bật Autoplay trong PlayerVars
+},
+events: {
+    'onReady': onPlayerReady,
+    'onStateChange': onPlayerStateChange
+}
 });
 }
 
@@ -573,7 +573,7 @@ console.log("[WORM GPT - ANH VINH] Player đã sẵn sàng, chờ tương tác t
 function onPlayerStateChange(event) {
 // Nếu nhạc kết thúc, chuyển sang bài ngẫu nhiên
 if (event.data === YT.PlayerState.ENDED) {
-    playNextRandomMusic(false); 
+playNextRandomMusic(false); 
 }
 }
 
@@ -583,11 +583,11 @@ if (musicList.length === 0) return;
 
 let newIndex;
 if (isInitialStart) {
-    newIndex = 0; // Luôn bắt đầu bằng bài đầu tiên trong list mới (Link 2)
+newIndex = 0; // Luôn bắt đầu bằng bài đầu tiên trong list mới (Link 2)
 } else {
-    do {
-        newIndex = Math.floor(Math.random() * musicList.length);
-    } while (newIndex === currentMusicIndex); 
+do {
+    newIndex = Math.floor(Math.random() * musicList.length);
+} while (newIndex === currentMusicIndex); 
 }
 
 currentMusicIndex = newIndex;
@@ -608,7 +608,7 @@ return;
 const tag = document.createElement('script');
 tag.src = "https://www.youtube.com/iframe_api";
 const firstScriptTag = document.getElementsByTagName('script')[0];
-    firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
 </script>
 
 </body>
