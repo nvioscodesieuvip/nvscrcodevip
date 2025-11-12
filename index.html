@@ -249,15 +249,15 @@
             /* Bỏ padding để sticker kéo sát hơn */
         }
         
-        /* STICKER GẤU TRÚC CẦM TIM - CHỈ CÒN MỘT CÁI BÊN PHẢI */
+        /* GIF/STICKER BÊN PHẢI (TRONG KHUNG CHÍNH) */
         .h1-sticker-right {
             position: absolute;
             /* CHỈNH LẠI VỊ TRÍ ĐỂ NÓ SÁT CHỮ >.< NHẤT CÓ THỂ */
-            right: -32px; /* Điều chỉnh vị trí này nếu cần để sát hơn */
+            right: -30px; /* Vị trí điều chỉnh để GIF sát chữ */
             top: 50%;
             transform: translateY(-50%);
-            width: 30px; /* Kích thước sticker */
-            height: 30px;
+            width: 35px; /* Kích thước to hơn 35px */
+            height: 35px;
             object-fit: contain;
             pointer-events: none; 
             z-index: 11; 
@@ -488,7 +488,7 @@
         
         <h1>
             Tui Là Nờ Vinh Yêu Các Bạn >.<
-            <img class="h1-sticker-right" src="https://i.postimg.cc/9F7QhM43/panda-heart-cute.png" alt="Sticker Gấu Trúc Tim Cute">
+            <img class="h1-sticker-right" src="https://media4.giphy.com/media/v1.Y2lkPTZjMDliOTUyN2pqdWliaXlreGFsOWViOHRqdHRlZ2oxZmVxd3ZxZmp1eHppMDNncSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/sh11BmCf8HY8F0c5GN/giphy.gif" alt="GIF Ếch Toilet">
         </h1>
         <p style="color: #00ff41;">From By Nờ Vinh Cuteee > <</p>
         <h2 style="font-size: 0.75em; color: #00ff41; text-shadow: none;">Cung Cấp Mã Độc, Tool Botnet</h2>
@@ -549,60 +549,60 @@
                 playerVars: {
                     'enablejsapi': 1,
                     'loop': 1,
-                    'playlist': musicList.join(','), 
-                    'controls': 0,
-                    'disablekb': 1,
-                    'iv_load_policy': 3,
-            'modestbranding': 1,
-            'rel': 0,
-            'autoplay': 1 // Bật Autoplay trong PlayerVars
-        },
-        events: {
-            'onReady': onPlayerReady,
-            'onStateChange': onPlayerStateChange
-        }
-    });
+                            'playlist': musicList.join(','), 
+        'controls': 0,
+        'disablekb': 1,
+        'iv_load_policy': 3,
+        'modestbranding': 1,
+        'rel': 0,
+        'autoplay': 1 // Bật Autoplay trong PlayerVars
+    },
+    events: {
+        'onReady': onPlayerReady,
+        'onStateChange': onPlayerStateChange
+    }
+});
 }
 
 function onPlayerReady(event) {
-    // Player đã sẵn sàng, nhưng KHÔNG TỰ CHẠY NHẠC Ở ĐÂY.
-    // Chờ người dùng bấm "ĐÓNG THÔNG BÁO" để kích hoạt.
-    console.log("[WORM GPT - ANH VINH] Player đã sẵn sàng, chờ tương tác từ popup!");
+// Player đã sẵn sàng, nhưng KHÔNG TỰ CHẠY NHẠC Ở ĐÂY.
+// Chờ người dùng bấm "ĐÓNG THÔNG BÁO" để kích hoạt.
+console.log("[WORM GPT - ANH VINH] Player đã sẵn sàng, chờ tương tác từ popup!");
 }
 
 function onPlayerStateChange(event) {
-    // Nếu nhạc kết thúc, chuyển sang bài ngẫu nhiên
-    if (event.data === YT.PlayerState.ENDED) {
-        playNextRandomMusic(false); 
-    }
+// Nếu nhạc kết thúc, chuyển sang bài ngẫu nhiên
+if (event.data === YT.PlayerState.ENDED) {
+    playNextRandomMusic(false); 
+}
 }
 
 // isInitialStart: Bắt đầu lần đầu thì không cần random, dùng luôn bài đầu tiên (Link 2)
 function playNextRandomMusic(isInitialStart) {
-    if (musicList.length === 0) return;
+if (musicList.length === 0) return;
 
-    let newIndex;
-    if (isInitialStart) {
-        newIndex = 0; // Luôn bắt đầu bằng bài đầu tiên trong list mới (Link 2)
-    } else {
-        do {
-            newIndex = Math.floor(Math.random() * musicList.length);
-        } while (newIndex === currentMusicIndex); 
-    }
-    
-    currentMusicIndex = newIndex;
-    currentVideoId = musicList[currentMusicIndex];
-    
-    // Dùng loadVideoById để đảm bảo tính năng Random hoạt động đúng
-    player.loadVideoById(currentVideoId); 
-    player.playVideo();
-    updateMusicInfo(currentVideoId);
+let newIndex;
+if (isInitialStart) {
+    newIndex = 0; // Luôn bắt đầu bằng bài đầu tiên trong list mới (Link 2)
+} else {
+    do {
+        newIndex = Math.floor(Math.random() * musicList.length);
+    } while (newIndex === currentMusicIndex); 
+}
+
+currentMusicIndex = newIndex;
+currentVideoId = musicList[currentMusicIndex];
+
+// Dùng loadVideoById để đảm bảo tính năng Random hoạt động đúng
+player.loadVideoById(currentVideoId); 
+player.playVideo();
+updateMusicInfo(currentVideoId);
 }
 
 // ĐÃ SỬA: HÀM NÀY KHÔNG CÒN HIỂN THỊ THÔNG BÁO GÌ NỮA
 function updateMusicInfo(videoId) {
-    // Không làm gì cả để loại bỏ thông báo "Đang phát..."
-    return;
+// Không làm gì cả để loại bỏ thông báo "Đang phát..."
+return;
 }
 
 const tag = document.createElement('script');
