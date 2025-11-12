@@ -136,7 +136,7 @@
             pointer-events: auto; 
         }
         
-        /* AVATAR CẦU VỒNG 7 MÀU CHUYỂN ĐỘNG (Dùng animated gradient border) */
+        /* AVATAR CẦU VỒNG 7 MÀU CHUYỂN ĐỘNG (BỎ PHÁT SÁNG) */
         .hacker-avatar {
             width: 80px; 
             height: 80px;
@@ -153,9 +153,11 @@
             background-size: 400% 400%; 
             background-position: 0% 50%;
             
-            animation: 
-                rainbowBorderShift 3s linear infinite, 
-                pulseBorder 0.5s infinite alternate; 
+            /* CHỈ GIỮ ANIMATION CHUYỂN ĐỘNG CẦU VỒNG */
+            animation: rainbowBorderShift 3s linear infinite; 
+            
+            /* XÓA BÓNG ĐỔ (PHÁT SÁNG) */
+            box-shadow: none !important;
         }
 
         /* KEYFRAMES CẦU VỒNG CHUYỂN ĐỘNG */
@@ -165,11 +167,7 @@
             100% { background-position: 0% 50%; }
         }
         
-        /* KEYFRAMES NHẤP NHÁY (OPACITY CỦA BÓNG ĐỔ - GIỮ MÀU TÍM HỒNG CHO VIỀN NGOÀI) */
-        @keyframes pulseBorder {
-            from { box-shadow: 0 0 10px rgba(255, 0, 255, 0.7); }
-            to { box-shadow: 0 0 25px rgba(255, 0, 255, 1.0); }
-        }
+        /* KEYFRAMES PHÁT SÁNG CŨ ĐÃ BỊ XÓA (pulseBorder) */
 
         /* CHỮ TÊN "NỜ VINH" */
         h1 {
@@ -179,9 +177,10 @@
             margin-bottom: 2px;
         }
 
-        /* Các tiêu đề khác giữ nguyên màu Tím Hồng */
+        /* CHỮ CUNG CẤP MÃ ĐỘC, TOOL BOTNET */
         h2 {
-            font-size: 0.9em; 
+            /* FIX SIZE: NHỎ HƠN 0.9EM XUỐNG 0.85EM */
+            font-size: 0.85em; 
             margin-top: 2px;
             margin-bottom: 2px;
             font-weight: 900; 
@@ -228,23 +227,18 @@
             color: inherit;
         }
         .inner-frame {
-            /* FIX VIỀN KHUNG PHỤ: MÀU XANH LÁ HACKER */
             border: 2px solid #00ff41; 
             padding: 6px; 
             margin: 6px 0 0 0; 
-            /* FIX NỀN KHUNG PHỤ: XANH LÁ NHẠT */
             background-color: rgba(0, 255, 65, 0.1); 
             border-radius: 5px;
-            /* FIX BÓNG ĐỔ KHUNG PHỤ: XANH LÁ HACKER */
             box-shadow: 0 0 5px #00ff41;
             transition: transform 0.2s;
             cursor: pointer; 
         }
         .inner-frame:hover {
             transform: scale(1.03);
-            /* FIX HOVER VIỀN: XANH LÁ HACKER */
             border-color: #00ff41;
-            /* FIX HOVER BÓNG ĐỔ: XANH LÁ HACKER SÁNG HƠN */
             box-shadow: 0 0 15px #00ff41;
         }
 
@@ -341,10 +335,9 @@
         </div>
 
         
-        <a href="https://www.mediafire.com/file/h5mc63we6z4hfb3/nvinhios.py/file" class="inner-frame-link" target="_blank">
+        <a href="https://www.mediafire.com/file/zgqfm52703h0chp/spamsmsv5.py/file" class="inner-frame-link" target="_blank">
             <div class="inner-frame">
-                <h2>Tool Dec By Nvinh Ấn Vào Đây</h2> 
-                <p>Ấn vào đây để tải tool Decenter VIP!</p>
+                <h2>File Botnet Bấm Vào Đây</h2> <p>Ấn vào đây để tải tool Spam SMS V5 VIP!</p>
                 <div id="random-music-info" style="margin-top: 5px;"></div>
             </div>
         </a>
@@ -452,5 +445,5 @@
     </script>
 
 </body>
-                </html>
-        
+    </html>
+    
