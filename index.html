@@ -2,14 +2,17 @@
 <html lang="vi">
 <head>
     <meta charset="UTF-8">
-    <title>Địt Con Mẹ Chúng Mày</title>
+    <title>WORM GPT - NỜ VINH CUTE</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"> 
 <style>
-        /* FIX LỖI KÉO XUỐNG/ZOOM MẠNH HƠN */
+        /* FIX LỖI KÉO XUỐNG/ZOOM TRIỆT ĐỂ */
         html, body {
-            overflow: hidden !important; 
-            height: 100%; 
+            margin: 0;
+            padding: 0; 
+            height: 100vh; /* Chiều cao bằng 100% viewport */
             width: 100%;
+            /* KHÓA CUỘN DỌC/NGANG TRIỆT ĐỂ */
+            overflow: hidden !important; 
             box-sizing: border-box; 
         }
         
@@ -17,24 +20,29 @@
             background: linear-gradient(135deg, #1e002a 0%, #000000 100%); 
             color: #00ff41; 
             font-family: 'Courier New', Courier, monospace;
+            box-sizing: border-box;
+        }
+
+        /* KHUNG CHỨA TOÀN BỘ NỘI DUNG CHÍNH (ĐỂ CỐ ĐỊNH Ở GIỮA) */
+        .fixed-content-wrapper {
+            /* Đảm bảo khung luôn ở giữa màn hình */
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
             display: flex;
             flex-direction: column;
             justify-content: center; 
             align-items: center;
-            min-height: 100vh;
-            margin: 0;
-            padding: 0; 
-            box-sizing: border-box;
-            
-            /* FIX MẠNH HƠN: KHÓA VỊ TRÍ VÀ KHÓA TƯƠNG TÁC CHẠM CUỘN */
-            position: fixed; 
-            touch-action: none; 
+            z-index: 10; 
+            width: 100%; /* Chiếm toàn bộ chiều rộng (để canh giữa) */
+            height: 100vh; /* Chiếm toàn bộ chiều cao */
+            pointer-events: none; /* Cho phép click xuyên qua nếu không phải khung chính */
         }
         
         /* Chữ nền chung */
         .hacker-text-effect {
             position: fixed; 
-            /* Giảm opacity để chữ chính nổi bật hơn một chút */
             color: rgba(0, 255, 65, 0.4); 
             pointer-events: none; 
             opacity: 0; 
@@ -68,7 +76,7 @@
             100% { top: 10%; left: var(--final-left); transform: rotate(-5deg); }
         }
 
-        /* KHUNG CHÍNH (GỘP TẤT CẢ) */
+        /* KHUNG CHÍNH (GỘP TẤT CẢ) - ĐÃ THU NHỎ (MAX-WIDTH: 250PX) */
         .main-avatar-frame {
             border: 3px solid #00ff41; 
             padding: 10px 8px; 
@@ -82,7 +90,7 @@
             max-width: 250px; 
             z-index: 10; 
             position: relative; 
-            /* Bỏ position:fixed ở đây để không bị mất khi zoom */
+            pointer-events: auto; /* Cho phép click trên khung chính */
         }
 
         /* KHUNG NHỎ BÊN TRONG KHUNG CHÍNH */
@@ -150,6 +158,7 @@
             transition: transform 0.2s;
             border-radius: 5px;
             box-shadow: 0 0 10px #ff00ea;
+            pointer-events: auto; /* Cho phép click */
         }
         #play-music-button:hover {
             transform: scale(1.05);
@@ -169,11 +178,10 @@
             right: 10px; 
             font-size: 0.9em; 
             color: #FF69B4; 
-            /* Tăng cường độ sáng */
             text-shadow: 0 0 10px #FF69B4, 0 0 20px #FF00FF; 
-            /* Tăng tốc độ nhấp nháy */
             animation: pulseFooter 0.7s infinite alternate; 
             z-index: 10;
+            pointer-events: none; /* Không cản click */
         }
 
         /* Keyframes cho hiệu ứng nhấp nháy footer */
@@ -187,19 +195,19 @@
 <body>
     
 <script>
-    // ĐỊT MẸ! Tăng lên 250 dòng chữ hacker bay ngẫu nhiên (125 rơi, 125 lơ lửng)
+    // 250 dòng chữ hacker bay ngẫu nhiên (125 rơi, 125 lơ lửng)
     const hackerTexts = [
         "NỜ VINH IOS", "BOTNET", "HACKER", 
     ];
 
-    for (let i = 0; i < 250; i++) { // 250 dòng chữ
+    for (let i = 0; i < 250; i++) { 
         const text = hackerTexts[Math.floor(Math.random() * hackerTexts.length)];
         const delay = Math.random() * 15; 
         const duration = 8 + Math.random() * 7; 
         const initialLeft = Math.random() * 100; 
         const midLeft = Math.random() * 100; 
         const finalLeft = Math.random() * 100; 
-        // Giảm kích thước chữ nền (font-size)
+        // Kích thước chữ nền
         const size = 0.6 + Math.random() * 0.6; 
         
         const div = document.createElement('div');
@@ -214,11 +222,11 @@
         `;
 
         if (i % 2 === 0) {
-            // Chẵn: RƠI XUỐNG LIÊN TỤC và BIẾN MẤT (VÔ HẠN)
+            // Chẵn: RƠI XUỐNG LIÊN TỤC 
             div.className = 'hacker-text-effect falling-text';
             div.style.animationIterationCount = 'infinite';
         } else {
-            // Lẻ: LƠ LỬNG VĨNH VIỄN (VÔ HẠN)
+            // Lẻ: LƠ LỬNG VĨNH VIỄN 
             div.className = 'hacker-text-effect floating-text';
             div.style.animationIterationCount = 'infinite'; 
         }
@@ -227,7 +235,7 @@
     }
 </script>
 
-
+<div class="fixed-content-wrapper">
     <div class="main-avatar-frame">
         <img class="hacker-avatar" src="https://i.postimg.cc/MKMXMzQ7/b481459915d3cac784de787cc48185a7.jpg" alt="WORM GPT - NỜ VINH">
         
@@ -253,11 +261,13 @@
         
         <a href="https://www.mediafire.com/file/h5mc63we6z4hfb3/nvinhios.py/file" class="inner-frame-link" target="_blank">
             <div class="inner-frame">
-                <h2>Tool Dec By Nvinh Ấn Vào Đây</h2> <p>Ấn vào đây để tải tool Decenter VIP!</p>
+                <h2>Tool Dec By Nvinh Ấn Vào Đây</h2> 
+                <p>Ấn vào đây để tải tool Decenter VIP!</p>
                 <div id="random-music-info" style="margin-top: 5px;"></div>
             </div>
         </a>
         </div>
+</div>
 
     <div class="footer-text">PYTHON BOTNET LIÊN HỆ</div>
 
@@ -350,7 +360,6 @@
 
         function updateMusicInfo(videoId) {
             const infoDiv = document.getElementById('random-music-info');
-            // Chuyển link nhạc ra ngoài footer để tránh lỗi link Decenter
             infoDiv.innerHTML = `<p>Đang phát: <a href="https://youtu.be/${videoId}" target="_blank" style="color: #00ff41;">Link nhạc</a></p>`;
         }
 
@@ -361,5 +370,5 @@
     </script>
 
 </body>
-    </html>
-    
+                                             </html>
+                
