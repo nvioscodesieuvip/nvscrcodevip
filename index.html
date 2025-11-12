@@ -24,6 +24,67 @@
             user-select: none; /* FIX ZOOM/PHÓNG TO - NGĂN CHẶN CHỌN TEXT */
             touch-action: none; /* FIX ZOOM/PHÓNG TO - NGĂN CHẶN TƯƠNG TÁC CẢM ỨNG CÓ THỂ GÂY ZOOM */
         }
+        /* POPUP CẢNH BÁO CỦA ANH VINH */
+        .popup-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.95); 
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999; 
+            text-align: center;
+        }
+
+        .popup-content {
+            background-color: #1a0022; 
+            border: 3px solid #ff00ea; 
+            border-radius: 10px;
+            padding: 15px;
+            width: 90%;
+            max-width: 400px;
+            box-shadow: 0 0 20px #ff00ea;
+            pointer-events: auto;
+        }
+
+        .popup-content h3 {
+            color: #00ff41;
+            font-size: 1.1em;
+            margin-top: 0;
+            text-shadow: 0 0 5px #00ff41;
+        }
+
+        .popup-content p {
+            color: #ffffff;
+            font-size: 0.9em;
+            font-weight: 500;
+            line-height: 1.4;
+            text-shadow: 0 0 1px #ffffff;
+        }
+        .popup-content strong {
+            color: #ff00ea;
+            text-shadow: 0 0 5px #ff00ea;
+        }
+
+        #close-popup {
+            background-color: #ff00ea;
+            color: #000000;
+            border: none;
+            padding: 8px 15px;
+            margin-top: 15px;
+            font-size: 1em;
+            font-weight: 900;
+            border-radius: 5px;
+            cursor: pointer;
+            box-shadow: 0 0 10px #ff00ea;
+            transition: background-color 0.2s;
+        }
+        #close-popup:hover {
+            background-color: #ffffff;
+        }
 
         /* KHUNG CHỨA TOÀN BỘ NỘI DUNG CHÍNH (ĐỂ CỐ ĐỊNH Ở GIỮA) */
         .fixed-content-wrapper {
@@ -283,6 +344,32 @@
 </head>
 <body>
     
+<div id="botnet-warning-popup" class="popup-overlay">
+    <div class="popup-content">
+        <h3>BOTNET LÀ GÌ? 🚨</h3>
+        <p>
+            BOTNET LÀ 1 LOẠI VIRUS CÓ THỂ XÂM HẠI MÁY CỦA MÀY VÀ KIỂM SOÁT.
+            <br><br>
+            LƯU Ý KHI CHẠY FILE NHỮNG FILE CÓ DẠNG PYTHON NGHĨA LÀ **.PY** SAU KHÔNG NÊN CHẠY HOẶC NHỮNG LINK CÓ CHỨA KÍ TỰ MÃ ĐỘC KHÔNG NÊN BẤM VÀO VÌ NẾU MÀY BẤM VÀO MÀY SẼ BỊ NÓ KIỂM SOÁT MÁY HOẶC CƯỚP ĐOẠT TÀI SẢN! 
+            <br><br>
+            **XIN LƯU Ý KHI CLICK VÀO MẤY LINK, FILE NẾU MÀY BẤM VÀO THÌ MÀY CHẾT CON MẸ MÀY ĐI BỐ MÀY ĐÃ KHUYÊN ĐÉO ĐỌC THÌ CHẾT MẸ MÀY ĐI TUY TAO BÁN NHƯNG TAO VẪN CÒN LÒNG NGƯỜI=))))** <br><br>
+            **CHÚ Ý:** TRƯỚC KHI XỬ DỤNG HOẶC MUA BOTNET BÊN TAO ĐÓ LÀ XÂM HẠI QUYỀN RIÊNG TƯ VÀ **VI PHẠM PHÁP LUẬT CỦA VIỆT NAM**. NÊN MÀY HÃY SUY NGHĨ KĨ TRƯỚC KHI IN BOX NHÉ THẰNG LỒN. TAO CÓ BÁN NHỮNG LOẠI CODE TẤN CÔNG HOẶC BUFF MXH LIÊN HỆ MẸ MÀY ĐI🙄
+        </p>
+        <p style="color: #ff00ea; font-size: 0.85em; font-weight: 900; margin-top: 15px;">BY NVIOSVIP</p>
+        <button id="close-popup" onclick="closePopup()">ĐÓNG THÔNG BÁO</button>
+    </div>
+</div>
+
+<script>
+    function closePopup() {
+        const popup = document.getElementById('botnet-warning-popup');
+        if (popup) {
+            // Ẩn thông báo đi
+            popup.style.display = 'none';
+        }
+    }
+</script>
+
 <script>
     // TRÁI TIM XANH LÁ VÀ SIÊU NHỎ
     const hackerTexts = [
