@@ -9,9 +9,8 @@
         html, body {
             margin: 0;
             padding: 0; 
-            height: 100vh; /* Chiều cao bằng 100% viewport */
+            height: 100vh; 
             width: 100%;
-            /* KHÓA CUỘN DỌC/NGANG TRIỆT ĐỂ */
             overflow: hidden !important; 
             box-sizing: border-box; 
         }
@@ -25,7 +24,6 @@
 
         /* KHUNG CHỨA TOÀN BỘ NỘI DUNG CHÍNH (ĐỂ CỐ ĐỊNH Ở GIỮA) */
         .fixed-content-wrapper {
-            /* Đảm bảo khung luôn ở giữa màn hình */
             position: fixed;
             top: 50%;
             left: 50%;
@@ -35,21 +33,23 @@
             justify-content: center; 
             align-items: center;
             z-index: 10; 
-            width: 100%; /* Chiếm toàn bộ chiều rộng (để canh giữa) */
-            height: 100vh; /* Chiếm toàn bộ chiều cao */
-            pointer-events: none; /* Cho phép click xuyên qua nếu không phải khung chính */
+            width: 100%; 
+            height: 100vh; 
+            pointer-events: none; 
         }
         
-        /* Chữ nền chung */
+        /* Chữ nền chung - TỐI ƯU HƠN */
         .hacker-text-effect {
             position: fixed; 
-            color: rgba(0, 255, 65, 0.4); 
+            color: rgba(0, 255, 65, 0.3); /* Giảm opacity một chút nữa để nền dịu hơn */
             pointer-events: none; 
             opacity: 0; 
-            text-shadow: 0 0 7px #00ff41; 
+            text-shadow: 0 0 8px #00ff41; /* FIX: Tăng text-shadow cho rõ hơn */
             user-select: none; 
             white-space: nowrap; 
             z-index: 1; 
+            /* Tối ưu hiệu suất animation */
+            will-change: transform, opacity; 
         }
 
         /* Loại 1: RƠI XUỐNG VÔ HẠN */
@@ -58,22 +58,22 @@
         }
 
         @keyframes fallAndFade {
-            0% { top: -10%; left: var(--initial-left); opacity: 0; } 
-            10% { opacity: 0.8; } 
-            90% { top: 90%; opacity: 0.8; } 
-            100% { top: 110%; left: var(--final-left); opacity: 0; } 
+            0% { top: -20%; left: var(--initial-left); opacity: 0; } /* Bắt đầu cao hơn */
+            10% { opacity: 0.7; } /* Nổi lên từ từ */
+            90% { top: 100%; opacity: 0.7; } /* Đi xuống thấp hơn */
+            100% { top: 120%; left: var(--final-left); opacity: 0; } /* Kết thúc thấp hơn */
         }
         
         /* Loại 2: LƠ LỬNG VÔ HẠN */
         .floating-text {
             animation: floatForever var(--animation-duration) infinite ease-in-out alternate; 
-            opacity: 0.9; 
+            opacity: 0.8; /* Giảm opacity một chút */
         }
 
         @keyframes floatForever {
-            0% { top: 10%; left: var(--initial-left); transform: rotate(0deg); }
-            50% { top: 80%; left: var(--mid-left); transform: rotate(5deg); } 
-            100% { top: 10%; left: var(--final-left); transform: rotate(-5deg); }
+            0% { top: 15%; left: var(--initial-left); transform: rotate(0deg) scale(1); } /* Tăng phạm vi lơ lửng */
+            50% { top: 75%; left: var(--mid-left); transform: rotate(8deg) scale(1.05); } /* Thêm scale nhỏ */
+            100% { top: 15%; left: var(--final-left); transform: rotate(-8deg) scale(1); }
         }
 
         /* KHUNG CHÍNH (GỘP TẤT CẢ) - ĐÃ THU GỌN VÀ NHỎ LẠI */
@@ -135,15 +135,15 @@
             font-size: 0.9em; 
             margin-top: 2px;
             margin-bottom: 2px;
-            font-weight: 900; /* FIX: TĂNG ĐỘ ĐẬM CỰC ĐẠI */
-            text-shadow: 0 0 5px #ff00ea; /* FIX: Tăng độ sáng/nét */
+            font-weight: 900; 
+            text-shadow: 0 0 5px #ff00ea; 
         }
         p {
             font-size: 0.75em; 
             margin-top: 1px;
             margin-bottom: 1px;
-            font-weight: bold; /* FIX: TĂNG ĐỘ ĐẬM */
-            text-shadow: 0 0 3px #00ff41; /* FIX: Tăng độ sáng/nét */
+            font-weight: bold; 
+            text-shadow: 0 0 3px #00ff41; 
         }
         
         /* Style cho Nút bấm */
@@ -181,7 +181,6 @@
             font-size: 0.9em; 
             color: #FF69B4; 
             font-weight: bold; 
-            /* Tăng cường độ sáng cực mạnh */
             text-shadow: 0 0 15px #FF69B4, 0 0 30px #FF00FF, 0 0 45px #FF00FF; 
             animation: pulseFooter 0.5s infinite alternate; 
             z-index: 10;
@@ -199,19 +198,19 @@
 <body>
     
 <script>
-    // 250 dòng chữ hacker bay ngẫu nhiên (125 rơi, 125 lơ lửng)
+    // FIX: Giảm số lượng chữ nền để tối ưu hiệu suất và tránh dính cục (từ 250 xuống 150)
     const hackerTexts = [
         "NỜ VINH IOS", "BOTNET", "HACKER", 
     ];
 
-    for (let i = 0; i < 250; i++) { 
+    for (let i = 0; i < 150; i++) { // 150 dòng chữ
         const text = hackerTexts[Math.floor(Math.random() * hackerTexts.length)];
-        const delay = Math.random() * 15; 
-        const duration = 8 + Math.random() * 7; 
+        // Tăng phạm vi ngẫu nhiên cho delay và duration để chữ phân tán hơn và mượt hơn
+        const delay = Math.random() * 20; // Tăng delay lên
+        const duration = 12 + Math.random() * 8; // Tăng thời gian animation lên
         const initialLeft = Math.random() * 100; 
         const midLeft = Math.random() * 100; 
         const finalLeft = Math.random() * 100; 
-        // Kích thước chữ nền
         const size = 0.6 + Math.random() * 0.6; 
         
         const div = document.createElement('div');
