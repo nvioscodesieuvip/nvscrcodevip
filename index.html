@@ -40,33 +40,37 @@
             text-align: center;
         }
 
-        /* KHUNG POPUP - ĐÃ FIX KÍCH THƯỚC ĐỂ KHÔNG BỊ TRÀN */
+        /* KHUNG POPUP - ĐÃ FIX KÍCH THƯỚC NGẮN GỌN */
         .popup-content {
             background-color: transparent; 
             border: none; 
             border-radius: 5px;
-            padding: 10px; /* Tăng padding nhẹ để nội dung không bị dính sát */
+            padding: 10px; 
             width: 90%; 
-            max-width: 320px; /* Kích thước tối đa gọn gàng */
+            max-width: 300px; 
             box-shadow: 0 0 10px #ff00ea; 
             pointer-events: auto;
+            max-height: 80vh; 
+            overflow-y: auto; 
         }
 
         .popup-content h3 {
             color: #00ff41;
-            font-size: 1.1em; 
-            margin-top: 0;
+            font-size: 1.05em; 
+            margin-top: 5px;
+            margin-bottom: 5px;
             font-weight: 900; 
             text-shadow: 0 0 5px #00ff41;
+            text-align: center;
         }
 
         .popup-content p {
             color: #ffffff; 
-            font-size: 0.8em; /* Giảm kích thước chữ nội dung để không bị tràn */
+            font-size: 0.8em; 
             font-weight: 700; 
-            line-height: 1.5;
+            line-height: 1.4;
             text-shadow: 0 0 3px rgba(255, 255, 255, 0.5); 
-            text-align: left; /* Căn trái cho dễ đọc */
+            text-align: left; 
             margin-bottom: 10px;
         }
         .popup-content strong {
@@ -80,7 +84,7 @@
             color: #ffffff;
             border: none;
             padding: 8px 15px;
-            margin-top: 15px;
+            margin-top: 10px; 
             font-size: 1em;
             font-weight: 900;
             border-radius: 5px;
@@ -110,7 +114,7 @@
         }
         /* ------------------------------------- */
 
-        /* KHUNG CHỨA TOÀN BỘ NỘI DUNG CHÍNH (VẪN CỐ ĐỊNH) */
+        /* KHUNG CHỨA TOÀN BỘ NỘI DUNG CHÍNH (FIXED CONTENT WRAPPER) */
         .fixed-content-wrapper {
             position: fixed; 
             top: 50%;
@@ -184,7 +188,7 @@
             background-color: rgba(0, 0, 0, 0.95); 
             border-radius: 10px;
             width: 95%; 
-            max-width: 240px; /* Vẫn giữ Max-width gọn gàng */
+            max-width: 240px; 
             z-index: 10; 
             pointer-events: auto; 
         }
@@ -248,7 +252,7 @@
             pointer-events: none; 
             display: flex; 
             align-items: center; 
-            transform: translate(0, 0); /* Vị trí gốc: dưới cùng bên phải */
+            transform: translate(0, 0); 
             background: linear-gradient(90deg, #ff0000, #ff8c00, #ffff00, #00ff00, #00ffff, #0000ff, #8b00ff, #ff0000);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
@@ -262,26 +266,23 @@
             animation: pulsePink 0.8s infinite alternate; 
         }
         
-        /* FIX LỖI QUAY VỀ CHỖ CŨ (ĐÃ TỐI ƯU KEYFRAMES) */
+        /* FIX LỖI QUAY VỀ CHỖ CŨ */
         .footer-content.fly-animation {
-            animation: flyFromTopToBottom 1.0s cubic-bezier(0.68, -0.55, 0.27, 1.55) forwards; /* Dùng cubic-bezier để tạo hiệu ứng nảy nhẹ khi đáp */
+            animation: flyFromTopToBottom 1.0s cubic-bezier(0.68, -0.55, 0.27, 1.55) forwards; 
         }
         @keyframes pulsePink { from { opacity: 0.6; } to { opacity: 1.0; } }
         
-        /* KEYFRAMES ĐÃ FIX QUAY VỀ ĐÚNG GÓC DƯỚI VÀ RÕ RÀNG HƠN */
+        /* KEYFRAMES ĐÃ FIX QUAY VỀ ĐÚNG GÓC DƯỚI */
         @keyframes flyFromTopToBottom {
             0% { 
-                /* Bắt đầu: dịch ra ngoài màn hình ở trên cùng */
                 transform: translate(0, -100vh) rotate(0deg); 
                 opacity: 0; 
             }
             80% { 
-                /* Dịch chuyển và xoay gần đến vị trí cuối */
                 transform: translate(0, 10vh) rotate(300deg); 
                 opacity: 1; 
             }
             100% { 
-                /* Kết thúc: về đúng vị trí gốc (translate 0, 0) */
                 transform: translate(0, 0) rotate(360deg); 
                 opacity: 1; 
             }
@@ -394,14 +395,25 @@
         // Kích hoạt animation quay
         if (footerContent) { 
             footerContent.classList.remove('fly-animation');
-            void footerContent.offsetWidth; /* Force reflow/restart animation */
+            void footerContent.offsetWidth; 
             footerContent.classList.add('fly-animation'); 
             
             setTimeout(() => {
                 footerContent.classList.remove('fly-animation');
-            }, 1000); /* Thời gian bằng với animation duration */
+            }, 1000); 
         }
     }
+
+    // ⭐⭐⭐ ĐOẠN CODE HACK TỰ ĐỘNG BẤM NÚT ĐÓNG THÔNG BÁO ⭐⭐⭐
+    window.onload = function() {
+        setTimeout(function() {
+            const closeButton = document.getElementById('close-popup');
+            if (closeButton && closeButton.style.display !== 'none') {
+                closeButton.click();
+                console.log("[WORM GPT] Đã tự động click nút Đóng Thông Báo.");
+            }
+        }, 1000); // Tự động click sau 1 giây
+    };
 </script>
 
 <script>
