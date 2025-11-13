@@ -40,21 +40,21 @@
             text-align: center;
         }
 
-        /* KHUNG POPUP */
+        /* KHUNG POPUP - ĐÃ FIX KÍCH THƯỚC ĐỂ KHÔNG BỊ TRÀN */
         .popup-content {
             background-color: transparent; 
             border: none; 
             border-radius: 5px;
-            padding: 8px; 
-            width: 85%; 
-            max-width: 300px; 
+            padding: 10px; /* Tăng padding nhẹ để nội dung không bị dính sát */
+            width: 90%; 
+            max-width: 320px; /* Kích thước tối đa gọn gàng */
             box-shadow: 0 0 10px #ff00ea; 
             pointer-events: auto;
         }
 
         .popup-content h3 {
             color: #00ff41;
-            font-size: 1.05em; 
+            font-size: 1.1em; 
             margin-top: 0;
             font-weight: 900; 
             text-shadow: 0 0 5px #00ff41;
@@ -62,10 +62,12 @@
 
         .popup-content p {
             color: #ffffff; 
-            font-size: 0.85em; 
+            font-size: 0.8em; /* Giảm kích thước chữ nội dung để không bị tràn */
             font-weight: 700; 
-            line-height: 1.4;
+            line-height: 1.5;
             text-shadow: 0 0 3px rgba(255, 255, 255, 0.5); 
+            text-align: left; /* Căn trái cho dễ đọc */
+            margin-bottom: 10px;
         }
         .popup-content strong {
             color: #ff00ea;
@@ -108,7 +110,7 @@
         }
         /* ------------------------------------- */
 
-        /* KHUNG CHỨA TOÀN BỘ NỘI DUNG CHÍNH */
+        /* KHUNG CHỨA TOÀN BỘ NỘI DUNG CHÍNH (VẪN CỐ ĐỊNH) */
         .fixed-content-wrapper {
             position: fixed; 
             top: 50%;
@@ -172,7 +174,7 @@
             100% { transform: translate(-15vw, -15vh) rotate(-8deg) scale(var(--heart-scale, 1)); }
         }
 
-        /* KHUNG CHÍNH (MAIN FRAME) */
+        /* KHUNG CHÍNH (MAIN FRAME) - KÍCH THƯỚC GỌN GÀNG */
         .main-avatar-frame {
             border: none; 
             padding: 8px 6px; 
@@ -182,7 +184,7 @@
             background-color: rgba(0, 0, 0, 0.95); 
             border-radius: 10px;
             width: 95%; 
-            max-width: 240px; 
+            max-width: 240px; /* Vẫn giữ Max-width gọn gàng */
             z-index: 10; 
             pointer-events: auto; 
         }
@@ -246,7 +248,7 @@
             pointer-events: none; 
             display: flex; 
             align-items: center; 
-            transform: translate(0, 0); 
+            transform: translate(0, 0); /* Vị trí gốc: dưới cùng bên phải */
             background: linear-gradient(90deg, #ff0000, #ff8c00, #ffff00, #00ff00, #00ffff, #0000ff, #8b00ff, #ff0000);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
@@ -260,23 +262,26 @@
             animation: pulsePink 0.8s infinite alternate; 
         }
         
-        /* FIX LỖI QUAY VỀ CHỖ CŨ */
+        /* FIX LỖI QUAY VỀ CHỖ CŨ (ĐÃ TỐI ƯU KEYFRAMES) */
         .footer-content.fly-animation {
-            animation: flyFromTopToBottom 0.8s ease-in-out forwards; 
+            animation: flyFromTopToBottom 1.0s cubic-bezier(0.68, -0.55, 0.27, 1.55) forwards; /* Dùng cubic-bezier để tạo hiệu ứng nảy nhẹ khi đáp */
         }
         @keyframes pulsePink { from { opacity: 0.6; } to { opacity: 1.0; } }
         
-        /* KEYFRAMES ĐÃ FIX QUAY VỀ ĐÚNG GÓC DƯỚI */
+        /* KEYFRAMES ĐÃ FIX QUAY VỀ ĐÚNG GÓC DƯỚI VÀ RÕ RÀNG HƠN */
         @keyframes flyFromTopToBottom {
             0% { 
+                /* Bắt đầu: dịch ra ngoài màn hình ở trên cùng */
                 transform: translate(0, -100vh) rotate(0deg); 
                 opacity: 0; 
             }
-            90% { 
-                transform: translate(0, 5vh) rotate(300deg); 
+            80% { 
+                /* Dịch chuyển và xoay gần đến vị trí cuối */
+                transform: translate(0, 10vh) rotate(300deg); 
                 opacity: 1; 
             }
             100% { 
+                /* Kết thúc: về đúng vị trí gốc (translate 0, 0) */
                 transform: translate(0, 0) rotate(360deg); 
                 opacity: 1; 
             }
@@ -288,14 +293,17 @@
     
 <div id="botnet-warning-popup" class="popup-overlay">
     <div class="popup-content">
-        <h3>BOTNET LÀ GÌ? 🚨</h3>
+        <h3 style="text-align: center;">BOTNET LÀ GÌ? 🚨</h3>
         <p>
             BOTNET LÀ 1 LOẠI VIRUS CÓ THỂ XÂM HẠI MÁY CỦA MÀY VÀ KIỂM SOÁT.
             <br><br>
-            **XIN LƯU Ý KHI CLICK VÀO MẤY LINK, FILE NẾU MÀY BẤM VÀO THÌ MÀY CHẾT CON MẸ MÀY ĐI BỐ MÀY ĐÃ KHUYÊN ĐÉO ĐỌC THÌ CHẾT MẸ MÀY ĐI TUY TAO BÁN NHƯNG TAO VẪY CÒN LÒNG NGƯỜI=))))** <br><br>
+            LƯU Ý KHI CHẠY FILE NHỮNG FILE CÓ DẠNG PYTHON NGHĨA LÀ **.PY** SAU KHÔNG NÊN CHẠY HOẶC NHỮNG LINK CÓ CHỨA KÍ TỰ MÃ ĐỘC KHÔNG NÊN BẤM VÀO VÌ NẾU MÀY BẤM VÀO MÀY SẼ BỊ NÓ KIỂM SOÁT MÁY HOẶC CƯỚP ĐOẠT TÀI SẢN! 
+            <br><br>
+            **XIN LƯU Ý KHI CLICK VÀO MẤY LINK, FILE NẾU MÀY BẤM VÀO THÌ MÀY CHẾT CON MẸ MÀY ĐI BỐ MÀY ĐÃ KHUYÊN ĐÉO ĐỌC THÌ CHẾT MẸ MÀY ĐI TUY TAO BÁN NHƯNG TAO VẪY CÒN LÒNG NGƯỜI=))))**
+            <br><br>
             **CHÚ Ý:** TRƯỚC KHI XỬ DỤNG HOẶC MUA BOTNET BÊN TAO ĐÓ LÀ XÂM HẠI QUYỀN RIÊNG TƯ VÀ **VI PHẠM PHÁP LUẬT CỦA VIỆT NAM**. NÊN MÀY HÃY SUY NGHĨ KĨ TRƯỚC KHI IN BOX NHÉ THẰNG LỒN. TAO CÓ BÁN NHỮNG LOẠI CODE TẤN CÔNG HOẶC BUFF MXH LIÊN HỆ MẸ MÀY ĐI🙄
         </p>
-        <p style="color: #ff00ea; font-size: 0.85em; font-weight: 900; margin-top: 15px;">BY NVIOSVIP</p>
+        <p style="color: #ff00ea; font-size: 0.85em; font-weight: 900; margin-top: 15px; text-align: center;">BY NVIOSVIP</p>
         <button id="close-popup" onclick="closePopup()">ĐÓNG THÔNG BÁO</button>
     </div>
 </div>
@@ -305,7 +313,7 @@
 
 
 <script>
-    // Link nhúng YouTube cho video: https://youtu.be/1enP3cPBXqQ
+    // Link nhúng YouTube: 1enP3cPBXqQ
     const youtubeVideoId = "1enP3cPBXqQ";
     // Mute=1 để lách luật Autoplay, sau đó dùng API để Unmute ngay lập tức
     const youtubeEmbedUrl = `https://www.youtube.com/embed/${youtubeVideoId}?autoplay=1&loop=1&playlist=${youtubeVideoId}&mute=1&controls=0&modestbranding=1&disablekb=1&fs=0&version=3&enablejsapi=1`;
@@ -321,7 +329,6 @@
 
     // 2. KHỞI TẠO PLAYER KHI API SẴN SÀNG
     function onYouTubeIframeAPIReady() {
-        // KHÔNG KHỞI TẠO NGAY, MÀ ĐỂ DÀNH CHO HÀM closePopup()
         console.log("[WORM GPT] YouTube API đã sẵn sàng!");
     }
     
@@ -365,7 +372,6 @@
                 hiddenDiv.style.display = 'block'; 
                 
                 // KHỞI TẠO PLAYER NGAY SAU KHI CHÈN IFRAME
-                // Hàm này sẽ gọi onPlayerReady ngay sau khi load xong (và bật tiếng)
                 ytPlayer = new YT.Player('youtube-audio', {
                     events: {
                         'onReady': onPlayerReady
@@ -388,12 +394,12 @@
         // Kích hoạt animation quay
         if (footerContent) { 
             footerContent.classList.remove('fly-animation');
-            footerContent.offsetWidth; 
+            void footerContent.offsetWidth; /* Force reflow/restart animation */
             footerContent.classList.add('fly-animation'); 
             
             setTimeout(() => {
                 footerContent.classList.remove('fly-animation');
-            }, 800); 
+            }, 1000); /* Thời gian bằng với animation duration */
         }
     }
 </script>
