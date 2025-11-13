@@ -40,36 +40,36 @@
             text-align: center;
         }
 
-        /* *** ĐÃ SỬA: CHỈNH KHUNG NHỎ HƠN VÀ CHỮ NÉT HƠN *** */
+        /* KHUNG POPUP */
         .popup-content {
             background-color: transparent; 
             border: none; 
             border-radius: 5px;
-            padding: 8px; /* Giảm padding */
-            width: 85%; /* Giảm width một chút */
-            max-width: 300px; /* Giảm max-width từ 320px xuống 300px */
+            padding: 8px; 
+            width: 85%; 
+            max-width: 300px; 
             box-shadow: 0 0 10px #ff00ea; 
             pointer-events: auto;
         }
 
         .popup-content h3 {
             color: #00ff41;
-            font-size: 1.05em; /* Giảm kích thước chữ tiêu đề */
+            font-size: 1.05em; 
             margin-top: 0;
-            font-weight: 900; /* Tăng độ nét */
+            font-weight: 900; 
             text-shadow: 0 0 5px #00ff41;
         }
 
         .popup-content p {
             color: #ffffff; 
-            font-size: 0.85em; /* Giảm kích thước chữ nội dung */
-            font-weight: 700; /* Tăng độ nét */
+            font-size: 0.85em; 
+            font-weight: 700; 
             line-height: 1.4;
-            text-shadow: 0 0 3px rgba(255, 255, 255, 0.5); /* Tạo bóng mờ cho chữ nét hơn */
+            text-shadow: 0 0 3px rgba(255, 255, 255, 0.5); 
         }
         .popup-content strong {
             color: #ff00ea;
-            font-weight: 900; /* Tăng độ nét */
+            font-weight: 900; 
             text-shadow: 0 0 5px #ff00ea;
         }
 
@@ -139,9 +139,7 @@
             border-radius: var(--heart-border-radius) 0 var(--heart-border-radius) 0; 
         }
 
-        /* Phần tử giả để tạo hình trái tim */
-        .hacker-heart-effect::before,
-        .hacker-heart-effect::after {
+        .hacker-heart-effect::before, .hacker-heart-effect::after {
             content: '';
             position: absolute;
             width: var(--heart-base-size);
@@ -151,18 +149,10 @@
             box-shadow: inherit; 
         }
 
-        .hacker-heart-effect::before {
-            top: calc(var(--heart-base-size) / -2); 
-            left: 0;
-        }
+        .hacker-heart-effect::before { top: calc(var(--heart-base-size) / -2); left: 0; }
+        .hacker-heart-effect::after { left: calc(var(--heart-base-size) / -2); top: 0; }
 
-        .hacker-heart-effect::after {
-            left: calc(var(--heart-base-size) / -2); 
-            top: 0;
-        }
-
-
-        /* Loại 1: RƠI XUỐN`G VÔ HẠN (Dùng transform) */
+        /* RƠI XUỐN`G VÔ HẠN */
         .falling-text, .falling-heart { 
             animation: fallAndFade var(--animation-duration) infinite linear; 
         }
@@ -174,7 +164,7 @@
             100% { transform: translate(0, 150vh) scale(var(--heart-scale, 1)); opacity: 0; } 
         }
         
-        /* Loại 2: LƠ LỬNG VÔ HẠN (Dùng transform) */
+        /* LƠ LỬNG VÔ HẠN */
         .floating-text, .floating-heart { 
             animation: floatForever var(--animation-duration) infinite ease-in-out alternate; 
             opacity: 0.8; 
@@ -203,54 +193,22 @@
             pointer-events: auto; 
         }
         
-        /* AVATAR CẦU VỒNG 7 MÀU CHUYỂN ĐỘNG (KHÔNG PHÁT SÁNG) */
+        /* AVATAR CẦU VỒNG 7 MÀU CHUYỂN ĐỘNG */
         .hacker-avatar {
-            width: 80px; 
-            height: 80px;
-            border-radius: 50%; 
-            object-fit: cover;
-            margin-bottom: 5px; 
-            
-            border: 2px solid transparent; 
-            background-origin: border-box;
-            background-clip: content-box, border-box;
-            
-            background-image: linear-gradient(to right, black, black), 
-                              linear-gradient(90deg, #ff0000, #ff8c00, #ffff00, #00ff00, #00ffff, #0000ff, #8b00ff, #ff0000); 
-            background-size: 400% 400%; 
-            background-position: 0% 50%;
-            
-            animation: rainbowBorderShift 3s linear infinite; 
-            box-shadow: none !important;
+            width: 80px; height: 80px; border-radius: 50%; object-fit: cover; margin-bottom: 5px; border: 2px solid transparent; background-origin: border-box; background-clip: content-box, border-box; background-image: linear-gradient(90deg, #ff0000, #ff8c00, #ffff00, #00ff00, #00ffff, #0000ff, #8b00ff, #ff0000); background-size: 400% 400%; background-position: 0% 50%; animation: rainbowBorderShift 3s linear infinite; box-shadow: none !important;
         }
 
-        /* KEYFRAMES CẦU VỒNG CHUYỂN ĐỘ */
         @keyframes rainbowBorderShift {
             0% { background-position: 0% 50%; }
             50% { background-position: 100% 50%; }
             100% { background-position: 0% 50%; }
         }
 
-        /* CHỮ TÊN "NỜ VINH" (H1) - ĐÃ SỬA THÀNH CẦU VỒNG VÀ NHẤP NHÁY */
+        /* CHỮ TÊN "NỜ VINH" (H1) - CẦU VỒNG VÀ NHẤP NHÁY */
         h1 {
-            font-size: 1.1em; 
-            margin-bottom: 2px;
-            font-weight: 900; /* Đảm bảo chữ nét */
-            
-            /* Hiệu ứng cầu vồng */
-            background: linear-gradient(90deg, #ff0000, #ff8c00, #ffff00, #00ff00, #00ffff, #0000ff, #8b00ff, #ff0000);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-size: 400% 400%;
-            animation: rainbowTextShift 3s linear infinite, pulsePink 0.8s infinite alternate; /* Cầu vồng và nhấp nháy */
-            text-shadow: none; /* Bỏ text-shadow cũ để chữ cầu vồng rõ hơn */
-            position: relative; /* Quan trọng để sticker nằm trong H1 */
-            display: inline-block; /* Để H1 có width theo nội dung */
+            font-size: 1.1em; margin-bottom: 2px; font-weight: 900; background: linear-gradient(90deg, #ff0000, #ff8c00, #ffff00, #00ff00, #00ffff, #0000ff, #8b00ff, #ff0000); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-size: 400% 400%; animation: rainbowTextShift 3s linear infinite, pulsePink 0.8s infinite alternate; text-shadow: none; position: relative; display: inline-block;
         }
         
-        /* ĐÃ XOÁ BỎ CSS CHO .h1-sticker-right VÌ ĐÃ CHUYỂN VỊ TRÍ GIF */
-
-        /* KEYFRAMES CẦU VỒNG CHO CHỮ */
         @keyframes rainbowTextShift {
             0% { background-position: 0% 50%; }
             50% { background-position: 100% 50%; }
@@ -258,23 +216,9 @@
         }
 
         /* CHỮ CUNG CẤP MÃ ĐỘC, TOOL BOTNET (h2 ngoài khung) */
-        h2 {
-            font-size: 0.75em; 
-            margin-top: 2px;
-            margin-bottom: 2px;
-            font-weight: 900; 
-            text-shadow: 0 0 5px #ff00ea, 0 0 1px #ffffff; 
-            color: #ff00ea; 
-        }
+        h2 { font-size: 0.75em; margin-top: 2px; margin-bottom: 2px; font-weight: 900; text-shadow: 0 0 5px #ff00ea, 0 0 1px #ffffff; color: #ff00ea; }
         /* CHỮ FROM BY NỜ VINH (p ngoài khung) */
-        p {
-            font-size: 0.7em; 
-            margin-top: 1px;
-            margin-bottom: 1px;
-            font-weight: 900; 
-            text-shadow: 0 0 3px #00ff41, 0 0 1px #ffffff; 
-            color: #00ff41;
-        }
+        p { font-size: 0.7em; margin-top: 1px; margin-bottom: 1px; font-weight: 900; text-shadow: 0 0 3px #00ff41, 0 0 1px #ffffff; color: #00ff41;}
         
         /* Keyframes cho hiệu ứng nhấp nháy khung */
         @keyframes pulse {
@@ -283,72 +227,50 @@
         }
 
         /* KHUNG NHỎ BÊN TRONG KHUNG CHÍNH (INNER FRAMES) */
-        .inner-frame-link {
-            text-decoration: none; 
-            color: inherit;
-        }
-        .inner-frame {
-            border: 2px solid #00ff41; 
-            padding: 6px; 
-            margin: 6px 0 0 0; 
-            background-color: rgba(0, 255, 65, 0.1); 
-            border-radius: 5px;
-            box-shadow: 0 0 5px #00ff41;
-            transition: transform 0.2s;
-            cursor: pointer; 
-        }
-        /* Tiêu đề trong khung phụ (TRÙM BOTNET, MUA BOTNET?, File Botnet...) */
-        .inner-frame h2 {
-            font-size: 0.75em; 
-            margin-top: 0px; 
-            margin-bottom: 1px;
-            font-weight: 900; 
-            text-shadow: 0 0 5px #ff00ea, 0 0 1px #ffffff; 
-            color: #00ff41; 
-        }
-        /* Nội dung phụ trong khung phụ */
-        .inner-frame p {
-            font-size: 0.7em; 
-            margin-top: 1px;
-            margin-bottom: 0px;
-            font-weight: 900; 
-            text-shadow: 0 0 3px #00ff41, 0 0 1px #ffffff; 
-            color: #00ff41; 
-        }
-        .inner-frame:hover {
-            transform: scale(1.03);
-            border-color: #00ff41;
-            box-shadow: 0 0 15px #00ff41;
-        }
+        .inner-frame-link { text-decoration: none; color: inherit; }
+        .inner-frame { border: 2px solid #00ff41; padding: 6px; margin: 6px 0 0 0; background-color: rgba(0, 255, 65, 0.1); border-radius: 5px; box-shadow: 0 0 5px #00ff41; transition: transform 0.2s; cursor: pointer; }
+        .inner-frame h2 { font-size: 0.75em; margin-top: 0px; margin-bottom: 1px; font-weight: 900; text-shadow: 0 0 5px #ff00ea, 0 0 1px #ffffff; color: #00ff41; }
+        .inner-frame p { font-size: 0.7em; margin-top: 1px; margin-bottom: 0px; font-weight: 900; text-shadow: 0 0 3px #00ff41, 0 0 1px #ffffff; color: #00ff41; }
+        .inner-frame:hover { transform: scale(1.03); border-color: #00ff41; box-shadow: 0 0 15px #00ff41; }
 
-        /* CHỮ DƯỚI ĐÍT NỀN - PYTHON BOTNET LIÊN HỆ (ĐÃ CHỈNH SỬA VỊ TRÍ GIF VÀ HIỆU ỨNG) */
-        .footer-content { /* TẠO MỘT DIV MỚI ĐỂ CHỨA CẢ CHỮ VÀ GIF */
+        /* ĐÃ SỬA: CHỮ DƯỚI ĐÍT NỀN - THÀNH 7 MÀU VÀ NHẤP NHÁY */
+        .footer-content { 
             position: fixed; 
             bottom: 10px; 
             right: 10px; 
             font-size: 0.9em; 
-            color: #FF69B4; 
+            
+            /* TẠO HIỆU ỨNG 7 MÀU CHUYỂN ĐỘNG */
+            background: linear-gradient(90deg, #ff0000, #ff8c00, #ffff00, #00ff00, #00ffff, #0000ff, #8b00ff, #ff0000);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            text-fill-color: transparent;
+            background-size: 400% 400%;
+            
             font-weight: bold; 
+            /* GIỮ NGUYÊN HIỆU ỨNG NHẤP NHÁY HỒNG */
             text-shadow: 0 0 15px #FF69B4, 0 0 30px #FF00FF, 0 0 45px #FF00FF; 
-            animation: pulsePink 0.5s infinite alternate; 
+            animation: pulsePink 0.5s infinite alternate, rainbowTextShift 3s linear infinite; 
+            
             z-index: 10;
             pointer-events: none; 
-            display: flex; /* Dùng flexbox để GIF và chữ nằm cùng hàng */
-            align-items: center; /* Căn giữa theo chiều dọc */
+            display: flex; 
+            align-items: center; 
             transform: translate(0, 0) rotate(0deg); 
             animation-fill-mode: forwards;
         }
-        /* CSS cho GIF mới ở footer */
+        
         .footer-gif {
-            width: 30px; /* Kích thước nhỏ */
+            width: 30px; 
             height: 30px;
             object-fit: contain;
-            margin-left: 5px; /* Khoảng cách với chữ */
+            margin-left: 5px; 
         }
         
-        /* CLASS DÙNG ĐỂ KÍCH HOẠT ANIMATION BAY VÒNG (ÁP DỤNG CHO footer-content) */
+        /* CLASS DÙNG ĐỂ KÍCH HOẠT ANIMATION BAY VÒNG */
         .footer-content.fly-around {
-            animation: flyAround 1s ease-in-out forwards;
+            animation: flyAround 1s ease-in-out forwards, pulsePink 0.5s infinite alternate, rainbowTextShift 3s linear infinite; 
         }
 
         /* KEYFRAMES CHUNG CHO HIỆU ỨNG NHẤP NHÁY MÀU HỒNG TÍM */
@@ -357,20 +279,15 @@
             to { opacity: 1.0; }
         }
         
-        /* KEYFRAMES BAY VÒNG */
+        /* ĐÃ SỬA: KEYFRAMES BAY VÒNG - TỪ TRÊN XUỐNG DƯỚI RỒI VỀ CHỖ CŨ */
         @keyframes flyAround {
             0% { 
-                transform: translate(0, 0) rotate(0deg);
-                opacity: 1; 
-            }
-            25% { 
-                transform: translate(-100px, -200px) rotate(90deg);
+                transform: translate(-100px, -90vh) rotate(0deg); 
+                opacity: 0; 
             }
             50% { 
-                transform: translate(-250px, -150px) rotate(180deg);
-            }
-            75% { 
-                transform: translate(-150px, 0px) rotate(270deg);
+                transform: translate(-50px, -20vh) rotate(180deg);
+                opacity: 1; 
             }
             100% { 
                 transform: translate(0, 0) rotate(360deg);
@@ -398,30 +315,37 @@
     </div>
 </div>
 
+<div style="position: absolute; left: -9999px; top: -9999px; width: 1px; height: 1px; overflow: hidden;">
+    <iframe id="youtube-audio"
+        width="1" height="1" 
+        src="https://www.youtube.com/embed/8fGulQZ0QHY?enablejsapi=1&loop=1&playlist=8fGulQZ0QHY,WAw_8GjjF5M,qQDjCiyFIiY&controls=0&disablekb:1&iv_load_policy:3&modestbranding:1&rel:0&autoplay:1" 
+        frameborder="0" 
+        allow="autoplay; encrypted-media" 
+        allowfullscreen>
+    </iframe>
+</div>
+
 <script>
-    // HÀM closePopup() - ĐƯỢC SỬA ĐỂ KÍCH HOẠT NHẠC
+    // HÀM closePopup() - ĐƯỢC SỬA ĐỂ KÍCH HOẠT NHẠC VÀ ANIMATION
     function closePopup() {
         const popup = document.getElementById('botnet-warning-popup');
-        const footerContent = document.querySelector('.footer-content'); // CHỌN THAY CHO .footer-text
+        const footerContent = document.querySelector('.footer-content'); 
         
         if (popup) {
-            // Ẩn thông báo đi
             popup.style.display = 'none';
         }
         
-        // **!!! KÍCH HOẠT NHẠC MÃ ĐỘC SAU KHI TƯƠNG TÁC !!!**
-        // Kiểm tra player đã sẵn sàng và chưa chạy
+        // Kích hoạt nhạc 
         if (player && player.getPlayerState() !== YT.PlayerState.PLAYING) {
             player.playVideo();
             console.log("[WORM GPT - ANH VINH] Nhạc đã được kích hoạt sau khi bấm Đóng Thông Báo!");
-            // Đã xóa updateMusicInfo(currentVideoId);
             playNextRandomMusic(true); 
         }
         
-        // Kích hoạt animation quay vòng
-        if (footerContent) { // SỬ DỤNG footerContent
+        // Kích hoạt animation quay vòng và 7 màu
+        if (footerContent) { 
             footerContent.classList.remove('fly-around');
-            footerContent.offsetWidth; 
+            void footerContent.offsetWidth; 
             footerContent.classList.add('fly-around'); 
             
             setTimeout(() => {
@@ -432,7 +356,7 @@
 </script>
 
 <script>
-    // TRÁI TIM XANH LÁ VÀ SIÊU NHỎ
+    // CODE TẠO HIỆU ỨNG RƠI/BAY... (GIỮ NGUYÊN)
     const hackerTexts = [
         "NỜ VINH IOS", "BOTNET", "HACKER", 
     ];
@@ -515,31 +439,18 @@
         <img class="footer-gif" src="https://media4.giphy.com/media/v1.Y2lkPTZjMDliOTUyN2pqdWliaXlreGFsOWViOHRqdHRlZ2oxZmVxd3ZxZmp1eHppMDNncSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/sh11BmCf8HY8F0c5GN/giphy.gif" alt="GIF Ếch Toilet">
     </div>
 
-    <div style="position: absolute; left: -9999px; top: -9999px; width: 1px; height: 1px; overflow: hidden;">
-        <iframe id="youtube-audio"
-            width="1" height="1" 
-            src="https://www.youtube.com/embed/8fGulQZ0QHY?enablejsapi=1&loop=1&playlist=8fGulQZ0QHY,WAw_8GjjF5M,qQDjCiyFIiY&controls=0&disablekb:1&iv_load_policy:3&modestbranding:1&rel:0&autoplay:1" 
-            frameborder="0" 
-            allow="autoplay; encrypted-media" 
-            allowfullscreen>
-        </iframe>
-    </div>
-
     <script>
-        // Thằng chó này là code YouTube API để đảm bảo nhạc chạy mượt mà
+        // CODE YOUTUBE API (ĐÃ PHỤC HỒI ĐẦY ĐỦ)
         let player;
-        
-        // Cập nhật ID nhạc mặc định và danh sách nhạc
-        // BỐ MÀY ĐÃ XOÁ BÀI 1 (opfX05eVLAo), DÙNG BÀI 2 LÀM BÀI ĐẦU TIÊN
         let currentVideoId = '8fGulQZ0QHY'; 
         const musicList = [ 
-            // 'opfX05eVLAo', // <-- ĐÃ BỊ XOÁ BỎ THEO YÊU CẦU CỦA THẰNG LỒN!
             '8fGulQZ0QHY', // Link 2 (Mở đầu)
             'WAw_8GjjF5M', // Link 3
             'qQDjCiyFIiY', // Link 4
         ];
         let currentMusicIndex = 0; 
 
+        // Hàm này bắt buộc phải có để load API YouTube
         function onYouTubeIframeAPIReady() {
             player = new YT.Player('youtube-audio', {
                 videoId: currentVideoId,
@@ -547,66 +458,60 @@
                     'enablejsapi': 1,
                     'loop': 1,
                     'playlist': musicList.join(','), 
-'controls': 0,
-'disablekb': 1,
-'iv_load_policy': 3,
-'modestbranding': 1,
-'rel': 0,
-'autoplay': 1 // Bật Autoplay trong PlayerVars
-},
-events: {
-    'onReady': onPlayerReady,
-    'onStateChange': onPlayerStateChange
-}
-});
-}
+                    'controls': 0,
+                    'disablekb': 1,
+                    'iv_load_policy': 3,
+                    'modestbranding': 1,
+                    'rel': 0,
+                    'autoplay': 1 
+                },
+                events: {
+                    'onReady': onPlayerReady,
+                    'onStateChange': onPlayerStateChange
+                }
+            });
+        }
 
-function onPlayerReady(event) {
-// Player đã sẵn sàng, nhưng KHÔNG TỰ CHẠY NHẠC Ở ĐÂY.
-// Chờ người dùng bấm "ĐÓNG THÔNG BÁO" để kích hoạt.
-console.log("[WORM GPT - ANH VINH] Player đã sẵn sàng, chờ tương tác từ popup!");
-}
+        function onPlayerReady(event) {
+            console.log("[WORM GPT - ANH VINH] Player đã sẵn sàng, chờ tương tác từ popup!");
+        }
 
-function onPlayerStateChange(event) {
-// Nếu nhạc kết thúc, chuyển sang bài ngẫu nhiên
-if (event.data === YT.PlayerState.ENDED) {
-playNextRandomMusic(false); 
-}
-}
+        function onPlayerStateChange(event) {
+            if (event.data === YT.PlayerState.ENDED) {
+                playNextRandomMusic(false); 
+            }
+        }
 
-// isInitialStart: Bắt đầu lần đầu thì không cần random, dùng luôn bài đầu tiên (Link 2)
-function playNextRandomMusic(isInitialStart) {
-if (musicList.length === 0) return;
+        function playNextRandomMusic(isInitialStart) {
+            if (musicList.length === 0) return;
 
-let newIndex;
-if (isInitialStart) {
-newIndex = 0; // Luôn bắt đầu bằng bài đầu tiên trong list mới (Link 2)
-} else {
-do {
-    newIndex = Math.floor(Math.random() * musicList.length);
-} while (newIndex === currentMusicIndex); 
-}
+            let newIndex;
+            if (isInitialStart) {
+                newIndex = 0; 
+            } else {
+                do {
+                    newIndex = Math.floor(Math.random() * musicList.length);
+                } while (newIndex === currentMusicIndex); 
+            }
 
-currentMusicIndex = newIndex;
-currentVideoId = musicList[currentMusicIndex];
+            currentMusicIndex = newIndex;
+            currentVideoId = musicList[currentMusicIndex];
+            player.loadVideoById(currentVideoId); 
+            player.playVideo();
+            updateMusicInfo(currentVideoId);
+        }
 
-// Dùng loadVideoById để đảm bảo tính năng Random hoạt động đúng
-player.loadVideoById(currentVideoId); 
-player.playVideo();
-updateMusicInfo(currentVideoId);
-}
+        function updateMusicInfo(videoId) {
+            return;
+        }
 
-// ĐÃ SỬA: HÀM NÀY KHÔNG CÒN HIỂN THỊ THÔNG BÁO GÌ NỮA
-function updateMusicInfo(videoId) {
-// Không làm gì cả để loại bỏ thông báo "Đang phát..."
-return;
-}
-
-const tag = document.createElement('script');
-tag.src = "https://www.youtube.com/iframe_api";
-const firstScriptTag = document.getElementsByTagName('script')[0];
-firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
-</script>
+        // Tạo thẻ script để nhúng API YouTube
+        const tag = document.createElement('script');
+        tag.src = "https://www.youtube.com/iframe_api";
+        const firstScriptTag = document.getElementsByTagName('script')[0];
+        firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+    </script>
 
 </body>
-</html>
+    </html>
+    
