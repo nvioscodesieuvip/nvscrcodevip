@@ -176,9 +176,12 @@
             100% { transform: translate(-15vw, -15vh) rotate(-8deg) scale(var(--heart-scale, 1)); }
         }
 
-        /* *** ĐÃ SỬA: KHUNG CHÍNH 7 MÀU VIỀN (BỎ NHẤP NHÁY) *** */
+        /* *** ĐÃ PHỤC HỒI: KHUNG CHÍNH (VIỀN XANH LÁ NHẤP NHÁY) *** */
         .main-avatar-frame {
+            border: none; /* Xóa border 2px solid transparent */
             padding: 8px 6px; 
+            box-shadow: 0 0 20px #00ff41, 0 0 5px #00ff41 inset; /* Thay thế bằng box-shadow XANH LÁ */
+            animation: pulse 1.5s infinite alternate; /* Dùng animation pulse XANH LÁ */
             text-align: center;
             background-color: rgba(0, 0, 0, 0.95); 
             border-radius: 10px;
@@ -188,32 +191,32 @@
             z-index: 10; 
             position: relative; 
             pointer-events: auto; 
-
-            /* VIỀN CẦU VỒNG (BỎ pulse) */
-            border: 2px solid transparent; 
-            background-origin: padding-box, border-box;
-            background-image: linear-gradient(to bottom, rgba(0, 0, 0, 0.95), rgba(0, 0, 0, 0.95)), 
-                              linear-gradient(90deg, #ff0000, #ff8c00, #ffff00, #00ff00, #00ffff, #0000ff, #8b00ff, #ff0000); 
-            background-size: 400% 400%; 
-            background-position: 0% 50%;
-            animation: rainbowBorderShift 3s linear infinite; /* CHỈ GIỮ LẠI CHUYỂN MÀU */
+            /* Xóa các thuộc tính 7 màu cũ */
+            background-image: none;
+            background-origin: unset;
+            background-size: unset;
+            background-position: unset;
         }
         
-        /* AVATAR CẦU VỒNG 7 MÀU CHUYỂN ĐỘNG */
+        /* Keyframes cho hiệu ứng nhấp nháy khung XANH LÁ (Phục hồi) */
+        @keyframes pulse {
+            from { box-shadow: 0 0 10px #00ff41, 0 0 5px #00ff41 inset; }
+            to { box-shadow: 0 0 30px #00ff41, 0 0 15px #00ff41 inset; }
+        }
+        
+        /* AVATAR CẦU VỒNG 7 MÀU CHUYỂN ĐỘ (GIỮ NGUYÊN) */
         .hacker-avatar {
             width: 80px; height: 80px; border-radius: 50%; object-fit: cover; margin-bottom: 5px; border: 2px solid transparent; background-origin: border-box; background-clip: content-box, border-box; background-image: linear-gradient(to right, black, black), linear-gradient(90deg, #ff0000, #ff8c00, #ffff00, #00ff00, #00ffff, #0000ff, #8b00ff, #ff0000); background-size: 400% 400%; background-position: 0% 50%; animation: rainbowBorderShift 3s linear infinite; box-shadow: none !important;
         }
 
-        /* KEYFRAMES CẦU VỒNG CHUYỂN ĐỘ (Dùng cho Avatar và Viền Khung) */
+        /* KEYFRAMES CẦU VỒNG CHUYỂN ĐỘ */
         @keyframes rainbowBorderShift {
             0% { background-position: 0% 50%; }
             50% { background-position: 100% 50%; }
             100% { background-position: 0% 50%; }
         }
         
-        /* Keyframes pulse cũ và rainbowBorderPulse đã bị loại bỏ */
-
-        /* CHỮ TÊN "NỜ VINH" (H1) - CẦU VỒNG VÀ NHẤP NHÁY */
+        /* CHỮ TÊN "NỜ VINH" (H1) - CẦU VỒNG VÀ NHẤP NHÁY (GIỮ NGUYÊN) */
         h1 {
             font-size: 1.1em; margin-bottom: 2px; font-weight: 900; background: linear-gradient(90deg, #ff0000, #ff8c00, #ffff00, #00ff00, #00ffff, #0000ff, #8b00ff, #ff0000); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-size: 400% 400%; animation: rainbowTextShift 3s linear infinite, pulsePink 0.8s infinite alternate; text-shadow: none; position: relative; display: inline-block;
         }
@@ -236,7 +239,7 @@
         .inner-frame p { font-size: 0.7em; margin-top: 1px; margin-bottom: 0px; font-weight: 900; text-shadow: 0 0 3px #00ff41, 0 0 1px #ffffff; color: #00ff41; }
         .inner-frame:hover { transform: scale(1.03); border-color: #00ff41; box-shadow: 0 0 15px #00ff41; }
 
-        /* *** ĐÃ SỬA: CHỮ DƯỚI ĐÍT NỀN - BỎ NHẤP NHÁY *** */
+        /* CHỮ DƯỚI ĐÍT NỀN - 7 MÀU LƯỚT, BỎ NHẤP NHÁY (GIỮ NGUYÊN) */
         .footer-content { 
             position: fixed; 
             bottom: 10px; 
@@ -249,8 +252,7 @@
             text-fill-color: transparent;
             background-size: 400% 400%;
             font-weight: bold; 
-            /* BỎ text-shadow để loại bỏ hiệu ứng nhấp nháy bóng */
-            animation: rainbowTextShift 3s linear infinite; /* CHỈ GIỮ LẠI CHUYỂN MÀU */
+            animation: rainbowTextShift 3s linear infinite; 
             z-index: 10;
             pointer-events: none; 
             display: flex; 
@@ -268,7 +270,7 @@
         
         /* CLASS DÙNG ĐỂ KÍCH HOẠT ANIMATION BAY VÒNG */
         .footer-content.fly-around {
-            animation: flyAround 1s ease-in-out forwards, rainbowTextShift 3s linear infinite; /* BỎ pulsePink */
+            animation: flyAround 1s ease-in-out forwards, rainbowTextShift 3s linear infinite; 
         }
 
         /* KEYFRAMES CHUNG CHO HIỆU ỨNG NHẤP NHÁY MÀU HỒNG TÍM (Vẫn giữ lại cho H1) */
@@ -512,4 +514,4 @@
 
 </body>
     </html>
-                                             
+    
