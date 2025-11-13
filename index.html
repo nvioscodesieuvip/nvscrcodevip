@@ -383,18 +383,18 @@
             to { opacity: 1.0; }
         }
         
-        /* KEYFRAMES BAY TỪ TRÊN XUỐN`G DƯỚI VÀ QUAY VỀ CHỖ CŨ (ĐÃ FIX: VỊ TRÍ GỐC 0, 0 LÀ GÓC DƯỚI PHẢI) */
+        /* KEYFRAMES BAY TỪ TRÊN XUỐN`G DƯỚI VÀ QUAY VỀ CHỖ CŨ (ĐÃ FIX ĐỂ ĐÁP XUỐNG VỊ TRÍ CHÍNH XÁC) */
         @keyframes flyFromTopToBottom {
             0% { 
-                transform: translate(0, -100vh) rotate(0deg); /* Bắt đầu từ trên (cùng cột dọc) */
+                transform: translate(0, -100vh) rotate(0deg); /* Bắt đầu từ trên cùng màn hình */
                 opacity: 0; 
             }
-            70% { 
-                transform: translate(-20px, 0px) rotate(300deg); /* Đi qua vị trí cuối một chút */
+            90% { 
+                transform: translate(0, 5vh) rotate(300deg); /* Xoay và dịch chuyển về gần chỗ đáp */
                 opacity: 1; 
             }
             100% { 
-                transform: translate(0, 0) rotate(360deg); /* Quay về vị trí gốc (góc dưới phải) */
+                transform: translate(0, 0) rotate(360deg); /* Đáp xuống đúng tọa độ gốc (góc dưới phải) */
                 opacity: 1; 
             }
         }
@@ -424,19 +424,29 @@
 
 <script>
     // Link nhúng YouTube cho video: https://youtu.be/1enP3cPBXqQ
-    // Thêm các tham số: 
-    // - autoplay=1 (tự động phát sau click)
-    // - loop=1 (lặp lại)
-    // - playlist=1enP3cPBXqQ (cần có playlist ID giống video ID để loop hoạt động)
-    // - controls=0 (ẩn điều khiển)
-    // - modestbranding=1 (ẩn logo YT nhỏ)
-    // - disablekb=1 (vô hiệu hoá phím tắt)
-    // - fs=0 (ẩn fullscreen)
     const youtubeVideoId = "1enP3cPBXqQ";
-    const youtubeEmbedUrl = `https://www.youtube.com/embed/${youtubeVideoId}?autoplay=1&loop=1&playlist=${youtubeVideoId}&mute=0&controls=0&modestbranding=1&disablekb=1&fs=0&version=3`;
+    // Đã thêm mute=1 để đáp ứng chính sách tự động phát của trình duyệt, nhưng sẽ unmute ngay sau đó
+    const youtubeEmbedUrl = `https://www.youtube.com/embed/${youtubeVideoId}?autoplay=1&loop=1&playlist=${youtubeVideoId}&mute=1&controls=0&modestbranding=1&disablekb=1&fs=0&version=3&enablejsapi=1`;
 
     // Biến cờ để đảm bảo chỉ chèn 1 lần
     let playerStarted = false;
+    let ytPlayer;
+
+    // Hàm gọi API của YouTube Player
+    function onYouTubeIframeAPIReady() {
+        ytPlayer = new YT.Player('youtube-audio', {
+            events: {
+                // Đã chèn và sẵn sàng -> BẬT TIẾNG
+                'onReady': onPlayerReady
+            }
+        });
+    }
+
+    function onPlayerReady(event) {
+        // Thủ thuật: Bật tiếng ngay sau khi player sẵn sàng (chỉ thực hiện sau khi user click)
+        event.target.unMute(); 
+        event.target.setVolume(100); 
+    }
 
     function closePopup() {
         const popup = document.getElementById('botnet-warning-popup');
@@ -451,7 +461,13 @@
             const hiddenDiv = document.getElementById('youtube-container');
             
             if (hiddenDiv) {
-                // CHÈN IFRAME VÀ KHỞI ĐỘNG NHẠC NGAY SAU KHI CLICK
+                // CHÈN THẺ SCRIPT YOUTUBE API
+                var tag = document.createElement('script');
+                tag.src = "https://www.youtube.com/iframe_api";
+                var firstScriptTag = document.getElementsByTagName('script')[0];
+                firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+                
+                // CHÈN IFRAME VỚI ID ĐỂ YOUTUBE API HOẠT ĐỘNG
                 hiddenDiv.innerHTML = `
                     <iframe 
                         id="youtube-audio"
@@ -463,11 +479,17 @@
                         allowfullscreen>
                     </iframe>
                 `;
-                hiddenDiv.style.display = 'block'; // Hiển thị container nhỏ (1px)
+                hiddenDiv.style.display = 'block'; 
                 console.log("[WORM GPT] Đã chèn và khởi động iframe YouTube!");
             }
             
-            playerStarted = true; // Đánh dấu đã chèn/khởi động
+            playerStarted = true; 
+        } else {
+             // Nếu đã load API, chỉ cần đảm bảo nó đang chơi (dự phòng)
+             if (ytPlayer && ytPlayer.playVideo) {
+                 ytPlayer.playVideo();
+                 ytPlayer.unMute(); 
+             }
         }
         // --- END LOGIC NHẠC ---
         
@@ -523,7 +545,7 @@
         if (i % 2 === 0) { 
             div.className = isHeart ? 'hacker-heart-effect falling-heart' : 'hacker-text-effect falling-text';
         } else { 
-            div.className = isHeart ? 'hacker-heart-effect floating-heart' : 'hacker-text-effect floating-heart';
+                        div.className = isHeart ? 'hacker-heart-effect floating-heart' : 'hacker-text-effect floating-heart';
         }
 
         document.body.appendChild(div);
@@ -544,7 +566,7 @@
             <div class="inner-frame">
                 <h2>TRÙM BOTNET</h2>
                 <p>Không ngán bất kỳ botnet nào.</p>
-                        </div>
+            </div>
         </a>
 
         <a href="https://www.facebook.com/hihihi09ne" class="inner-frame-link" target="_blank">
