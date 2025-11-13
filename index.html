@@ -90,6 +90,25 @@
             background-color: #ff0000;
         }
 
+        /* *** IFRAME YOUTUBE HIỂN THỊ KHI CLICK *** */
+        #youtube-container {
+            position: fixed; 
+            top: 0; 
+            left: 0;
+            width: 100%;
+            height: 1px; /* RẤT NHỎ, MÀU ĐEN, KHÓ THẤY */
+            overflow: hidden; /* QUAN TRỌNG: CẮT BỎ IFRAME */
+            z-index: 99; 
+            display: none; /* Mặc định ẩn */
+        }
+        /* CSS cho iframe bên trong (Đảm bảo nó vừa với container) */
+        #youtube-audio {
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+        /* ------------------------------------- */
+
         /* KHUNG CHỨA TOÀN BỘ NỘI DUNG CHÍNH (ĐỂ CỐ ĐỊNH Ở GIỮA) */
         .fixed-content-wrapper {
             position: fixed; 
@@ -318,22 +337,29 @@
             box-shadow: 0 0 15px #00ff41;
         }
 
-        /* CHỮ DƯỚI ĐÍT NỀN - PYTHON BOTNET LIÊN HỆ */
-        .footer-content { /* TẠO MỘT DIV MỚI ĐỂ CHỨA CẢ CHỮ VÀ GIF */
+        /* CHỮ DƯỚI ĐÍT NỀN - PYTHON BOTNET LIÊN HỆ (ĐÃ SỬA THÀNH CẦU VỒNG & NHẤP NHÁY) */
+        .footer-content { 
             position: fixed; 
             bottom: 10px; 
             right: 10px; 
             font-size: 0.9em; 
-            color: #FF69B4; 
             font-weight: bold; 
-            text-shadow: 0 0 15px #FF69B4, 0 0 30px #FF00FF, 0 0 45px #FF00FF; 
-            animation: pulsePink 0.5s infinite alternate; 
             z-index: 10;
             pointer-events: none; 
-            display: flex; /* Dùng flexbox để GIF và chữ nằm cùng hàng */
-            align-items: center; /* Căn giữa theo chiều dọc */
-            transform: translate(0, 0); /* Vị trí đứng yên ban đầu */
+            display: flex; 
+            align-items: center; 
+            transform: translate(0, 0); 
+
+            /* Hiệu ứng cầu vồng cho chữ */
+            background: linear-gradient(90deg, #ff0000, #ff8c00, #ffff00, #00ff00, #00ffff, #0000ff, #8b00ff, #ff0000);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-size: 400% 400%;
+            animation: rainbowTextShift 3s linear infinite, pulsePink 0.8s infinite alternate; /* Cầu vồng và nhấp nháy */
+            text-shadow: none; /* Bỏ text-shadow cũ để chữ cầu vồng rõ hơn */
+            position: relative;
         }
+
         /* CSS cho GIF (Ếch toilet) */
         .footer-gif {
             width: 30px; /* Kích thước nhỏ */
@@ -342,36 +368,33 @@
             margin-left: 5px; /* Khoảng cách với chữ */
             border-radius: 0;
             box-shadow: none;
+            /* GIF vẫn nhấp nháy cùng chữ */
+            animation: pulsePink 0.8s infinite alternate; 
         }
         
         /* CLASS DÙNG ĐỂ KÍCH HOẠT ANIMATION BAY VÒNG (ÁP DỤNG CHO footer-content) */
-        .footer-content.fly-around {
-            animation: flyAround 1.5s ease-in-out forwards; /* Chỉ 1.5s và dùng forwards để nó giữ trạng thái 100% (quay lại vị trí ban đầu) */
+        .footer-content.fly-animation {
+            animation: flyFromTopToBottom 0.8s ease-in-out forwards; /* Tăng tốc độ quay và dùng forwards */
         }
 
-        /* KEYFRAMES CHUNG CHO HIỆU ỨNG NHẤP NHÁY MÀU HỒNG TÍM */
+        /* KEYFRAMES CHUNG CHO HIỆU ỨNG NHẤP NHÁY MÀU HỒNG TÍM (ĐÃ CHUYỂN THÀNH OPACITY) */
         @keyframes pulsePink {
             from { opacity: 0.6; }
             to { opacity: 1.0; }
         }
         
-        /* KEYFRAMES BAY VÒNG - ĐẢM BẢO BẮT ĐẦU VÀ KẾT THÚC Ở VỊ TRÍ GỐC (0,0) */
-        @keyframes flyAround {
+        /* KEYFRAMES BAY TỪ TRÊN XUỐN`G DƯỚI VÀ QUAY VỀ CHỖ CŨ */
+        @keyframes flyFromTopToBottom {
             0% { 
-                transform: translate(0, 0) rotate(0deg); /* Vị trí gốc */
+                transform: translate(0, -100vh) rotate(0deg); /* Bắt đầu từ trên cùng màn hình */
+                opacity: 0; 
+            }
+            70% { 
+                transform: translate(-20px, 0px) rotate(300deg); /* Đi qua vị trí cuối một chút */
                 opacity: 1; 
             }
-            25% { 
-                transform: translate(-100px, -200px) rotate(90deg);
-            }
-            50% { 
-                transform: translate(-250px, -150px) rotate(180deg);
-            }
-            75% { 
-                transform: translate(-150px, 0px) rotate(270deg);
-            }
             100% { 
-                transform: translate(0, 0) rotate(360deg); /* Quay lại vị trí gốc */
+                transform: translate(0, 0) rotate(360deg); /* Quay về vị trí cuối */
                 opacity: 1; 
             }
         }
@@ -396,19 +419,24 @@
     </div>
 </div>
 
-<audio id="background-audio" loop preload="auto" style="display: none;">
-    <source src="https://www.dl.dropboxusercontent.com/s/z9j71j987y8a76b/khong_buong_remix.mp3?dl=0" type="audio/mpeg">
-</audio>
-
-<div id="soundcloud-container" style="position: absolute; left: -9999px; top: -9999px; width: 500px; height: 500px; overflow: hidden;">
+<div id="youtube-container">
 </div>
 
 <script>
-    // Link nhúng SoundCloud mới của mày (ĐÃ CẬP NHẬT)
-    const soundcloudUrl = "https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/tracks/1753733226&auto_play=true&hide_related=true&show_comments=false&show_user=false&show_reposts=false&show_teaser=false&visual=false&sharing=false&download=false&start_track=0&loop=true";
+    // Link nhúng YouTube cho video: https://youtu.be/1enP3cPBXqQ
+    // Thêm các tham số: 
+    // - autoplay=1 (tự động phát sau click)
+    // - loop=1 (lặp lại)
+    // - playlist=1enP3cPBXqQ (cần có playlist ID giống video ID để loop hoạt động)
+    // - controls=0 (ẩn điều khiển)
+    // - modestbranding=1 (ẩn logo YT nhỏ)
+    // - disablekb=1 (vô hiệu hoá phím tắt)
+    // - fs=0 (ẩn fullscreen)
+    const youtubeVideoId = "1enP3cPBXqQ";
+    const youtubeEmbedUrl = `https://www.youtube.com/embed/${youtubeVideoId}?autoplay=1&loop=1&playlist=${youtubeVideoId}&mute=0&controls=0&modestbranding=1&disablekb=1&fs=0&version=3`;
 
     // Biến cờ để đảm bảo chỉ chèn 1 lần
-    let soundcloudPlayerStarted = false;
+    let playerStarted = false;
 
     function closePopup() {
         const popup = document.getElementById('botnet-warning-popup');
@@ -418,65 +446,38 @@
             popup.style.display = 'none';
         }
         
-        if (!soundcloudPlayerStarted) {
-            const audio = document.getElementById('background-audio');
-            const hiddenDiv = document.getElementById('soundcloud-container');
+        if (!playerStarted) {
+            const hiddenDiv = document.getElementById('youtube-container');
             
-            // LỚP 1: CHẠY THẺ AUDIO (CÁCH MẠNH NHẤT)
-            if (audio) {
-                 audio.play()
-                    .then(() => {
-                        console.log("[WORM GPT] Nhạc Audio MP3 chạy thành công!");
-                    })
-                    .catch(error => {
-                        console.error("[WORM GPT] Audio MP3 bị chặn. Chuyển sang Iframe:", error);
-                        // LỚP 2 (DỰ PHÒNG): NẾU AUDIO BỊ CHẶN, CHÈN IFRAME VÀO DOM
-                        if (hiddenDiv) {
-                            hiddenDiv.innerHTML = `
-                                <iframe 
-                                    id="soundcloud-audio"
-                                    width="500" 
-                                    height="500" 
-                                    scrolling="no" 
-                                    frameborder="no" 
-                                    allow="autoplay"
-                                    src="${soundcloudUrl}">
-                                </iframe>
-                            `;
-                            console.log("[WORM GPT] Đã chèn iframe SoundCloud (Autoplay Trick)!");
-                        }
-                    });
-            } else {
-                 // Nếu không tìm thấy thẻ Audio, dùng luôn Iframe
-                 if (hiddenDiv) {
-                    hiddenDiv.innerHTML = `
-                        <iframe 
-                            id="soundcloud-audio"
-                            width="500" 
-                            height="500" 
-                            scrolling="no" 
-                            frameborder="no" 
-                            allow="autoplay"
-                            src="${soundcloudUrl}">
-                        </iframe>
-                    `;
-                    console.log("[WORM GPT] Đã chèn iframe SoundCloud (Do không tìm thấy thẻ Audio)!");
-                }
+            if (hiddenDiv) {
+                hiddenDiv.innerHTML = `
+                    <iframe 
+                        id="youtube-audio"
+                        width="100%" 
+                        height="100%" 
+                        src="${youtubeEmbedUrl}"
+                        frameborder="0" 
+                        allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
+                        allowfullscreen>
+                    </iframe>
+                `;
+                hiddenDiv.style.display = 'block'; // Hiển thị container nhỏ (1px)
+                console.log("[WORM GPT] Đã chèn và khởi động iframe YouTube!");
             }
             
-            soundcloudPlayerStarted = true; // Đánh dấu đã chèn/khởi động
+            playerStarted = true; // Đánh dấu đã chèn/khởi động
         }
         
-        // Kích hoạt animation quay 1 vòng
+        // Kích hoạt animation quay từ trên xuống dưới
         if (footerContent) { 
-            footerContent.classList.remove('fly-around');
+            footerContent.classList.remove('fly-animation');
             footerContent.offsetWidth; // Force reflow
-            footerContent.classList.add('fly-around'); 
+            footerContent.classList.add('fly-animation'); 
             
-            // Xóa class fly-around sau khi animation hoàn tất
+            // Xóa class animation sau khi hoàn thành để nó có thể chạy lại
             setTimeout(() => {
-                footerContent.classList.remove('fly-around');
-            }, 1500); 
+                footerContent.classList.remove('fly-animation');
+            }, 800); // Thời gian bằng với animation-duration
         }
     }
 </script>
@@ -566,4 +567,5 @@
     </div>
 
 </body>
-</html>
+    </html>
+    
