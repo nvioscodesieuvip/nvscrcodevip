@@ -383,10 +383,10 @@
             to { opacity: 1.0; }
         }
         
-        /* KEYFRAMES BAY TỪ TRÊN XUỐN`G DƯỚI VÀ QUAY VỀ CHỖ CŨ */
+        /* KEYFRAMES BAY TỪ TRÊN XUỐN`G DƯỚI VÀ QUAY VỀ CHỖ CŨ (ĐÃ FIX: VỊ TRÍ GỐC 0, 0 LÀ GÓC DƯỚI PHẢI) */
         @keyframes flyFromTopToBottom {
             0% { 
-                transform: translate(0, -100vh) rotate(0deg); /* Bắt đầu từ trên cùng màn hình */
+                transform: translate(0, -100vh) rotate(0deg); /* Bắt đầu từ trên (cùng cột dọc) */
                 opacity: 0; 
             }
             70% { 
@@ -394,7 +394,7 @@
                 opacity: 1; 
             }
             100% { 
-                transform: translate(0, 0) rotate(360deg); /* Quay về vị trí cuối */
+                transform: translate(0, 0) rotate(360deg); /* Quay về vị trí gốc (góc dưới phải) */
                 opacity: 1; 
             }
         }
@@ -567,5 +567,4 @@
     </div>
 
 </body>
-    </html>
-    
+</html>
