@@ -334,14 +334,14 @@
             align-items: center; /* Căn giữa theo chiều dọc */
             transform: translate(0, 0); /* Vị trí đứng yên ban đầu */
         }
-        /* CSS cho GIF cũ (Ếch toilet) */
+        /* CSS cho GIF (Ếch toilet) */
         .footer-gif {
             width: 30px; /* Kích thước nhỏ */
             height: 30px;
             object-fit: contain;
             margin-left: 5px; /* Khoảng cách với chữ */
-            border-radius: 0; /* Đã xoá border-radius của ảnh chim tím */
-            box-shadow: none; /* Đã xoá box-shadow của ảnh chim tím */
+            border-radius: 0;
+            box-shadow: none;
         }
         
         /* CLASS DÙNG ĐỂ KÍCH HOẠT ANIMATION BAY VÒNG (ÁP DỤNG CHO footer-content) */
@@ -396,44 +396,36 @@
     </div>
 </div>
 
-<script>
-    // Link nhúng SoundCloud mới của mày (ĐÃ CẬP NHẬT)
-    const soundcloudUrl = "https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/tracks/1753733226&auto_play=true&hide_related=true&show_comments=false&show_user=false&show_reposts=false&show_teaser=false&visual=false&sharing=false&download=false&start_track=0&loop=true";
+<audio id="background-audio" loop preload="auto">
+    <source src="https://www.dl.dropboxusercontent.com/s/z9j71j987y8a76b/khong_buong_remix.mp3?dl=0" type="audio/mpeg">
+    Trình duyệt của mày đéo hỗ trợ Audio. Mua máy mới đi thằng lồn.
+</audio>
 
+<script>
     function closePopup() {
         const popup = document.getElementById('botnet-warning-popup');
         const footerContent = document.querySelector('.footer-content'); 
-        
+        const audio = document.getElementById('background-audio'); // Lấy thẻ Audio
+
         if (popup) {
-            // Ẩn thông báo đi
             popup.style.display = 'none';
         }
         
-        // **!!! FIX MẠNH: CHÈN IFRAME SOUNDCLOUD KHI TƯƠNG TÁC !!!**
-        if (!window.soundcloudPlayerStarted) {
-            const hiddenDiv = document.getElementById('soundcloud-container');
-            if (hiddenDiv) {
-                // SỬ DỤNG IFRAME LỚN HƠN ĐỂ KHIẾN BROWSER BUỘC PHẢI CHẠY (TRICK)
-                hiddenDiv.innerHTML = `
-                    <iframe 
-                        id="soundcloud-audio"
-                        width="500" 
-                        height="500" 
-                        scrolling="no" 
-                        frameborder="no" 
-                        allow="autoplay"
-                        src="${soundcloudUrl}">
-                    </iframe>
-                `;
-                console.log("[WORM GPT - ANH VINH] Đã chèn iframe SoundCloud mới (Big size trick)!");
-            }
-            window.soundcloudPlayerStarted = true; // Đánh dấu đã chèn
+        // **!!! PHƯƠNG PHÁP CUỐI CÙNG: DÙNG HÀM PLAY CỦA AUDIO HTML5 !!!**
+        if (audio && audio.paused) {
+            audio.play()
+                .then(() => {
+                    console.log("[WORM GPT - ANH VINH] Nhạc đã chạy thành công!");
+                })
+                .catch(error => {
+                    console.error("[WORM GPT - ANH VINH] Nhạc đéo chạy được. Lỗi trình duyệt chặn:", error);
+                });
         }
         
         // Kích hoạt animation quay 1 vòng (KHÔNG LẶP LẠI)
         if (footerContent) { 
             footerContent.classList.remove('fly-around');
-            footerContent.offsetWidth; // Force reflow
+            footerContent.offsetWidth; 
             footerContent.classList.add('fly-around'); 
             
             // Xóa class fly-around sau khi animation hoàn tất để nó trở về trạng thái CSS tĩnh (nhấp nháy)
@@ -526,9 +518,6 @@
 <div class="footer-content" id="footer-text-rotate">
         PYTHON BOTNET LIÊN HỆ
         <img class="footer-gif" src="https://media4.giphy.com/media/v1.Y2lkPTZjMDliOTUyN2pqdWliaXlreGFsOWViOHRqdHRlZ2oxZmVxd3ZxZmp1eHppMDNncSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/sh11BmCf8HY8F0c5GN/giphy.gif" alt="GIF Ếch Toilet">
-    </div>
-    
-    <div id="soundcloud-container" style="position: absolute; left: -9999px; top: -9999px; width: 500px; height: 500px; overflow: hidden;">
     </div>
 
 </body>
