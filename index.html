@@ -446,10 +446,12 @@
             popup.style.display = 'none';
         }
         
+        // --- LOGIC NHẠC YOUTUBE ---
         if (!playerStarted) {
             const hiddenDiv = document.getElementById('youtube-container');
             
             if (hiddenDiv) {
+                // CHÈN IFRAME VÀ KHỞI ĐỘNG NHẠC NGAY SAU KHI CLICK
                 hiddenDiv.innerHTML = `
                     <iframe 
                         id="youtube-audio"
@@ -467,6 +469,7 @@
             
             playerStarted = true; // Đánh dấu đã chèn/khởi động
         }
+        // --- END LOGIC NHẠC ---
         
         // Kích hoạt animation quay từ trên xuống dưới
         if (footerContent) { 
@@ -541,7 +544,7 @@
             <div class="inner-frame">
                 <h2>TRÙM BOTNET</h2>
                 <p>Không ngán bất kỳ botnet nào.</p>
-            </div>
+                        </div>
         </a>
 
         <a href="https://www.facebook.com/hihihi09ne" class="inner-frame-link" target="_blank">
