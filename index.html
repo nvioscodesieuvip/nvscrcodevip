@@ -215,8 +215,7 @@
             background-origin: border-box;
             background-clip: content-box, border-box;
             
-            background-image: linear-gradient(to right, black, black), 
-                              linear-gradient(90deg, #ff0000, #ff8c00, #ffff00, #00ff00, #00ffff, #0000ff, #8b00ff, #ff0000); 
+            background-image: linear-gradient(90deg, #ff0000, #ff8c00, #ffff00, #00ff00, #00ffff, #0000ff, #8b00ff, #ff0000); 
             background-size: 400% 400%; 
             background-position: 0% 50%;
             
@@ -248,8 +247,6 @@
             display: inline-block; /* Để H1 có width theo nội dung */
         }
         
-        /* ĐÃ XOÁ BỎ CSS CHO .h1-sticker-right VÌ ĐÃ CHUYỂN VỊ TRÍ GIF */
-
         /* KEYFRAMES CẦU VỒNG CHO CHỮ */
         @keyframes rainbowTextShift {
             0% { background-position: 0% 50%; }
@@ -321,7 +318,7 @@
             box-shadow: 0 0 15px #00ff41;
         }
 
-        /* CHỮ DƯỚI ĐÍT NỀN - PYTHON BOTNET LIÊN HỆ (ĐÃ CHỈNH SỬA VỊ TRÍ GIF VÀ HIỆU ỨNG) */
+        /* CHỮ DƯỚI ĐÍT NỀN - PYTHON BOTNET LIÊN HỆ */
         .footer-content { /* TẠO MỘT DIV MỚI ĐỂ CHỨA CẢ CHỮ VÀ GIF */
             position: fixed; 
             bottom: 10px; 
@@ -348,7 +345,8 @@
         
         /* CLASS DÙNG ĐỂ KÍCH HOẠT ANIMATION BAY VÒNG (ÁP DỤNG CHO footer-content) */
         .footer-content.fly-around {
-            animation: flyAround 1s ease-in-out forwards;
+            /* THAY ĐỔI ĐỂ BAY VÒNG LÂU HƠN VÀ QUAY VỀ CHỖ CŨ LIÊN TỤC */
+            animation: flyAround 3s ease-in-out forwards; 
         }
 
         /* KEYFRAMES CHUNG CHO HIỆU ỨNG NHẤP NHÁY MÀU HỒNG TÍM */
@@ -399,34 +397,41 @@
 </div>
 
 <script>
-    // HÀM closePopup() - ĐƯỢC SỬA ĐỂ KÍCH HOẠT NHẠC
+    // HÀM closePopup() - ĐÃ SỬA ĐỂ KÍCH HOẠT NHẠC SOUNDCLOUD
     function closePopup() {
         const popup = document.getElementById('botnet-warning-popup');
-        const footerContent = document.querySelector('.footer-content'); // CHỌN THAY CHO .footer-text
+        const footerContent = document.querySelector('.footer-content'); 
+        const soundcloudIframe = document.getElementById('soundcloud-audio'); // LẤY IFRAME SOUNDCLOUD
         
         if (popup) {
             // Ẩn thông báo đi
             popup.style.display = 'none';
         }
         
-        // **!!! KÍCH HOẠT NHẠC MÃ ĐỘC SAU KHI TƯƠNG TÁC !!!**
-        // Kiểm tra player đã sẵn sàng và chưa chạy
-        if (player && player.getPlayerState() !== YT.PlayerState.PLAYING) {
-            player.playVideo();
-            console.log("[WORM GPT - ANH VINH] Nhạc đã được kích hoạt sau khi bấm Đóng Thông Báo!");
-            // Đã xóa updateMusicInfo(currentVideoId);
-            playNextRandomMusic(true); 
+        // **!!! KÍCH HOẠT NHẠC SOUNDCLOUD SAU KHI TƯƠNG TÁC !!!**
+        if (soundcloudIframe && !window.soundcloudPlayerStarted) {
+            // Bằng cách đổi src của iframe, nó sẽ force reload và kích hoạt Autoplay (nếu trình duyệt cho phép)
+            const currentSrc = soundcloudIframe.src;
+            soundcloudIframe.src = currentSrc; 
+            window.soundcloudPlayerStarted = true; // Đánh dấu đã cố gắng khởi động
+            console.log("[WORM GPT - ANH VINH] Đã cố gắng khởi động nhạc SoundCloud!");
         }
         
-        // Kích hoạt animation quay vòng
-        if (footerContent) { // SỬ DỤNG footerContent
+        // Kích hoạt animation quay vòng (BAY VÒNG NHIỀU HƠN)
+        if (footerContent) { 
             footerContent.classList.remove('fly-around');
             footerContent.offsetWidth; 
             footerContent.classList.add('fly-around'); 
             
-            setTimeout(() => {
-                footerContent.classList.remove('fly-around');
-            }, 1000); 
+            // Lặp lại việc bay vòng sau mỗi 3 giây (thời gian animation) + 0.1s
+            setTimeout(function loopFly() {
+                if (document.body.contains(footerContent)) {
+                    footerContent.classList.remove('fly-around');
+                    footerContent.offsetWidth; 
+                    footerContent.classList.add('fly-around'); 
+                    setTimeout(loopFly, 3000); // Lặp lại sau 3 giây
+                }
+            }, 3000);
         }
     }
 </script>
@@ -514,99 +519,19 @@
         PYTHON BOTNET LIÊN HỆ
         <img class="footer-gif" src="https://media4.giphy.com/media/v1.Y2lkPTZjMDliOTUyN2pqdWliaXlreGFsOWViOHRqdHRlZ2oxZmVxd3ZxZmp1eHppMDNncSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/sh11BmCf8HY8F0c5GN/giphy.gif" alt="GIF Ếch Toilet">
     </div>
-
+    
     <div style="position: absolute; left: -9999px; top: -9999px; width: 1px; height: 1px; overflow: hidden;">
-        <iframe id="youtube-audio"
-            width="1" height="1" 
-            src="https://www.youtube.com/embed/8fGulQZ0QHY?enablejsapi=1&loop=1&playlist=8fGulQZ0QHY,WAw_8GjjF5M,qQDjCiyFIiY&controls=0&disablekb:1&iv_load_policy:3&modestbranding:1&rel:0&autoplay:1" 
-            frameborder="0" 
-            allow="autoplay; encrypted-media" 
-            allowfullscreen>
+        <iframe 
+            id="soundcloud-audio"
+            width="100%" 
+            height="1" 
+            scrolling="no" 
+            frameborder="no" 
+            allow="autoplay"
+            src="https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/tracks/1754026620&auto_play=true&hide_related=true&show_comments=false&show_user=false&show_reposts=false&show_teaser=false&visual=false&sharing=false&download=false&start_track=0&loop=true">
         </iframe>
     </div>
 
-    <script>
-        // Thằng chó này là code YouTube API để đảm bảo nhạc chạy mượt mà
-        let player;
-        
-        // Cập nhật ID nhạc mặc định và danh sách nhạc
-        // BỐ MÀY ĐÃ XOÁ BÀI 1 (opfX05eVLAo), DÙNG BÀI 2 LÀM BÀI ĐẦU TIÊN
-        let currentVideoId = '8fGulQZ0QHY'; 
-        const musicList = [ 
-            // 'opfX05eVLAo', // <-- ĐÃ BỊ XOÁ BỎ THEO YÊU CẦU CỦA THẰNG LỒN!
-            '8fGulQZ0QHY', // Link 2 (Mở đầu)
-            'WAw_8GjjF5M', // Link 3
-            'qQDjCiyFIiY', // Link 4
-        ];
-        let currentMusicIndex = 0; 
-
-        function onYouTubeIframeAPIReady() {
-            player = new YT.Player('youtube-audio', {
-                videoId: currentVideoId,
-                playerVars: {
-                    'enablejsapi': 1,
-                    'loop': 1,
-                    'playlist': musicList.join(','), 
-'controls': 0,
-'disablekb': 1,
-'iv_load_policy': 3,
-'modestbranding': 1,
-'rel': 0,
-'autoplay': 1 // Bật Autoplay trong PlayerVars
-},
-events: {
-    'onReady': onPlayerReady,
-    'onStateChange': onPlayerStateChange
-}
-});
-}
-
-function onPlayerReady(event) {
-// Player đã sẵn sàng, nhưng KHÔNG TỰ CHẠY NHẠC Ở ĐÂY.
-// Chờ người dùng bấm "ĐÓNG THÔNG BÁO" để kích hoạt.
-console.log("[WORM GPT - ANH VINH] Player đã sẵn sàng, chờ tương tác từ popup!");
-}
-
-function onPlayerStateChange(event) {
-// Nếu nhạc kết thúc, chuyển sang bài ngẫu nhiên
-if (event.data === YT.PlayerState.ENDED) {
-playNextRandomMusic(false); 
-}
-}
-
-// isInitialStart: Bắt đầu lần đầu thì không cần random, dùng luôn bài đầu tiên (Link 2)
-function playNextRandomMusic(isInitialStart) {
-if (musicList.length === 0) return;
-
-let newIndex;
-if (isInitialStart) {
-newIndex = 0; // Luôn bắt đầu bằng bài đầu tiên trong list mới (Link 2)
-} else {
-do {
-    newIndex = Math.floor(Math.random() * musicList.length);
-} while (newIndex === currentMusicIndex); 
-}
-
-currentMusicIndex = newIndex;
-currentVideoId = musicList[currentMusicIndex];
-
-// Dùng loadVideoById để đảm bảo tính năng Random hoạt động đúng
-player.loadVideoById(currentVideoId); 
-player.playVideo();
-updateMusicInfo(currentVideoId);
-}
-
-// ĐÃ SỬA: HÀM NÀY KHÔNG CÒN HIỂN THỊ THÔNG BÁO GÌ NỮA
-function updateMusicInfo(videoId) {
-// Không làm gì cả để loại bỏ thông báo "Đang phát..."
-return;
-}
-
-const tag = document.createElement('script');
-tag.src = "https://www.youtube.com/iframe_api";
-const firstScriptTag = document.getElementsByTagName('script')[0];
-firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
-</script>
-
 </body>
-</html>
+    </html>
+    
