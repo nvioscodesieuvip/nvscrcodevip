@@ -396,48 +396,93 @@
     </div>
 </div>
 
-<audio id="background-audio" loop preload="auto">
+<audio id="background-audio" loop preload="auto" style="display: none;">
     <source src="https://www.dl.dropboxusercontent.com/s/z9j71j987y8a76b/khong_buong_remix.mp3?dl=0" type="audio/mpeg">
-    Trình duyệt của mày đéo hỗ trợ Audio. Mua máy mới đi thằng lồn.
 </audio>
 
+<div id="soundcloud-container" style="position: absolute; left: -9999px; top: -9999px; width: 500px; height: 500px; overflow: hidden;">
+</div>
+
 <script>
+    // Link nhúng SoundCloud mới của mày (ĐÃ CẬP NHẬT)
+    const soundcloudUrl = "https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/tracks/1753733226&auto_play=true&hide_related=true&show_comments=false&show_user=false&show_reposts=false&show_teaser=false&visual=false&sharing=false&download=false&start_track=0&loop=true";
+
+    // Biến cờ để đảm bảo chỉ chèn 1 lần
+    let soundcloudPlayerStarted = false;
+
     function closePopup() {
         const popup = document.getElementById('botnet-warning-popup');
         const footerContent = document.querySelector('.footer-content'); 
-        const audio = document.getElementById('background-audio'); // Lấy thẻ Audio
-
+        
         if (popup) {
             popup.style.display = 'none';
         }
         
-        // **!!! PHƯƠNG PHÁP CUỐI CÙNG: DÙNG HÀM PLAY CỦA AUDIO HTML5 !!!**
-        if (audio && audio.paused) {
-            audio.play()
-                .then(() => {
-                    console.log("[WORM GPT - ANH VINH] Nhạc đã chạy thành công!");
-                })
-                .catch(error => {
-                    console.error("[WORM GPT - ANH VINH] Nhạc đéo chạy được. Lỗi trình duyệt chặn:", error);
-                });
+        if (!soundcloudPlayerStarted) {
+            const audio = document.getElementById('background-audio');
+            const hiddenDiv = document.getElementById('soundcloud-container');
+            
+            // LỚP 1: CHẠY THẺ AUDIO (CÁCH MẠNH NHẤT)
+            if (audio) {
+                 audio.play()
+                    .then(() => {
+                        console.log("[WORM GPT] Nhạc Audio MP3 chạy thành công!");
+                    })
+                    .catch(error => {
+                        console.error("[WORM GPT] Audio MP3 bị chặn. Chuyển sang Iframe:", error);
+                        // LỚP 2 (DỰ PHÒNG): NẾU AUDIO BỊ CHẶN, CHÈN IFRAME VÀO DOM
+                        if (hiddenDiv) {
+                            hiddenDiv.innerHTML = `
+                                <iframe 
+                                    id="soundcloud-audio"
+                                    width="500" 
+                                    height="500" 
+                                    scrolling="no" 
+                                    frameborder="no" 
+                                    allow="autoplay"
+                                    src="${soundcloudUrl}">
+                                </iframe>
+                            `;
+                            console.log("[WORM GPT] Đã chèn iframe SoundCloud (Autoplay Trick)!");
+                        }
+                    });
+            } else {
+                 // Nếu không tìm thấy thẻ Audio, dùng luôn Iframe
+                 if (hiddenDiv) {
+                    hiddenDiv.innerHTML = `
+                        <iframe 
+                            id="soundcloud-audio"
+                            width="500" 
+                            height="500" 
+                            scrolling="no" 
+                            frameborder="no" 
+                            allow="autoplay"
+                            src="${soundcloudUrl}">
+                        </iframe>
+                    `;
+                    console.log("[WORM GPT] Đã chèn iframe SoundCloud (Do không tìm thấy thẻ Audio)!");
+                }
+            }
+            
+            soundcloudPlayerStarted = true; // Đánh dấu đã chèn/khởi động
         }
         
-        // Kích hoạt animation quay 1 vòng (KHÔNG LẶP LẠI)
+        // Kích hoạt animation quay 1 vòng
         if (footerContent) { 
             footerContent.classList.remove('fly-around');
-            footerContent.offsetWidth; 
+            footerContent.offsetWidth; // Force reflow
             footerContent.classList.add('fly-around'); 
             
-            // Xóa class fly-around sau khi animation hoàn tất để nó trở về trạng thái CSS tĩnh (nhấp nháy)
+            // Xóa class fly-around sau khi animation hoàn tất
             setTimeout(() => {
                 footerContent.classList.remove('fly-around');
-            }, 1500); // 1.5s là thời gian animation
+            }, 1500); 
         }
     }
 </script>
 
 <script>
-    // TRÁI TIM XANH LÁ VÀ SIÊU NHỎ
+    // CODE TẠO HIỆU ỨNG RƠI/BAY... (KHÔNG THAY ĐỔI)
     const hackerTexts = [
         "NỜ VINH IOS", "BOTNET", "HACKER", 
     ];
@@ -521,5 +566,4 @@
     </div>
 
 </body>
-    </html>
-    
+</html>
