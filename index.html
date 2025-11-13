@@ -205,20 +205,21 @@
             z-index: 5; 
         }
 
-        /* *** TUYẾT RƠI: HIỆU ỨNG HẠT TRẮNG CỰC ĐẸP (MỚI) *** */
+        /* *** TUYẾT RƠI: HIỆU ỨNG HẠT TRẮNG CỰC ĐẸP (CÓ PHÁT SÁNG NHẸ) *** */
         .falling-effect-local {
             position: absolute;
             pointer-events: none;
             opacity: 0;
             border-radius: 50%;
             background-color: #ffffff; 
-            box-shadow: 0 0 5px #ffffff, 0 0 8px #ffffff; /* Phát sáng mạnh hơn */
+            /* Điều chỉnh box-shadow để phát sáng nhẹ nhàng và đẹp hơn */
+            box-shadow: 0 0 2px #ffffff, 0 0 5px rgba(255, 255, 255, 0.7); /* Nhẹ nhàng hơn */
             will-change: transform, opacity;
             z-index: 5;
         }
 
         @keyframes localFallAndFade {
-            0% { transform: translateY(-100%); opacity: 0.9; } /* Bắt đầu sáng và rõ hơn */
+            0% { transform: translateY(-100%); opacity: 0.9; } 
             100% { transform: translateY(var(--fall-limit)); opacity: 0; } 
         }
         
@@ -471,7 +472,7 @@
     </div>
 
 <script>
-    // *** CODE TUYẾT RƠI TRONG KHUNG LỚN (ĐÃ CHỈNH MÀU TRẮNG) ***
+    // *** CODE TUYẾT RƠI TRONG KHUNG LỚN (ĐÃ CHỈNH SỬA) ***
     function createLocalFallingEffect() {
         const snowContainer = document.getElementById('local-snow-container');
         const mainFrame = document.getElementById('main-frame');
@@ -486,28 +487,25 @@
         const mainFrameRect = mainFrame.getBoundingClientRect();
         const lastFrameRect = lastFrame.getBoundingClientRect();
         
-        // Chiều cao giới hạn (tính bằng pixel)
-        // Chiều cao từ đỉnh mainFrame đến đáy lastFrame
         const fallLimitPx = lastFrameRect.bottom - mainFrameRect.top; 
 
-        // Đặt lại chiều cao container để giới hạn vùng hiển thị
         snowContainer.style.height = `${fallLimitPx}px`;
 
-        // Tạo hạt rơi
-        const numLocalEffects = 20; 
-        
+        // Tăng số lượng hạt tuyết được tạo mỗi lần
+        const numLocalEffects = 40; // Tăng từ 20 lên 40 hạt
+
         for (let i = 0; i < numLocalEffects; i++) {
             setTimeout(() => {
-                const size = 1 + Math.random() * 2; // Kích thước hạt 1px - 3px
-                const duration = 2 + Math.random() * 4; // Thời gian rơi 2s - 6s
+                const size = 1 + Math.random() * 2.5; // Kích thước hạt 1px - 3.5px (đẹp hơn)
+                const duration = 2.5 + Math.random() * 4.5; // Thời gian rơi 2.5s - 7s (đa dạng hơn)
                 const leftPercent = Math.random() * 95; // Vị trí ngang
                 
                 const dot = document.createElement('div');
                 dot.className = 'falling-effect-local';
                 dot.style.cssText = `
                     width: ${size}px;
-                    Height: ${size}px; /* DÒNG CODE MÀY YÊU CẦU XÁC NHẬN */
-                    left: ${leftPercent}%;
+                    Height: ${size}px; 
+                    Left: ${leftPercent}%;
                     --animation-duration: ${duration}s;
                     --fall-limit: ${fallLimitPx}px; 
                 `;
@@ -524,15 +522,15 @@
                     dot.remove();
                 }, duration * 1000 + 100); 
 
-            }, i * 300); // Khoảng thời gian tạo hạt
+            }, i * 150); // Giảm khoảng thời gian tạo hạt để tuyết rơi dày hơn
         }
     }
     
     // Gọi hàm tạo hiệu ứng tuyết rơi liên tục
     function startLocalSnow() {
         createLocalFallingEffect();
-        // Lặp lại việc tạo hạt sau mỗi 6s (20 hạt * 300ms/hạt = 6000ms)
-        setInterval(createLocalFallingEffect, 20 * 300); 
+        // Lặp lại việc tạo hạt sau mỗi khoảng thời gian hợp lý (tăng tần suất)
+        setInterval(createLocalFallingEffect, 40 * 150); // 40 hạt * 150ms/hạt = 6000ms
     }
 
     // Chạy tuyết rơi sau khi DOM đã load
